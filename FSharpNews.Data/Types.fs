@@ -3,12 +3,21 @@
 open System
 
 type StackExchangeSite =
-    | Stackoverflow = 0
-    | Programmers = 1
+    | Stackoverflow
+    | Programmers
 
-type StackExchangeQuestion(site: StackExchangeSite, id: int, title: string, url: string, creationDate: DateTime) =
-    member val Id = id with get, set
-    member val Site = site with get, set
-    member val Title = title with get, set
-    member val Url = url with get, set
-    member val CreationDate = creationDate with get, set
+type StackExchangeQuestion = { Id: int
+                               Site: StackExchangeSite
+                               Title: string
+                               Url: string
+                               CreationDate: DateTime }
+
+type Tweet = { Id: int64
+               Text: string
+               UserId: int64
+               UserScreenName: string
+               CreationDate: DateTime }
+
+type Activity =
+    | StackExchangeQuestion of StackExchangeQuestion
+    | Tweet of Tweet

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpNews.DataProviders", "FSharpNews.DataProviders\FSharpNews.DataProviders.fsproj", "{6890E30C-D16E-4ABA-B1A9-0865C46E3A76}"
-EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpNews.DataPuller", "FSharpNews.DataPuller\FSharpNews.DataPuller.fsproj", "{ADCAEDC4-5172-4052-835F-EB206DE6ED06}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpNews.Data", "FSharpNews.Data\FSharpNews.Data.fsproj", "{A351991A-045F-4D07-94DD-C83BCF47790A}"
@@ -24,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6890E30C-D16E-4ABA-B1A9-0865C46E3A76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6890E30C-D16E-4ABA-B1A9-0865C46E3A76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6890E30C-D16E-4ABA-B1A9-0865C46E3A76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6890E30C-D16E-4ABA-B1A9-0865C46E3A76}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ADCAEDC4-5172-4052-835F-EB206DE6ED06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ADCAEDC4-5172-4052-835F-EB206DE6ED06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADCAEDC4-5172-4052-835F-EB206DE6ED06}.Release|Any CPU.ActiveCfg = Release|Any CPU

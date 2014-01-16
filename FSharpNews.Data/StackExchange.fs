@@ -1,13 +1,13 @@
-﻿module FSharpNews.DataProviders.StackExchange
+﻿module FSharpNews.Data.StackExchange
 
 open System
-open HttpClient
+open System.Configuration
 open FSharp.Data
-open FSharpNews.Data
+open HttpClient
 open FSharpNews.Utils
 
 let private log = Logger.create "StackExchange"
-let private apiKey = "B))N8RBxzKO)Fv*LmA4azA(("
+let private apiKey = ConfigurationManager.AppSettings.["StackExchangeApiKey"]
 
 type private Questions = JsonProvider<"DataSamples/StackExchange/questions.json">
 
@@ -20,13 +20,17 @@ let private utcDateToUnix (dateTime: DateTime) =
     dateTime.Subtract(startEpoch).TotalSeconds |> int
 
 let private toString (qsEntity: Questions.DomainTypes.Entity) = sprintf "Items.Count=%d; HasMore=%b; QuotaRemaining=%d; QuotaMax=%d" qsEntity.Items.Length qsEntity.HasMore qsEntity.QuotaRemaining qsEntity.QuotaMax
-let private toQuestion site (q: Questions.DomainTypes.Item) = StackExchangeQuestion(site, q.QuestionId, q.Title, q.Link, unixToUtcDate(q.CreationDate))
+let private toQuestion site (q: Questions.DomainTypes.Item) =
+    StackExchangeQuestion { Site = site
+                            Id = q.QuestionId
+                            Title = q.Title
+                            Url = q.Link
+                            CreationDate = unixToUtcDate q.CreationDate }
 
 let private siteToStr site =
     match site with
     | StackExchangeSite.Stackoverflow -> "stackoverflow"
     | StackExchangeSite.Programmers -> "programmers"
-    | _ -> failwithf "Unknown stackexchange site %A" site
 
 let fetch site startDateInclusive =
     let fromDateUnixInclusive = utcDateToUnix startDateInclusive
@@ -49,11 +53,12 @@ let fetch site startDateInclusive =
 
         match response.EntityBody with
         | Some body -> let qsEntity = Questions.Parse body
-                       log.Debug "Response code %d. %s" response.StatusCode (toString qsEntity)
+                       log.Debug "Site=%A response code %d. %s" site response.StatusCode (toString qsEntity)
                        let result' =
                             qsEntity.Items
                             |> Array.toList
-                            |> List.map toQuestion
+                            |> List.zipWith toQuestion
+                            |> List.map (fun (raw,act) -> (act, raw.JsonValue.ToString()))
                             |> List.append result
                        if qsEntity.HasMore
                        then loop (page+1) result'
