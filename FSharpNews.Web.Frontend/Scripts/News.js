@@ -1,4 +1,6 @@
 $(function () {
+    var requestInterval = 10 * 1000; // ms
+
     var createAutoMoment = function (periodSec) {
         var now = ko.observable(moment());
         window.setInterval(function () { now(moment()); }, periodSec * 1000);
@@ -11,30 +13,27 @@ $(function () {
         return ago;
     };
 
-    var truncateTooLong = function (str, maxLen) {
-        return str.length - 3 > maxLen
-            ? str.substr(0, maxLen - 3) + '...'
-            : str;
-    };
-
     var activityToViewModel = function(activity) {
-        var createMoment = moment.unix(activity.CreationDateUnix);
+        var createMoment = moment.unix(activity.CreationDateUnix).utc();
         var createdAgo = timeAgoObservable(createMoment);
         var createdTitle = createMoment.format('YYYY-MM-DD HH:mm:ss') + 'Z';
         return {
             IconUrl: activity.IconUrl,
             IconTitle: activity.IconTitle,
-            Text: truncateTooLong(activity.Text, 140),
+            Text: activity.Text,
             Url: activity.Url,
-            CreationDateUnix: activity.CreationDateUnix,
             CreationDateAgo: createdAgo,
-            CreationDateTitle: createdTitle
+            CreationDateTitle: createdTitle,
+            AddedAt: activity.AddedDateUnixOffset
         };
     };
 
     var requestNews = function () {
-        var lastActivityDate = pageViewModel.News()[0].CreationDateUnix;
-        $.get('/api/news', { fromDate: lastActivityDate })
+        if (pageViewModel.News().length === 0)
+            return;
+
+        var lastActivityAdded = pageViewModel.News()[0].AddedAt;
+        $.get('/api/news', { addedFromDate: lastActivityAdded })
             .done(function(activities) {
                 var vms = activities.map(activityToViewModel);
                 vms.reverse();
@@ -44,7 +43,7 @@ $(function () {
     };
 
     var delayRequestNews = function() {
-        window.setTimeout(requestNews, 5000);
+        window.setTimeout(requestNews, requestInterval);
     };
 
     var pageViewModel = {

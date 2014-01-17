@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E982D0
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpNews.Web.Frontend", "FSharpNews.Web.Frontend\FSharpNews.Web.Frontend.fsproj", "{643F630B-4897-4699-86D2-457E56D708F7}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpNews.Tests.Acceptance", "FSharpNews.Tests.Acceptance\FSharpNews.Tests.Acceptance.fsproj", "{26B2695C-A5A5-47F6-8B4D-49899F56D3FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{643F630B-4897-4699-86D2-457E56D708F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{643F630B-4897-4699-86D2-457E56D708F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{643F630B-4897-4699-86D2-457E56D708F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26B2695C-A5A5-47F6-8B4D-49899F56D3FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26B2695C-A5A5-47F6-8B4D-49899F56D3FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26B2695C-A5A5-47F6-8B4D-49899F56D3FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26B2695C-A5A5-47F6-8B4D-49899F56D3FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

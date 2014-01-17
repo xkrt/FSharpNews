@@ -6,6 +6,9 @@ open FSharp.Data
 open HttpClient
 open FSharpNews.Utils
 
+type Configuration = { ApiKey: string
+                       ApiUrl: string }
+
 let private log = Logger.create "StackExchange"
 let private apiKey = ConfigurationManager.AppSettings.["StackExchangeApiKey"]
 
@@ -25,13 +28,14 @@ let private siteToStr site =
     | StackExchangeSite.Stackoverflow -> "stackoverflow"
     | StackExchangeSite.Programmers -> "programmers"
 
-let fetch site startDateInclusive =
+let fetch config site startDateInclusive =
     let fromDateUnixInclusive = DateTime.toUnix startDateInclusive
     let toQuestion = toQuestion site
+    let questionsUrl = sprintf "%s/%s" (config.ApiUrl.TrimEnd('/')) "2.1/questions"
 
     let rec loop page result =
         let response =
-            createRequest Get "https://api.stackexchange.com/2.1/questions"
+            createRequest Get questionsUrl
             |> withQueryStringItem { name="key"; value=apiKey }
             |> withQueryStringItem { name="fromdate"; value=fromDateUnixInclusive.ToString() }
             |> withQueryStringItem { name="page"; value=page.ToString() }

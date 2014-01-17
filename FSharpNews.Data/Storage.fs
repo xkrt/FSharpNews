@@ -1,6 +1,7 @@
 ﻿module FSharpNews.Data.Storage
 
 open System
+open System.Configuration
 open MongoDB.Bson
 open MongoDB.Bson.Serialization.Attributes
 open MongoDB.Driver
@@ -14,8 +15,10 @@ type private ActivityType =
     | StackExchange = 0
     | Tweet = 1
 
-let private client = new MongoClient("mongodb://localhost")
-let private db = client.GetServer().GetDatabase("fsharpnews")
+let private mongoUrl = ConfigurationManager.ConnectionStrings.["MongoDB"].ConnectionString |> MongoUrl.Create
+
+let private client = new MongoClient(mongoUrl)
+let private db = client.GetServer().GetDatabase(mongoUrl.DatabaseName)
 let private activities = db.GetCollection("activities")
 
 let private i32 value = BsonInt32 value
@@ -46,24 +49,28 @@ let private mapToDocument (activity, raw) =
     let rawDoc = BsonValue.Create(raw)
     BsonDocument [ el "descriminator" descriminator
                    el "activity" activityDoc
-                   el "raw" rawDoc ]
+                   el "raw" rawDoc
+                   el "addedDate" (date DateTime.UtcNow)]
 
 let private mapFromDocument (document: BsonDocument) =
     let activityType = enum<ActivityType>(document.["descriminator"].AsInt32)
     let adoc = document.["activity"].AsBsonDocument
-    match activityType with
-    | ActivityType.StackExchange -> { Id = adoc.["questionId"].AsInt32
-                                      Site = bsonToSite adoc.["site"].AsInt32
-                                      Title = adoc.["title"].AsString
-                                      UserDisplayName = adoc.["userDisplayName"].AsString
-                                      Url = adoc.["url"].AsString
-                                      CreationDate = adoc.["creationDate"].ToUniversalTime() } |> StackExchangeQuestion
-    | ActivityType.Tweet -> { Id = adoc.["tweetId"].AsInt64
-                              Text = adoc.["text"].AsString
-                              UserId = adoc.["userId"].AsInt64
-                              UserScreenName = adoc.["userScreenName"].AsString
-                              CreationDate = adoc.["creationDate"].ToUniversalTime() } |> Tweet
-    | t -> failwithf "Mapping for %A is not implemented" t
+    let activity =
+        match activityType with
+        | ActivityType.StackExchange -> { Id = adoc.["questionId"].AsInt32
+                                          Site = bsonToSite adoc.["site"].AsInt32
+                                          Title = adoc.["title"].AsString
+                                          UserDisplayName = adoc.["userDisplayName"].AsString
+                                          Url = adoc.["url"].AsString
+                                          CreationDate = adoc.["creationDate"].ToUniversalTime() } |> StackExchangeQuestion
+        | ActivityType.Tweet -> { Id = adoc.["tweetId"].AsInt64
+                                  Text = adoc.["text"].AsString
+                                  UserId = adoc.["userId"].AsInt64
+                                  UserScreenName = adoc.["userScreenName"].AsString
+                                  CreationDate = adoc.["creationDate"].ToUniversalTime() } |> Tweet
+        | t -> failwithf "Mapping for %A is not implemented" t
+    let added = document.["addedDate"].ToUniversalTime()
+    activity, added
 
 let save (activity: Activity, raw: string) =
     (activity, raw)
@@ -87,7 +94,7 @@ let getTimeOfLastQuestion (site: StackExchangeSite) =
                 |> Seq.map mapFromDocument
                 |> Seq.tryHead
     match quest with
-    | Some (StackExchangeQuestion quest) -> quest.CreationDate
+    | Some (StackExchangeQuestion quest, _) -> quest.CreationDate
     | _ -> DateTime(2014, 1, 1, 0, 0, 0, DateTimeKind.Utc)
 
 let getTopActivities count =
@@ -104,9 +111,12 @@ let getTopActivities count =
 let getActivities (fromDateExclusive: DateTime) =
     let cursor =
         activities
-            .Find(Query.GT("activity.creationDate", BsonDateTime(fromDateExclusive)))
+            .Find(Query.GT("addedDate", BsonDateTime(fromDateExclusive)))
             .SetSortOrder(SortBy.Descending("activity.creationDate"))
     cursor
     |> Seq.cast<BsonDocument>
     |> Seq.map mapFromDocument
     |> Seq.toList
+
+let deleteAll () =
+    do activities.RemoveAll() |> ignore

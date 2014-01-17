@@ -8,6 +8,9 @@ open System.Web.Mvc
 open System.Web.Routing
 open System.Web.Optimization
 
+// todo handle unhandled exceptions
+// todo setup logging
+
 type BundleConfig() =
     static member RegisterBundles (bundles:BundleCollection) =
         bundles.Add(ScriptBundle("~/bundles/libs").Include(

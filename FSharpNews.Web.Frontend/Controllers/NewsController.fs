@@ -8,8 +8,8 @@ open FSharpNews.Utils
 type NewsController() =
     inherit ApiController()
 
-    member this.Get(fromDate: int) : IHttpActionResult =
+    member this.Get(addedFromDate: int64) : IHttpActionResult =
         let activityViewModels =
-            Storage.getActivities (DateTime.unixToUtcDate fromDate)
+            Storage.getActivities (DateTime.unixOffsetToUtcDate addedFromDate)
             |> Seq.map ActivityViewModel.Create
         this.Json(activityViewModels) :> _

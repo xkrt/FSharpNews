@@ -1,6 +1,8 @@
 ﻿open System
+open System.Configuration
 open System.Threading
 open FSharpNews.Data
+open FSharpNews.Data.StackExchange
 open FSharpNews.Utils
 
 do Logger.configure()
@@ -30,22 +32,34 @@ let private repeatForever (interval: TimeSpan) fn =
         loop()
     }
 
-let private stackExchange =
+let private stackExchange config =
     let fetchNewQuestions site =
         let lastQuestionTime = Storage.getTimeOfLastQuestion site
-        let activitiesWithRaws = StackExchange.fetch site (lastQuestionTime.AddSeconds(1.))
-        log.Info "Fetched questions for %A: %d" site activitiesWithRaws.Length
-        Storage.saveAll activitiesWithRaws
+        let startDate = lastQuestionTime.AddSeconds(1.)
+        let activitiesWithRaws = StackExchange.fetch config site startDate
+        do log.Info "Fetched questions for %A: %d" site activitiesWithRaws.Length
+        do Storage.saveAll activitiesWithRaws
     let repeat = repeatForever (TimeSpan.FromMinutes(5.))
     repeat (fun () -> [Stackoverflow; Programmers] |> List.iter fetchNewQuestions)
 
 let private twitter =
     async { Twitter.listenStream Storage.save }
 
+let buildConfigs argv =
+    let seApiKey = ConfigurationManager.AppSettings.["StackExchangeApiKey"]
+    let seApiUrl =
+        match Array.toList argv with
+        | opt::stackExchangeUrl::[] when opt = "-test" -> stackExchangeUrl
+        | [] -> Configuration.ConfigurationManager.AppSettings.["StackExchangeApiUrl"]
+        | _ -> failwith "Wrong command line parameters"
+    { ApiKey=seApiKey
+      ApiUrl=seApiUrl }
+
 [<EntryPoint>]
 let main argv =
-    log.Info "Started"
-    [stackExchange; twitter]
+    do log.Info "Started"
+    let seConfig = buildConfigs argv
+    [stackExchange seConfig; twitter]
     |> Async.Parallel
     |> Async.Ignore
     |> Async.Start

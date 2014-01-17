@@ -8,7 +8,7 @@
     </script>
 }
 
-<table class="table">
+<table id="news" class="table" data-bind="visible: News().length > 0">
     <tbody data-bind="foreach: News">
         <tr>
             <td>
@@ -25,3 +25,8 @@
         </tr>
     </tbody>
 </table>
+
+@* todo: use bootstrap panel here *@
+<div id="noNews" data-bind="visible: News().length == 0">
+    For some strange reason there is no news!
+</div>
