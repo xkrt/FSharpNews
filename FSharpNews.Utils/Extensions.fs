@@ -12,10 +12,10 @@ type System.String with
        else this
 
 module DateTime =
-    let unixOffsetToUtcDate (unixOffset: int64) =
+    let unixToUtcDate (unix: int) =
         let startEpoch = DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
-        startEpoch.AddMilliseconds(float(unixOffset))
+        startEpoch.AddSeconds(float(unix))
 
-    let toUnixOffset (dateTime: DateTime) =
+    let toUnix (dateTime: DateTime) =
         let startEpoch = DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
-        dateTime.Subtract(startEpoch).TotalMilliseconds |> int64
+        dateTime.Subtract(startEpoch).TotalSeconds |> int

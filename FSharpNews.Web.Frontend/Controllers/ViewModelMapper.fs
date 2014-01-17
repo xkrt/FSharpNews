@@ -4,12 +4,12 @@ open System.Web.Http
 open FSharpNews.Data
 open FSharpNews.Utils
 
-type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: string, creationDateUnixOffset: int64) =
+type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: string, creationDateUnix: int) =
     member val IconUrl = iconUrl with get, set
     member val IconTitle = iconTitle with get, set
     member val Text = text with get, set
     member val Url = url with get, set
-    member val CreationDateUnixOffset = creationDateUnixOffset with get, set
+    member val CreationDateUnix = creationDateUnix with get, set
     static member Create(activity: Activity) =
         match activity with
         | StackExchangeQuestion q ->
@@ -21,12 +21,12 @@ type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: st
                 iconTitle = iconTitle,
                 text = sprintf "%s: %s" q.UserDisplayName q.Title,
                 url = q.Url,
-                creationDateUnixOffset = DateTime.toUnixOffset q.CreationDate)
+                creationDateUnix = DateTime.toUnix q.CreationDate)
         | Tweet t ->
             ActivityViewModel(
                 iconUrl = "http://abs.twimg.com/favicons/favicon.ico",
                 iconTitle = "Twitter",
                 text = sprintf "%s: %s" t.UserScreenName t.Text,
                 url = sprintf "https://twitter.com/%s/status/%d" t.UserScreenName t.Id,
-                creationDateUnixOffset = DateTime.toUnixOffset t.CreationDate)
+                creationDateUnix = DateTime.toUnix t.CreationDate)
 

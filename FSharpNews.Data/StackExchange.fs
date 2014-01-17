@@ -11,14 +11,6 @@ let private apiKey = ConfigurationManager.AppSettings.["StackExchangeApiKey"]
 
 type private Questions = JsonProvider<"DataSamples/StackExchange/questions.json">
 
-let private unixToUtcDate unixStamp =
-    let startEpoch = DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
-    startEpoch.AddSeconds(float(unixStamp))
-
-let private utcDateToUnix (dateTime: DateTime) =
-    let startEpoch = DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
-    dateTime.Subtract(startEpoch).TotalSeconds |> int
-
 let private toString (qsEntity: Questions.DomainTypes.Entity) = sprintf "Items.Count=%d; HasMore=%b; QuotaRemaining=%d; QuotaMax=%d" qsEntity.Items.Length qsEntity.HasMore qsEntity.QuotaRemaining qsEntity.QuotaMax
 let private toQuestion site (q: Questions.DomainTypes.Item) =
     StackExchangeQuestion { Site = site
@@ -26,7 +18,7 @@ let private toQuestion site (q: Questions.DomainTypes.Item) =
                             Title = q.Title
                             UserDisplayName = q.Owner.DisplayName
                             Url = q.Link
-                            CreationDate = unixToUtcDate q.CreationDate }
+                            CreationDate = DateTime.unixToUtcDate q.CreationDate }
 
 let private siteToStr site =
     match site with
@@ -34,7 +26,7 @@ let private siteToStr site =
     | StackExchangeSite.Programmers -> "programmers"
 
 let fetch site startDateInclusive =
-    let fromDateUnixInclusive = utcDateToUnix startDateInclusive
+    let fromDateUnixInclusive = DateTime.toUnix startDateInclusive
     let toQuestion = toQuestion site
 
     let rec loop page result =

@@ -18,7 +18,7 @@ $(function () {
     };
 
     var activityToViewModel = function(activity) {
-        var createMoment = moment(activity.CreationDateUnixOffset);
+        var createMoment = moment.unix(activity.CreationDateUnix);
         var createdAgo = timeAgoObservable(createMoment);
         var createdTitle = createMoment.format('YYYY-MM-DD HH:mm:ss') + 'Z';
         return {
@@ -26,14 +26,14 @@ $(function () {
             IconTitle: activity.IconTitle,
             Text: truncateTooLong(activity.Text, 140),
             Url: activity.Url,
-            CreationDateUnixOffset: activity.CreationDateUnixOffset,
+            CreationDateUnix: activity.CreationDateUnix,
             CreationDateAgo: createdAgo,
             CreationDateTitle: createdTitle
         };
     };
 
     var requestNews = function () {
-        var lastActivityDate = pageViewModel.News()[0].CreationDateUnixOffset;
+        var lastActivityDate = pageViewModel.News()[0].CreationDateUnix;
         $.get('/api/news', { fromDate: lastActivityDate })
             .done(function(activities) {
                 var vms = activities.map(activityToViewModel);
