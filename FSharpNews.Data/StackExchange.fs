@@ -24,6 +24,7 @@ let private toQuestion site (q: Questions.DomainTypes.Item) =
     StackExchangeQuestion { Site = site
                             Id = q.QuestionId
                             Title = q.Title
+                            UserDisplayName = q.Owner.DisplayName
                             Url = q.Link
                             CreationDate = unixToUtcDate q.CreationDate }
 

@@ -1,13 +1,16 @@
 namespace FSharpNews.Web.Frontend.Controllers
 
 open System
-open System.Collections.Generic
-open System.Linq
-open System.Web
 open System.Web.Mvc
-open System.Web.Mvc.Ajax
+open Newtonsoft.Json
+open FSharpNews.Data
 
 type HomeController() =
     inherit Controller()
-    member this.Index () = this.View()
 
+    member this.Index () =
+        let json =
+            Storage.getTopActivities 100
+            |> Seq.map ActivityViewModel.Create
+            |> JsonConvert.SerializeObject
+        this.View(json :> obj)

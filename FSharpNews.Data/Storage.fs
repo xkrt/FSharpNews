@@ -33,6 +33,7 @@ let private mapToDocument (activity, raw) =
         | StackExchangeQuestion q -> BsonDocument [ el "questionId" (i32 q.Id)
                                                     el "site" (siteToBson q.Site)
                                                     el "title" (str q.Title)
+                                                    el "userDisplayName" (str q.UserDisplayName)
                                                     el "url" (str q.Url)
                                                     el "creationDate" (date q.CreationDate) ]
                                      , i32 (int ActivityType.StackExchange)
@@ -54,6 +55,7 @@ let private mapFromDocument (document: BsonDocument) =
     | ActivityType.StackExchange -> { Id = adoc.["questionId"].AsInt32
                                       Site = bsonToSite adoc.["site"].AsInt32
                                       Title = adoc.["title"].AsString
+                                      UserDisplayName = adoc.["userDisplayName"].AsString
                                       Url = adoc.["url"].AsString
                                       CreationDate = adoc.["creationDate"].ToUniversalTime() } |> StackExchangeQuestion
     | ActivityType.Tweet -> { Id = adoc.["tweetId"].AsInt64
@@ -87,3 +89,24 @@ let getTimeOfLastQuestion (site: StackExchangeSite) =
     match quest with
     | Some (StackExchangeQuestion quest) -> quest.CreationDate
     | _ -> DateTime(2014, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+
+let getTopActivities count =
+    let cursor =
+        activities
+            .FindAll()
+            .SetSortOrder(SortBy.Descending("activity.creationDate"))
+            .SetLimit(count)
+    cursor
+    |> Seq.cast<BsonDocument>
+    |> Seq.map mapFromDocument
+    |> Seq.toList
+
+let getActivities (fromDateExclusive: DateTime) =
+    let cursor =
+        activities
+            .Find(Query.GT("activity.creationDate", BsonDateTime(fromDateExclusive)))
+            .SetSortOrder(SortBy.Descending("activity.creationDate"))
+    cursor
+    |> Seq.cast<BsonDocument>
+    |> Seq.map mapFromDocument
+    |> Seq.toList

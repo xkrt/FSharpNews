@@ -9,6 +9,7 @@ type StackExchangeSite =
 type StackExchangeQuestion = { Id: int
                                Site: StackExchangeSite
                                Title: string
+                               UserDisplayName: string
                                Url: string
                                CreationDate: DateTime }
 
