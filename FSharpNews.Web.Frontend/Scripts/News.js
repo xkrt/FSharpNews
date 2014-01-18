@@ -1,16 +1,15 @@
 $(function () {
-    var requestInterval = 10 * 1000; // ms
+    var requestIntervalSec = 60;
 
     var createAutoMoment = function (periodSec) {
-        var now = ko.observable(moment());
-        window.setInterval(function () { now(moment()); }, periodSec * 1000);
-        return now;
+        var observableNow = ko.observable(moment());
+        window.setInterval(function () { observableNow(moment()); }, periodSec * 1000);
+        return observableNow;
     };
+    var now = createAutoMoment(10);
 
-    var timeAgoObservable = function (datetimeMoment) {
-        var now = createAutoMoment(10);
-        var ago = ko.computed(function () { return datetimeMoment.from(now()); });
-        return ago;
+    var timeAgoObservable = function (moment) {
+        return ko.computed(function () { return moment.from(now()); });
     };
 
     var activityToViewModel = function(activity) {
@@ -32,23 +31,33 @@ $(function () {
         if (pageViewModel.News().length === 0)
             return;
 
-        var lastActivityAdded = pageViewModel.News()[0].AddedAt;
-        $.get('/api/news', { addedFromDate: lastActivityAdded })
+        var lastAddedStamp = 0;
+        $.each(pageViewModel.News(), function(_, activity) { if (activity.AddedAt > lastAddedStamp) lastAddedStamp = activity.AddedAt; });
+
+        $.get('/api/news', { addedFromDate: lastAddedStamp })
             .done(function(activities) {
                 var vms = activities.map(activityToViewModel);
                 vms.reverse();
                 vms.forEach(function (vm) { pageViewModel.News.unshift(vm); });
             })
+            .done(function() { pageViewModel.UpdatedDate(moment()); })
             .always(delayRequestNews);
     };
 
     var delayRequestNews = function() {
-        window.setTimeout(requestNews, requestInterval);
+        window.setTimeout(requestNews, requestIntervalSec * 1000);
     };
 
     var pageViewModel = {
+        UpdatedDate: ko.observable(moment()),
         News: ko.observableArray(window.initialNews.map(activityToViewModel))
     };
+    pageViewModel.UpdatedAgo = ko.computed(function () { return pageViewModel.UpdatedDate().from(now()); });
+    pageViewModel.UpdatedTitle = ko.computed(function () {
+        var updated = 'updated at ' + pageViewModel.UpdatedDate().format('HH:mm:ss');
+        return updated + ', updates every ' + requestIntervalSec + ' secs';
+    });
+
     ko.applyBindings(pageViewModel);
     delayRequestNews();
 });

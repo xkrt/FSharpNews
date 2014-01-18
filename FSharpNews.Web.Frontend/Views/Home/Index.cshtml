@@ -8,7 +8,12 @@
     </script>
 }
 
-<table id="news" class="table" data-bind="visible: News().length > 0">
+<small id="updated" class="text-muted" data-bind="attr: { title: UpdatedTitle }">
+    <span>Updated</span>
+    <span data-bind="text: UpdatedAgo"></span>
+</small>
+
+<table id="news" class="table table-condensed" data-bind="visible: News().length > 0">
     <tbody data-bind="foreach: News">
         <tr>
             <td>

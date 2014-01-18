@@ -13,8 +13,8 @@ let soIcoUrl = "http://cdn.sstatic.net/stackoverflow/img/favicon.ico"
 let pIcoUrl = "http://cdn.sstatic.net/programmers/img/favicon.ico"
 let indexUrl = sprintf "http://%s:4040" Utils.machine
 
-let ajaxInterval = TimeSpan.FromSeconds(10.)
-let waitAjax() = Threading.Thread.Sleep(ajaxInterval.Add(TimeSpan.FromSeconds(1.)))
+let ajaxInterval = 60
+let waitAjax() = sleep ajaxInterval
 
 [<SetUp>]
 let Setup() =
@@ -95,8 +95,17 @@ let ``Request news over ajax``() =
     let rows = table() |> elementsWithin "tr"
     rows.Length |> assertEqual 2
 
-    let expected = [pIcoUrl, (sprintf "%s: %s" pQuest.UserDisplayName pQuest.Title), pQuest.Url, "a few seconds ago"
-                    soIcoUrl, (sprintf "%s: %s" soQuest.UserDisplayName soQuest.Title), soQuest.Url, "a few seconds ago"]
+    let expected = [pIcoUrl, (sprintf "%s: %s" pQuest.UserDisplayName pQuest.Title), pQuest.Url, "a minute ago"
+                    soIcoUrl, (sprintf "%s: %s" soQuest.UserDisplayName soQuest.Title), soQuest.Url, "a minute ago"]
     rows
     |> List.zip expected
     |> List.iter checkMatch
+
+[<Test>]
+let ``Updated ago``() =
+    do saveQuest soQuest
+    do url indexUrl
+
+    "#updated" == "Updated a few seconds ago"
+    sleep (ajaxInterval - 5)
+    "#updated" == "Updated a minute ago"
