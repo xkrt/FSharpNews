@@ -25,7 +25,7 @@ authorizer.Credentials <- creds
 let private context = new TwitterContext(authorizer)
 
 type private CommonMessage = JsonProvider<"DataSamples/Twitter/stream-message.json", SampleList=true>
-type private TweetMessage = JsonProvider<"DataSamples/Twitter/tweet.json">
+type private TweetMessage = JsonProvider<"DataSamples/Twitter/tweet.json", SampleList=true>
 
 let private parseDate str =
     let dt = DateTime.ParseExact(str, "ddd MMM dd HH:mm:ss %K yyyy", CultureInfo.InvariantCulture.DateTimeFormat)
