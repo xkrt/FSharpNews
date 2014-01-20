@@ -5,13 +5,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>26b2695c-a5a5-47f6-8b4d-49899f56d3fb</ProjectGuid>
+    <ProjectGuid>119ca9b4-cfb7-4fa5-a735-fe7c8c4f3e86</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FSharpNews.Tests.Acceptance</RootNamespace>
-    <AssemblyName>FSharpNews.Tests.Acceptance</AssemblyName>
+    <RootNamespace>FSharpNews.Tests.Core</RootNamespace>
+    <AssemblyName>FSharpNews.Tests.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
-    <Name>FSharpNews.Tests.Acceptance</Name>
+    <Name>FSharpNews.Tests.Core</Name>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -23,7 +23,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Debug\FSharpNews.Tests.Acceptance.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\FSharpNews.Tests.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,7 +32,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Release\FSharpNews.Tests.Acceptance.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\FSharpNews.Tests.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
@@ -52,63 +52,22 @@
   <Import Project="$(FSharpTargetsPath)" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="App.config" />
-    <Content Include="chromedriver-license.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Include="chromedriver.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Compile Include="TestHelpers.fs" />
     <Compile Include="Utils.fs" />
-    <Compile Include="DataPullerApp.fs" />
-    <Compile Include="TestsSetupper.fs" />
-    <Compile Include="Tests.fs" />
+    <Compile Include="TypedAssertions.fs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="canopy">
-      <HintPath>..\packages\canopy.0.9.1\lib\canopy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SizSelCsZzz">
-      <HintPath>..\packages\SizSelCsZzz.0.3.35.0\lib\SizSelCsZzz.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
-    <Reference Include="WebDriver">
-      <HintPath>..\packages\Selenium.WebDriver.2.39.0\lib\net40\WebDriver.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="WebDriver.Support">
-      <HintPath>..\packages\Selenium.Support.2.39.0\lib\net40\WebDriver.Support.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <ProjectReference Include="..\FSharpNews.Data\FSharpNews.Data.fsproj">
-      <Name>FSharpNews.Data</Name>
-      <Project>{a351991a-045f-4d07-94dd-c83bcf47790a}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\FSharpNews.Utils\FSharpNews.Utils.fsproj">
-      <Name>FSharpNews.Utils</Name>
-      <Project>{18f43f82-0f6e-48f8-a57d-9acbe5387cc3}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

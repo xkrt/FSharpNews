@@ -2,9 +2,10 @@
 
 open System
 open System.Diagnostics
+open FSharpNews.Tests.Core
 
 let private dataPullerExePath =
-    let relPath = IO.Path.Combine(Utils.executingAssemblyDirPath(), "../../../FSharpNews.DataPuller/bin/Debug/FSharpNews.DataPuller.exe")
+    let relPath = IO.Path.Combine(Environment.executingAssemblyDirPath(), "../../../FSharpNews.DataPuller/bin/Debug/FSharpNews.DataPuller.exe")
     IO.Path.GetFullPath(relPath)
 
 let private stop (proc: Process) =
@@ -17,7 +18,7 @@ let private stop (proc: Process) =
     else failwithf "DataPuller exit timeout"
 
 let start () =
-    let args = sprintf "-test http://%s:4141/StackExchange" Utils.machine
+    let args = sprintf "-test http://%s:4141/StackExchange" Environment.machine
     let info = ProcessStartInfo(dataPullerExePath, args)
     info.UseShellExecute <- false
     info.RedirectStandardInput <- true

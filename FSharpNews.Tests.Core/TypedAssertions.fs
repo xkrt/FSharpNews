@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-module FSharpNews.Tests.Acceptance.TestHelpers
+module FSharpNews.Tests.Acceptance.TypedAssertions
 
 open NUnit.Framework
 

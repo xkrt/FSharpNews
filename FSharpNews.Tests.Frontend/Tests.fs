@@ -8,10 +8,11 @@ open canopy
 open OpenQA.Selenium
 open FSharpNews.Data
 open FSharpNews.Utils
+open FSharpNews.Tests.Core
 
 let soIcoUrl = "http://cdn.sstatic.net/stackoverflow/img/favicon.ico"
 let pIcoUrl = "http://cdn.sstatic.net/programmers/img/favicon.ico"
-let indexUrl = sprintf "http://%s:4040" Utils.machine
+let indexUrl = sprintf "http://%s:4040" Environment.machine
 
 let ajaxInterval = 60
 let waitAjax() = sleep ajaxInterval
