@@ -1,0 +1,2953 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>suave</name></assembly>
+<members>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Native">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Suave.Async.AsyncResultCell`1.Result">
+<summary>
+ WARNING: do not use, will block the event loop.
+ Await the result synchronously.
+</summary>
+</member>
+<member name="M:Suave.Async.AsyncResultCell`1.Complete(`0)">
+<summary>
+ Complete the async result cell, setting the value. If this invocation was the first
+ invocation, returns true, otherwise if there already is a value set, return false.
+</summary>
+</member>
+<member name="M:Suave.Async.AsyncResultCell`1.AwaitResult(Microsoft.FSharp.Core.FSharpOption{System.TimeSpan})">
+<summary>
+ Await the result of the AsyncResultCell, yielding Some(:&apos;T)
+ after the timeout or otherwise None.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Async.AsyncResultCell`1">
+<summary>
+ Haskell&apos;s TVar but without the STM.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Suave.Async.Async.AwaitTask.Static(System.Threading.Tasks.Task)">
+<summary>
+ Await a task asynchronously
+</summary>
+</member>
+<member name="M:Suave.Async.Async.AsyncRaise.Static``2(``0)">
+<summary>
+ Raise an exception on the async computation/workflow.
+</summary>
+</member>
+<member name="M:Suave.Async.Async.WithTimeout.Static``1(System.TimeSpan,Microsoft.FSharp.Control.FSharpAsync{``0})">
+<summary>
+ Spawn an async with a timeout, throwing &lt;see cref=&quot;System.TimeoutException&quot; /&gt; after
+ the timeout.
+</summary>
+</member>
+<member name="M:Suave.Async.invoke_once``3(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc{``1,Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc{``2,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Helper to just invoke the three &apos;funcs&apos; once.
+</summary>
+</member>
+<member name="T:Suave.Async">
+
+</member>
+<member name="T:Suave.Http.WebResult">
+ <summary><para>
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.url_scan``5(Microsoft.FSharp.Core.PrintfFormat{``0,``1,``2,``3,``4},Microsoft.FSharp.Core.FSharpFunc{``4,Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit}}}})">
+ <summary><para>
+ Strongly typed route matching! Matching the uri can be used with the 'parsers'
+ characters specified in Sscanf.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.log(System.IO.Stream,Suave.Types.HttpRequest)">
+ <summary><para>
+ HERE BE DRAGONS: Not thread-safe.
+ Log the HttpRequest to the given stream. For debugging purposes.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.log_format(Suave.Types.HttpRequest)">
+ <summary><para>
+ Formats the HttpRequest as in the default manner
+ </para></summary>
+</member>
+<member name="M:Suave.Http.authenticate_basic(Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,System.Boolean},Suave.Types.HttpRequest)">
+ <summary><para>
+ Perform basic authentication on the request, applying a predicate
+ to check the request for authentication tokens such as 'username'
+ and 'password'. Otherwise, if failing, challenge the client again.
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.parse_authentication_token(System.String)">
+ <summary><para>
+ Parse the authentication type, the user name and the password from
+ the token string
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.close_pipe(Microsoft.FSharp.Core.FSharpOption{Suave.Types.HttpRequest})">
+ <summary><para>
+ At the location where this function is applied, close the outbound stream
+ for further writing.
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.dir(Suave.Types.HttpRequest)">
+ <summary><para>
+ Serve a 'file browser' for a directory
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="P:Suave.Http.browse">
+ <summary><para>
+ 'browse' the file in the sense that the contents of the file are sent based on the
+ request's Url property. Will serve from the current directory.
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.browse_file(System.String)">
+ <summary><para>
+ 'browse' the file given as the filename, by sending it to the browser with a
+ MIME-type/Content-Type header based on its extension. Will service from the
+ current directory.
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.local_file(System.String)">
+ <summary><para>
+ Format a string with a local file path given a file name 'fileName'. You should
+ use this helper method to find the current directory and concatenate that current
+ directory to the filename which should be absolute and start with a path separator.
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.file(System.String)">
+ <summary><para>
+ Send the file by the filename given. Will search relative to the current directory for
+ the file path, unless you pass it a file with a slash at the start of its name, in which
+ case it will search the root of the file system that is hosting the current directory.
+ Will also set the MIME type based on the file extension.
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.send_file(System.String,Suave.Types.HttpRequest)">
+ <summary><para>
+ Send a file as a response to the request
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.set_mime_type(System.String)">
+ <summary><para>
+ Set the Content-Type header to the mime type given
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.mime_type(System.String)">
+ <summary><para>
+ Map a file ending to a mime-type
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.redirect(System.String)">
+ <summary><para>
+ </para><para>
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.INTERNAL_ERROR(System.String)">
+ <summary><para>
+ 500
+ </para><para>
+ The server encountered an unexpected condition which prevented it
+ from fulfilling the request.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.internal_error(System.Byte[])">
+ <summary><para>
+ 500
+ </para><para>
+ The server encountered an unexpected condition which prevented it
+ from fulfilling the request.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.TOO_MANY_REQUESTS(System.String)">
+ <summary><para>
+ 429
+ </para><para>
+ The user has sent too many requests in a given amount of time.
+ Intended for use with rate limiting schemes.[18]
+ </para><para>
+ </para></summary>
+ <remarks>
+ https://tools.ietf.org/html/rfc6585
+ </remarks>
+</member>
+<member name="M:Suave.Http.too_many_requests(System.Byte[])">
+ <summary><para>
+ 429
+ </para><para>
+ The user has sent too many requests in a given amount of time.
+ Intended for use with rate limiting schemes.[18]
+ </para><para>
+ </para></summary>
+ <remarks>
+ https://tools.ietf.org/html/rfc6585
+ </remarks>
+</member>
+<member name="M:Suave.Http.PRECONDITION_REQUIRED(System.String)">
+ <summary><para>
+ 428
+ </para><para>
+ The 428 status code indicates that the origin server requires the
+ request to be conditional.
+ </para><para>
+ Its typical use is to avoid the "lost update" problem, where a client
+ GETs a resource's state, modifies it, and PUTs it back to the server,
+ when meanwhile a third party has modified the state on the server,
+ leading to a conflict.  By requiring requests to be conditional, the
+ server can assure that clients are working with the correct copies.
+ </para><para>
+ Responses using this status code SHOULD explain how to resubmit the
+ request successfully.  For example:
+ <code>
+ HTTP/1.1 428 Precondition Required
+ Content-Type: text/html
+
+ &lt;html&gt;
+    &lt;head&gt;
+       &lt;title&gt;Precondition Required&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+       &lt;h1&gt;Precondition Required&lt;/h1&gt;
+       &lt;p&gt;This request is required to be conditional;
+       try using &quot;If-Match&quot;.&lt;/p&gt;
+    &lt;/body&gt;
+ &lt;/html&gt;
+ </code>
+ </para><para>
+ Responses with the 428 status code MUST NOT be stored by a cache.
+ </para></summary>
+ <remarks>
+ https://tools.ietf.org/html/rfc6585
+ </remarks>
+</member>
+<member name="M:Suave.Http.precondition_required(System.Byte[])">
+ <summary><para>
+ 428
+ </para><para>
+ The 428 status code indicates that the origin server requires the
+ request to be conditional.
+ </para><para>
+ Its typical use is to avoid the "lost update" problem, where a client
+ GETs a resource's state, modifies it, and PUTs it back to the server,
+ when meanwhile a third party has modified the state on the server,
+ leading to a conflict.  By requiring requests to be conditional, the
+ server can assure that clients are working with the correct copies.
+ </para><para>
+ Responses using this status code SHOULD explain how to resubmit the
+ request successfully.  For example:
+ <code>
+ HTTP/1.1 428 Precondition Required
+ Content-Type: text/html
+
+ &lt;html&gt;
+    &lt;head&gt;
+       &lt;title&gt;Precondition Required&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+       &lt;h1&gt;Precondition Required&lt;/h1&gt;
+       &lt;p&gt;This request is required to be conditional;
+       try using &quot;If-Match&quot;.&lt;/p&gt;
+    &lt;/body&gt;
+ &lt;/html&gt;
+ </code>
+ </para><para>
+ Responses with the 428 status code MUST NOT be stored by a cache.
+ </para></summary>
+ <remarks>
+ https://tools.ietf.org/html/rfc6585
+ </remarks>
+</member>
+<member name="M:Suave.Http.UNPROCESSABLE_ENTITY(System.String)">
+ <summary><para>
+ 422
+ </para><para>
+ The request was well-formed but was unable to be followed due to semantic errors.[4]
+ </para><para>
+ </para></summary>
+ <remarks>(WebDAV; RFC 4918)</remarks>
+</member>
+<member name="M:Suave.Http.unprocessable_entity(System.Byte[])">
+ <summary><para>
+ 422
+ </para><para>
+ The request was well-formed but was unable to be followed due to semantic errors.[4]
+ </para><para>
+ </para></summary>
+ <remarks>(WebDAV; RFC 4918)</remarks>
+</member>
+<member name="M:Suave.Http.UNSUPPORTED_MEDIA_TYPE(System.String)">
+ <summary><para>
+ 415
+ </para><para>
+ The server is refusing to service the request because the entity of
+ the request is in a format not supported by the requested resource
+ for the requested method.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.unsupported_media_type(System.Byte[])">
+ <summary><para>
+ 415
+ </para><para>
+ The server is refusing to service the request because the entity of
+ the request is in a format not supported by the requested resource
+ for the requested method.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.GONE(System.String)">
+ <summary><para>
+ 410
+ </para><para>
+ The requested resource is no longer available at the server and no
+ forwarding address is known. This condition is expected to be
+ considered permanent. Clients with link editing capabilities SHOULD
+ delete references to the Request-URI after user approval. If the
+ server does not know, or has no facility to determine, whether or not
+ the condition is permanent, the status code 404 (Not Found) SHOULD be
+ used instead. This response is cacheable unless indicated otherwise.
+ </para><para>
+ The 410 response is primarily intended to assist the task of web
+ maintenance by notifying the recipient that the resource is
+ intentionally unavailable and that the server owners desire that
+ remote links to that resource be removed. Such an event is common for
+ limited-time, promotional services and for resources belonging to
+ individuals no longer working at the server's site. It is not
+ necessary to mark all permanently unavailable resources as "gone" or
+ to keep the mark for any length of time -- that is left to the
+ discretion of the server owner.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.gone(System.Byte[])">
+ <summary><para>
+ 410
+ </para><para>
+ The requested resource is no longer available at the server and no
+ forwarding address is known. This condition is expected to be
+ considered permanent. Clients with link editing capabilities SHOULD
+ delete references to the Request-URI after user approval. If the
+ server does not know, or has no facility to determine, whether or not
+ the condition is permanent, the status code 404 (Not Found) SHOULD be
+ used instead. This response is cacheable unless indicated otherwise.
+ </para><para>
+ The 410 response is primarily intended to assist the task of web
+ maintenance by notifying the recipient that the resource is
+ intentionally unavailable and that the server owners desire that
+ remote links to that resource be removed. Such an event is common for
+ limited-time, promotional services and for resources belonging to
+ individuals no longer working at the server's site. It is not
+ necessary to mark all permanently unavailable resources as "gone" or
+ to keep the mark for any length of time -- that is left to the
+ discretion of the server owner.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.CONFLICT(System.String)">
+ <summary><para>
+ 409
+ </para><para>
+ The request could not be completed due to a conflict with the current
+ state of the resource. This code is only allowed in situations where
+ it is expected that the user might be able to resolve the conflict
+ and resubmit the request. The response body SHOULD include enough
+ information for the user to recognize the source of the conflict.
+ Ideally, the response entity would include enough information for the
+ user or user agent to fix the problem; however, that might not be
+ possible and is not required.
+ </para><para>
+ Conflicts are most likely to occur in response to a PUT request. For
+ example, if versioning were being used and the entity being PUT
+ included changes to a resource which conflict with those made by an
+ earlier (third-party) request, the server might use the 409 response
+ to indicate that it can't complete the request. In this case, the
+ response entity would likely contain a list of the differences
+ between the two versions in a format defined by the response
+ Content-Type.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.conflict(System.Byte[])">
+ <summary><para>
+ 409
+ </para><para>
+ The request could not be completed due to a conflict with the current
+ state of the resource. This code is only allowed in situations where
+ it is expected that the user might be able to resolve the conflict
+ and resubmit the request. The response body SHOULD include enough
+ information for the user to recognize the source of the conflict.
+ Ideally, the response entity would include enough information for the
+ user or user agent to fix the problem; however, that might not be
+ possible and is not required.
+ </para><para>
+ Conflicts are most likely to occur in response to a PUT request. For
+ example, if versioning were being used and the entity being PUT
+ included changes to a resource which conflict with those made by an
+ earlier (third-party) request, the server might use the 409 response
+ to indicate that it can't complete the request. In this case, the
+ response entity would likely contain a list of the differences
+ between the two versions in a format defined by the response
+ Content-Type.
+ </para></summary>
+</member>
+<member name="P:Suave.Http.request_timeout">
+ <summary><para>
+ 408
+ </para><para>
+ The client did not produce a request within the time that the server
+ was prepared to wait. The client MAY repeat the request without
+ modifications at any later time.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.NOT_ACCEPTABLE(System.String)">
+ <summary><para>
+ 406
+ </para><para>
+ The resource identified by the request is only capable of generating
+ response entities which have content characteristics not acceptable
+ according to the accept headers sent in the request.
+ </para><para>
+ Unless it was a HEAD request, the response SHOULD include an entity
+ containing a list of available entity characteristics and location(s)
+ from which the user or user agent can choose the one most
+ appropriate. The entity format is specified by the media type given
+ in the Content-Type header field. Depending upon the format and the
+ capabilities of the user agent, selection of the most appropriate
+ choice MAY be performed automatically. However, this specification
+ does not define any standard for such automatic selection.
+ </para><para>
+    Note: HTTP/1.1 servers are allowed to return responses which are
+    not acceptable according to the accept headers sent in the
+    request. In some cases, this may even be preferable to sending a
+    406 response. User agents are encouraged to inspect the headers of
+    an incoming response to determine if it is acceptable.
+ </para><para>
+ If the response could be unacceptable, a user agent SHOULD
+ temporarily stop receipt of more data and query the user for a
+ decision on further actions.
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.not_acceptable(System.Byte[])">
+ <summary><para>
+ 406
+ </para><para>
+ The resource identified by the request is only capable of generating
+ response entities which have content characteristics not acceptable
+ according to the accept headers sent in the request.
+ </para><para>
+ Unless it was a HEAD request, the response SHOULD include an entity
+ containing a list of available entity characteristics and location(s)
+ from which the user or user agent can choose the one most
+ appropriate. The entity format is specified by the media type given
+ in the Content-Type header field. Depending upon the format and the
+ capabilities of the user agent, selection of the most appropriate
+ choice MAY be performed automatically. However, this specification
+ does not define any standard for such automatic selection.
+ </para><para>
+    Note: HTTP/1.1 servers are allowed to return responses which are
+    not acceptable according to the accept headers sent in the
+    request. In some cases, this may even be preferable to sending a
+    406 response. User agents are encouraged to inspect the headers of
+    an incoming response to determine if it is acceptable.
+ </para><para>
+ If the response could be unacceptable, a user agent SHOULD
+ temporarily stop receipt of more data and query the user for a
+ decision on further actions.
+ </para><para>
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.METHOD_NOT_ALLOWED(System.String)">
+ <summary><para>
+ 405
+ </para><para>
+ The method specified in the Request-Line is not allowed for the
+ resource identified by the Request-URI. The response MUST include an
+ Allow header containing a list of valid methods for the requested
+ resource.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.method_not_allowed(System.Byte[])">
+ <summary><para>
+ 405
+ </para><para>
+ The method specified in the Request-Line is not allowed for the
+ resource identified by the Request-URI. The response MUST include an
+ Allow header containing a list of valid methods for the requested
+ resource.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.NOT_FOUND(System.String)">
+ <summary><para>
+ 404
+ </para><para>
+ Write the 'message' string to the body as UTF-8 encoded text, while
+ returning 404 Not Found to the response
+ </para><para>
+ The server has not found anything matching the Request-URI. No
+ indication is given of whether the condition is temporary or
+ permanent. The 410 (Gone) status code SHOULD be used if the server
+ knows, through some internally configurable mechanism, that an old
+ resource is permanently unavailable and has no forwarding address.
+ This status code is commonly used when the server does not wish to
+ reveal exactly why the request has been refused, or when no other
+ response is applicable.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.not_found(System.Byte[])">
+ <summary><para>
+ 404
+ </para><para>
+ Send a 404 Not Found with a byte array body specified by the 's' parameter.
+ </para><para>
+ The server has not found anything matching the Request-URI. No
+ indication is given of whether the condition is temporary or
+ permanent. The 410 (Gone) status code SHOULD be used if the server
+ knows, through some internally configurable mechanism, that an old
+ resource is permanently unavailable and has no forwarding address.
+ This status code is commonly used when the server does not wish to
+ reveal exactly why the request has been refused, or when no other
+ response is applicable.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.FORBIDDEN(System.String)">
+ <summary><para>
+ 403
+ </para><para>
+ The server understood the request, but is refusing to fulfill it.
+ Authorization will not help and the request SHOULD NOT be repeated.
+ If the request method was not HEAD and the server wishes to make
+ public why the request has not been fulfilled, it SHOULD describe the
+ reason for the refusal in the entity. If the server does not wish to
+ make this information available to the client, the status code 404
+ (Not Found) can be used instead.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.forbidden(System.Byte[])">
+ <summary><para>
+ 403
+ </para><para>
+ The server understood the request, but is refusing to fulfill it.
+ Authorization will not help and the request SHOULD NOT be repeated.
+ If the request method was not HEAD and the server wishes to make
+ public why the request has not been fulfilled, it SHOULD describe the
+ reason for the refusal in the entity. If the server does not wish to
+ make this information available to the client, the status code 404
+ (Not Found) can be used instead.
+ </para></summary>
+</member>
+<member name="P:Suave.Http.challenge">
+ <summary><para>
+ Composite:
+ </para><para>
+ HTTP/1.1 401 Unauthorized
+ </para><para>
+ WWW-Authenticate: Basic realm="protected"
+ </para><para>
+ A challenge response with a WWW-Authenticate header,
+ and 401 Authorization Required response message.
+ </para><para>
+ </para></summary>
+ <remarks>
+ Also see authenticate_basic and unauthorized
+ </remarks>
+</member>
+<member name="M:Suave.Http.UNAUTHORIZED(System.String)">
+ <summary><para>
+ 401
+ </para><para>
+ The request requires user authentication. The response MUST include a
+ WWW-Authenticate header field (section 14.47) containing a challenge
+ applicable to the requested resource. The client MAY repeat the
+ request with a suitable Authorization header field (section 14.8). If
+ the request already included Authorization credentials, then the 401
+ response indicates that authorization has been refused for those
+ credentials. If the 401 response contains the same challenge as the
+ prior response, and the user agent has already attempted
+ authentication at least once, then the user SHOULD be presented the
+ entity that was given in the response, since that entity might
+ include relevant diagnostic information. HTTP access authentication
+ is explained in "HTTP Authentication: Basic and Digest Access
+ Authentication" [43].
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.unauthorized(System.Byte[])">
+ <summary><para>
+ 401
+ </para><para>
+ The request requires user authentication. The response MUST include a
+ WWW-Authenticate header field (section 14.47) containing a challenge
+ applicable to the requested resource. The client MAY repeat the
+ request with a suitable Authorization header field (section 14.8). If
+ the request already included Authorization credentials, then the 401
+ response indicates that authorization has been refused for those
+ credentials. If the 401 response contains the same challenge as the
+ prior response, and the user agent has already attempted
+ authentication at least once, then the user SHOULD be presented the
+ entity that was given in the response, since that entity might
+ include relevant diagnostic information. HTTP access authentication
+ is explained in "HTTP Authentication: Basic and Digest Access
+ Authentication" [43].
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.BAD_REQUEST(System.String)">
+ <summary><para>
+ 400
+ </para><para>
+ The request could not be understood by the server due to malformed
+ syntax. The client SHOULD NOT repeat the request without
+ modifications.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.bad_request(System.Byte[])">
+ <summary><para>
+ 400
+ </para><para>
+ The request could not be understood by the server due to malformed
+ syntax. The client SHOULD NOT repeat the request without
+ modifications.
+ </para></summary>
+</member>
+<member name="P:Suave.Http.NOT_MODIFIED">
+ <summary><para>
+ If the client has performed a conditional GET request and access is
+ allowed, but the document has not been modified, the server SHOULD
+ respond with this status code. The 304 response MUST NOT contain a
+ message-body, and thus is always terminated by the first empty line
+ after the header fields.
+ </para><para>
+ The response MUST include the following header fields:
+ <list><item>
+   Date, unless its omission is required by section 14.18.1.
+   If a clockless origin server obeys these rules, and proxies and
+   clients add their own Date to any response received without one (as
+   already specified by [RFC 2068], section 14.19), caches will operate
+   correctly.
+ </item><item>
+   ETag and/or Content-Location, if the header would have been sent
+   in a 200 response to the same request
+ </item><item>
+   Expires, Cache-Control, and/or Vary, if the field-value might
+   differ from that sent in any previous response for the same
+   variant
+ </item></list>
+ </para><para>
+ If the conditional GET used a strong cache validator (see section
+ 13.3.3), the response SHOULD NOT include other entity-headers.
+ Otherwise (i.e., the conditional GET used a weak validator), the
+ response MUST NOT include other entity-headers; this prevents
+ inconsistencies between cached entity-bodies and updated headers.
+ </para><para>
+ If a 304 response indicates an entity not currently cached, then the
+ cache MUST disregard the response and repeat the request without the
+ conditional.
+ </para><para>
+ If a cache uses a received 304 response to update a cache entry, the
+ cache MUST update the entry to reflect any new field values given in
+ the response.
+ </para></summary>
+</member>
+<member name="P:Suave.Http.not_modified">
+ <summary><para>
+ If the client has performed a conditional GET request and access is
+ allowed, but the document has not been modified, the server SHOULD
+ respond with this status code. The 304 response MUST NOT contain a
+ message-body, and thus is always terminated by the first empty line
+ after the header fields.
+ </para><para>
+ The response MUST include the following header fields:
+ <list><item>
+   Date, unless its omission is required by section 14.18.1.
+   If a clockless origin server obeys these rules, and proxies and
+   clients add their own Date to any response received without one (as
+   already specified by [RFC 2068], section 14.19), caches will operate
+   correctly.
+ </item><item>
+   ETag and/or Content-Location, if the header would have been sent
+   in a 200 response to the same request
+ </item><item>
+   Expires, Cache-Control, and/or Vary, if the field-value might
+   differ from that sent in any previous response for the same
+   variant
+ </item></list>
+ </para><para>
+ If the conditional GET used a strong cache validator (see section
+ 13.3.3), the response SHOULD NOT include other entity-headers.
+ Otherwise (i.e., the conditional GET used a weak validator), the
+ response MUST NOT include other entity-headers; this prevents
+ inconsistencies between cached entity-bodies and updated headers.
+ </para><para>
+ If a 304 response indicates an entity not currently cached, then the
+ cache MUST disregard the response and repeat the request without the
+ conditional.
+ </para><para>
+ If a cache uses a received 304 response to update a cache entry, the
+ cache MUST update the entry to reflect any new field values given in
+ the response.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.redirect(System.String)">
+ <summary><para>
+ Composite:
+ </para><para>
+ HTTP/1.1 302 Found
+ </para><para>
+ Location: 'location'
+ </para><para>
+ Content-Type: text/html; charset=utf-8
+ </para><para>
+ &lt;html&gt;
+   &lt;body&gt;
+    &lt;a href=&quot;'location'&quot;&gt;Content Moved&lt;/a&gt;
+   &lt;/body&gt;
+ &lt;/html&gt;
+ </para><para>
+ Redirect the request to another location specified by the url parameter.
+ Sets the Location header and returns 302 Content Moved status-code/reason phrase.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.FOUND(System.String)">
+ <summary><para>
+ 302
+ </para><para>
+ The requested resource resides temporarily under a different URI.
+ Since the redirection might be altered on occasion, the client SHOULD
+ continue to use the Request-URI for future requests.  This response
+ is only cacheable if indicated by a Cache-Control or Expires header
+ field.
+ </para><para>
+ The temporary URI SHOULD be given by the Location field in the
+ response. Unless the request method was HEAD, the entity of the
+ response SHOULD contain a short hypertext note with a hyperlink to
+ the new URI(s).
+ </para><para>
+ If the 302 status code is received in response to a request other
+ than GET or HEAD, the user agent MUST NOT automatically redirect the
+ request unless it can be confirmed by the user, since this might
+ change the conditions under which the request was issued.
+ </para><para>
+ If the 302 status code is received in response to a request other
+ than GET or HEAD, the user agent MUST NOT automatically redirect the
+ request unless it can be confirmed by the user, since this might
+ change the conditions under which the request was issued.
+ </para></summary>
+ <remarks>
+    Note: RFC 1945 and RFC 2068 specify that the client is not allowed
+    to change the method on the redirected request.  However, most
+    existing user agent implementations treat 302 as if it were a 303
+    response, performing a GET on the Location field-value regardless
+    of the original request method. The status codes 303 and 307 have
+    been added for servers that wish to make unambiguously clear which
+    kind of reaction is expected of the client.
+ </remarks>
+</member>
+<member name="M:Suave.Http.found(System.String)">
+ <summary><para>
+ 302
+ </para><para>
+ The requested resource resides temporarily under a different URI.
+ Since the redirection might be altered on occasion, the client SHOULD
+ continue to use the Request-URI for future requests.  This response
+ is only cacheable if indicated by a Cache-Control or Expires header
+ field.
+ </para><para>
+ The temporary URI SHOULD be given by the Location field in the
+ response. Unless the request method was HEAD, the entity of the
+ response SHOULD contain a short hypertext note with a hyperlink to
+ the new URI(s).
+ </para><para>
+ If the 302 status code is received in response to a request other
+ than GET or HEAD, the user agent MUST NOT automatically redirect the
+ request unless it can be confirmed by the user, since this might
+ change the conditions under which the request was issued.
+ </para><para>
+ If the 302 status code is received in response to a request other
+ than GET or HEAD, the user agent MUST NOT automatically redirect the
+ request unless it can be confirmed by the user, since this might
+ change the conditions under which the request was issued.
+ </para></summary>
+ <remarks>
+    Note: RFC 1945 and RFC 2068 specify that the client is not allowed
+    to change the method on the redirected request.  However, most
+    existing user agent implementations treat 302 as if it were a 303
+    response, performing a GET on the Location field-value regardless
+    of the original request method. The status codes 303 and 307 have
+    been added for servers that wish to make unambiguously clear which
+    kind of reaction is expected of the client.
+ </remarks>
+</member>
+<member name="M:Suave.Http.MOVED_PERMANENTLY(System.String)">
+ <summary><para>
+ 301
+ </para><para>
+ The requested resource has been assigned a new permanent URI and any
+ future references to this resource SHOULD use one of the returned
+ URIs.  Clients with link editing capabilities ought to automatically
+ re-link references to the Request-URI to one or more of the new
+ references returned by the server, where possible. This response is
+ cacheable unless indicated otherwise.
+ </para><para>
+ The new permanent URI SHOULD be given by the Location field in the
+ response. Unless the request method was HEAD, the entity of the
+ response SHOULD contain a short hypertext note with a hyperlink to
+ the new URI(s).
+ </para><para>
+ If the 301 status code is received in response to a request other
+ than GET or HEAD, the user agent MUST NOT automatically redirect the
+ request unless it can be confirmed by the user, since this might
+ change the conditions under which the request was issued.
+ </para></summary>
+ <remarks>
+    Note: When automatically redirecting a POST request after
+    receiving a 301 status code, some existing HTTP/1.0 user agents
+    will erroneously change it into a GET request.
+ </remarks>
+</member>
+<member name="M:Suave.Http.moved_permanently(System.String)">
+ <summary><para>
+ 301
+ </para><para>
+ The requested resource has been assigned a new permanent URI and any
+ future references to this resource SHOULD use one of the returned
+ URIs.  Clients with link editing capabilities ought to automatically
+ re-link references to the Request-URI to one or more of the new
+ references returned by the server, where possible. This response is
+ cacheable unless indicated otherwise.
+ </para><para>
+ The new permanent URI SHOULD be given by the Location field in the
+ response. Unless the request method was HEAD, the entity of the
+ response SHOULD contain a short hypertext note with a hyperlink to
+ the new URI(s).
+ </para><para>
+ If the 301 status code is received in response to a request other
+ than GET or HEAD, the user agent MUST NOT automatically redirect the
+ request unless it can be confirmed by the user, since this might
+ change the conditions under which the request was issued.
+ </para></summary>
+ <remarks>
+    Note: When automatically redirecting a POST request after
+    receiving a 301 status code, some existing HTTP/1.0 user agents
+    will erroneously change it into a GET request.
+ </remarks>
+</member>
+<member name="P:Suave.Http.NO_CONTENT">
+ <summary><para>
+ 204
+ </para><para>
+ The server has fulfilled the request but does not need to return an
+ entity-body, and might want to return updated metainformation. The
+ response MAY include new or updated metainformation in the form of
+ entity-headers, which if present SHOULD be associated with the
+ requested variant.
+ </para><para>
+ If the client is a user agent, it SHOULD NOT change its document view
+ from that which caused the request to be sent. This response is
+ primarily intended to allow input for actions to take place without
+ causing a change to the user agent's active document view, although
+ any new or updated metainformation SHOULD be applied to the document
+ currently in the user agent's active view.
+ </para><para>
+ The 204 response MUST NOT include a message-body, and thus is always
+ terminated by the first empty line after the header fields.
+ </para></summary>
+</member>
+<member name="P:Suave.Http.no_content">
+ <summary><para>
+ 204
+ </para><para>
+ The server has fulfilled the request but does not need to return an
+ entity-body, and might want to return updated metainformation. The
+ response MAY include new or updated metainformation in the form of
+ entity-headers, which if present SHOULD be associated with the
+ requested variant.
+ </para><para>
+ If the client is a user agent, it SHOULD NOT change its document view
+ from that which caused the request to be sent. This response is
+ primarily intended to allow input for actions to take place without
+ causing a change to the user agent's active document view, although
+ any new or updated metainformation SHOULD be applied to the document
+ currently in the user agent's active view.
+ </para><para>
+ The 204 response MUST NOT include a message-body, and thus is always
+ terminated by the first empty line after the header fields.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.ACCEPTED(System.String)">
+ <summary><para>
+ 202
+ </para><para>
+ The request has been accepted for processing, but the processing has
+ not been completed. The request might or might not eventually be
+ acted upon, as it might be disallowed when processing actually takes
+ place. There is no facility for re-sending a status code from an
+ asynchronous operation such as this.
+ </para><para>
+ The 202 response is intentionally non-committal. Its purpose is to
+ allow a server to accept a request for some other process (perhaps a
+ batch-oriented process that is only run once per day) without
+ requiring that the user agent's connection to the server persist
+ until the process is completed. The entity returned with this
+ response SHOULD include an indication of the request's current status
+ and either a pointer to a status monitor or some estimate of when the
+ user can expect the request to be fulfilled.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.accepted(System.Byte[])">
+ <summary><para>
+ 202
+ </para><para>
+ The request has been accepted for processing, but the processing has
+ not been completed. The request might or might not eventually be
+ acted upon, as it might be disallowed when processing actually takes
+ place. There is no facility for re-sending a status code from an
+ asynchronous operation such as this.
+ </para><para>
+ The 202 response is intentionally non-committal. Its purpose is to
+ allow a server to accept a request for some other process (perhaps a
+ batch-oriented process that is only run once per day) without
+ requiring that the user agent's connection to the server persist
+ until the process is completed. The entity returned with this
+ response SHOULD include an indication of the request's current status
+ and either a pointer to a status monitor or some estimate of when the
+ user can expect the request to be fulfilled.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.CREATED(System.String)">
+ <summary><para>
+ 201
+ </para><para>
+ The request has been fulfilled and resulted in a new resource being
+ created. The newly created resource can be referenced by the URI(s)
+ returned in the entity of the response, with the most specific URI
+ for the resource given by a Location header field. The response
+ SHOULD include an entity containing a list of resource
+ characteristics and location(s) from which the user or user agent can
+ choose the one most appropriate. The entity format is specified by
+ the media type given in the Content-Type header field. The origin
+ server MUST create the resource before returning the 201 status code.
+ If the action cannot be carried out immediately, the server SHOULD
+ respond with 202 (Accepted) response instead.
+ </para><para>
+ A 201 response MAY contain an ETag response header field indicating
+ the current value of the entity tag for the requested variant just
+ created, see section 14.19.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.created(System.Byte[])">
+ <summary><para>
+ 201
+ </para><para>
+ Write the bytes to the body as a byte array
+ </para><para>
+ The request has been fulfilled and resulted in a new resource being
+ created. The newly created resource can be referenced by the URI(s)
+ returned in the entity of the response, with the most specific URI
+ for the resource given by a Location header field. The response
+ SHOULD include an entity containing a list of resource
+ characteristics and location(s) from which the user or user agent can
+ choose the one most appropriate. The entity format is specified by
+ the media type given in the Content-Type header field. The origin
+ server MUST create the resource before returning the 201 status code.
+ If the action cannot be carried out immediately, the server SHOULD
+ respond with 202 (Accepted) response instead.
+ </para><para>
+ A 201 response MAY contain an ETag response header field indicating
+ the current value of the entity tag for the requested variant just
+ created, see section 14.19.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.OK(System.String)">
+ <summary><para>
+ 200
+ </para><para>
+ Write the string to the body as UTF-8
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.ok(System.Byte[])">
+ <summary><para>
+ 200
+ </para><para>
+ Write the bytes to the body as a byte array
+ </para></summary>
+ <remarks>
+ </remarks>
+</member>
+<member name="M:Suave.Http.OPTIONS(Suave.Types.HttpRequest)">
+<summary>
+ Match on OPTIONS requests
+ The OPTIONS method represents a request for information about the communication
+ options available on the request/response chain identified by the Request-URI.
+ This method allows the client to determine the options and/or requirements associated
+ with a resource, or the capabilities of a server, without implying a resource
+ action or initiating a resource retrieval.
+ Responses to this method are not cacheable.
+</summary>
+</member>
+<member name="M:Suave.Http.TRACE(Suave.Types.HttpRequest)">
+ <summary><para>
+ Match on TRACE requests.
+ </para><para>
+ The TRACE method is used to invoke a remote, application-layer loop- back of the
+ request message. The final recipient of the request SHOULD reflect the message
+ received back to the client as the entity-body of a 200 (OK) response. The final
+ recipient is either the origin server or the first proxy or gateway to receive a
+ Max-Forwards value of zero (0) in the request (see section 14.31). A TRACE request
+ MUST NOT include an entity.
+ </para><para>
+ TRACE allows the client to see what is being received at the other end of the request
+ chain and use that data for testing or diagnostic information. The value of the Via
+ header field (section 14.45) is of particular interest, since it acts as a trace of
+ the request chain. Use of the Max-Forwards header field allows the client to limit
+ the length of the request chain, which is useful for testing a chain of proxies forwarding
+ messages in an infinite loop.
+ </para><para>
+ If the request is valid, the response SHOULD contain the entire request message in
+ the entity-body, with a Content-Type of "message/http". Responses to this method
+ MUST NOT be cached.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.PATCH(Suave.Types.HttpRequest)">
+ <summary><para>
+ Match on PATCH requests.
+ </para><para>
+ The PATCH method requests that a set of changes described in the
+ request entity be applied to the resource identified by the Request-
+ URI.  The set of changes is represented in a format called a "patch
+ document" identified by a media type.  If the Request-URI does not
+ point to an existing resource, the server MAY create a new resource,
+ depending on the patch document type (whether it can logically modify
+ a null resource) and permissions, etc.
+ </para><para>
+ The difference between the PUT and PATCH requests is reflected in the
+ way the server processes the enclosed entity to modify the resource
+ identified by the Request-URI.  In a PUT request, the enclosed entity
+ is considered to be a modified version of the resource stored on the
+ origin server, and the client is requesting that the stored version
+ be replaced.  With PATCH, however, the enclosed entity contains a set
+ of instructions describing how a resource currently residing on the
+ origin server should be modified to produce a new version.  The PATCH
+ method affects the resource identified by the Request-URI, and it
+ also MAY have side effects on other resources; i.e., new resources
+ may be created, or existing ones modified, by the application of a
+ PATCH.
+ </para></summary>
+ <remarks>From http://tools.ietf.org/html/rfc5789#page-2</remarks>
+</member>
+<member name="M:Suave.Http.CONNECT(Suave.Types.HttpRequest)">
+ <summary><para>
+ Match on CONNECT requests.
+ </para><para>
+ This specification (RFC 2616) reserves the method name CONNECT for use with a
+ proxy that can dynamically switch to being a tunnel (e.g. SSL tunneling [44]).
+ </para></summary>
+</member>
+<member name="M:Suave.Http.HEAD(Suave.Types.HttpRequest)">
+ <summary><para>
+ Match on HEAD requests.
+ </para><para>
+ The HEAD method is identical to GET except that the server MUST NOT return a message-body
+ in the response. The metainformation contained in the HTTP headers in response to a
+ HEAD request SHOULD be identical to the information sent in response to a GET request.
+ This method can be used for obtaining metainformation about the entity implied by the
+ request without transferring the entity-body itself. This method is often used for
+ testing hypertext links for validity, accessibility, and recent modification.
+ </para><para>
+ The response to a HEAD request MAY be cacheable in the sense that the information
+ contained in the response MAY be used to update a previously cached entity from that
+ resource. If the new field values indicate that the cached entity differs from the
+ current entity (as would be indicated by a change in Content-Length, Content-MD5,
+ ETag or Last-Modified), then the cache MUST treat the cache entry as stale.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.PUT(Suave.Types.HttpRequest)">
+ <summary><para>
+ Match on PUT requests
+ </para><para>
+ The PUT method requests that the enclosed entity be stored under the supplied
+ Request-URI. If the Request-URI refers to an already existing resource, the
+ enclosed entity SHOULD be considered as a modified version of the one residing
+ on the origin server. If the Request-URI does not point to an existing resource,
+ and that URI is capable of being defined as a new resource by the requesting user
+ agent, the origin server can create the resource with that URI. If a new resource
+ is created, the origin server MUST inform the user agent via the 201 (Created)
+ response. If an existing resource is modified, either the 200 (OK) or 204 (No Content)
+ response codes SHOULD be sent to indicate successful completion of the request. If
+ the resource could not be created or modified with the Request-URI, an appropriate
+ error response SHOULD be given that reflects the nature of the problem. The recipient
+ of the entity MUST NOT ignore any Content-* (e.g. Content-Range) headers that it does
+ not understand or implement and MUST return a 501 (Not Implemented) response in such cases.
+ </para><para>
+ If the request passes through a cache and the Request-URI identifies one or more
+ currently cached entities, those entries SHOULD be treated as stale. Responses to
+ this method are not cacheable.
+ </para><para>
+ The fundamental difference between the POST and PUT requests is reflected in the
+ different meaning of the Request-URI. The URI in a POST request identifies the
+ resource that will handle the enclosed entity. That resource might be a data-accepting
+ process, a gateway to some other protocol, or a separate entity that accepts annotations.
+ In contrast, the URI in a PUT request identifies the entity enclosed with the
+ request -- the user agent knows what URI is intended and the server MUST NOT attempt
+ to apply the request to some other resource. If the server desires that the request
+ be applied to a different URI, it MUST send a 301 (Moved Permanently) response;
+ the user agent MAY then make its own decision regarding whether or not to redirect
+ the request.
+ </para><para>
+ A single resource MAY be identified by many different URIs. For example, an article
+ might have a URI for identifying "the current version" which is separate from the URI
+ identifying each particular version. In this case, a PUT request on a general URI might
+ result in several other URIs being defined by the origin server.
+ </para><para>
+ PUT requests MUST obey the message transmission requirements set out in section 8.2.
+ </para><para>
+ HTTP/1.1 does not define how a PUT method affects the state of an origin server.
+ </para><para>
+ Unless otherwise specified for a particular entity-header, the entity-headers in the
+ PUT request SHOULD be applied to the resource created or modified by the PUT.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.DELETE(Suave.Types.HttpRequest)">
+ <summary><para>
+ Match on DELETE requests.
+ </para><para>
+ The DELETE method requests that the origin server delete the resource identified by
+ the Request-URI. This method MAY be overridden by human intervention (or other means)
+ on the origin server. The client cannot be guaranteed that the operation has been
+ carried out, even if the status code returned from the origin server indicates that
+ the action has been completed successfully. However, the server SHOULD NOT indicate
+ success unless, at the time the response is given, it intends to delete the resource
+ or move it to an inaccessible location.
+ </para><para>
+ A successful response SHOULD be 200 (OK) if the response includes an entity describing
+ the status, 202 (Accepted) if the action has not yet been enacted, or 204 (No Content)
+ if the action has been enacted but the response does not include an entity.
+ </para><para>
+ If the request passes through a cache and the Request-URI identifies one or more
+ currently cached entities, those entries SHOULD be treated as stale. Responses to this
+ method are not cacheable. 
+ </para>
+ </summary>
+</member>
+<member name="M:Suave.Http.POST(Suave.Types.HttpRequest)">
+ <summary>
+ <para>Match on POST requests.</para>
+ <para>
+ The POST method is used to request that the origin server accept the entity enclosed
+ in the request as a new subordinate of the resource identified by the Request-URI in
+ the Request-Line. POST is designed to allow a uniform method to cover the following
+ functions:
+ </para>
+ <list>
+ <item>Annotation of existing resources;</item>
+ <item>Posting a message to a bulletin board, newsgroup, mailing list, similar group
+ of articles;</item>
+ <item>Providing a block of data, such as the result of submitting a form, to a
+ data-handling process;</item>
+ <item>Extending a database through an append operation.</item>
+ </list>
+ <para>
+ The actual function performed by the POST method is determined by the server and is
+ usually dependent on the Request-URI. The posted entity is subordinate to that URI in
+ the same way that a file is subordinate to a directory containing it, a news article
+ is subordinate to a newsgroup to which it is posted, or a record is subordinate to a
+ database.
+ </para><para>
+ The action performed by the POST method might not result in a resource that can be
+ identified by a URI. In this case, either 200 (OK) or 204 (No Content) is the appropriate
+ response status, depending on whether or not the response includes an entity that
+ describes the result.
+ </para><para>
+ If a resource has been created on the origin server, the response SHOULD be 201 (Created)
+ and contain an entity which describes the status of the request and refers to the
+ new resource, and a Location header (see section 14.30).
+ </para><para>
+ Responses to this method are not cacheable, unless the response includes appropriate
+ Cache-Control or Expires header fields. However, the 303 (See Other) response can be
+ used to direct the user agent to retrieve a cacheable resource.
+ </para>
+ </summary>
+</member>
+<member name="M:Suave.Http.GET(Suave.Types.HttpRequest)">
+ <summary>
+ Match on GET requests.
+ <para>The GET method means retrieve whatever information (in the form of an entity) is
+ identified by the Request-URI. If the Request-URI refers to a data-producing process,
+ it is the produced data which shall be returned as the entity in the response and
+ not the source text of the process, unless that text happens to be the output of
+ the process.
+ </para><para>
+ The semantics of the GET method change to a "conditional GET" if the request
+ message includes an If-Modified-Since, If-Unmodified-Since, If-Match, If-None-Match,
+ or If-Range header field. A conditional GET method requests that the entity be
+ transferred only under the circumstances described by the conditional header field(s).
+ The conditional GET method is intended to reduce unnecessary network usage by
+ allowing cached entities to be refreshed without requiring multiple requests
+ or transferring data already held by the client.
+ </para></summary>
+</member>
+<member name="M:Suave.Http.url_regex(System.String,Suave.Types.HttpRequest)">
+<summary>
+ Applies the regex to the url and matchs on the result
+</summary>
+</member>
+<member name="M:Suave.Http.is_secure(Suave.Types.HttpRequest)">
+<summary>
+ Match on the protocol
+</summary>
+</member>
+<member name="M:Suave.Http.meth0d(System.String,Suave.Types.HttpRequest)">
+<summary>
+ Match on the method
+</summary>
+</member>
+<member name="M:Suave.Http.url(System.String,Suave.Types.HttpRequest)">
+<summary>
+ Match on the url
+</summary>
+</member>
+<member name="M:Suave.Http.set_cookie(System.String)">
+<summary>
+ Sets a cookie with the passed value in the &apos;cookie&apos; parameter
+</summary>
+</member>
+<member name="M:Suave.Http.set_header(System.String,System.String,Suave.Types.HttpRequest)">
+<summary>
+ Sets a header with the key and value specified
+</summary>
+</member>
+<member name="M:Suave.Http.response(System.Int32,System.String,System.Byte[],Suave.Types.HttpRequest)">
+<summary>
+ Respond with a given status code, http reason phrase, content in the body to a http request.
+</summary>
+</member>
+<member name="M:Suave.Http.response_f(System.Int32,System.String,Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit}},Suave.Types.HttpRequest)">
+<summary>
+ Respond with a given status code, http message, content in the body to a http request.
+</summary>
+</member>
+<member name="T:Suave.Http">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Log.ConsoleLogger">
+<summary>
+ Log a line with the given format, printing the current time in UTC ISO-8601 format
+ and then the string, like such:
+ &apos;2013-10-13T13:03:50.2950037Z: today is the day&apos;
+</summary>
+</member>
+<member name="M:Suave.Log.Logger.Log(Suave.Log.LogLevel,Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,Suave.Log.LogLine})">
+<summary>
+ log - evaluate the function if the log level matches
+</summary>
+</member>
+<member name="T:Suave.Log.Logger">
+<summary>
+ The primary Logger abstraction that you can log data into
+</summary>
+</member>
+<member name="F:Suave.Log.LogLine.exception">
+<summary>
+ an optional exception
+</summary>
+</member>
+<member name="F:Suave.Log.LogLine.message">
+<summary>
+ the message that the application wants to log
+</summary>
+</member>
+<member name="F:Suave.Log.LogLine.path">
+<summary>
+ the source of the log line
+</summary>
+</member>
+<member name="T:Suave.Log.LogLine">
+<summary>
+ When logging, write a log line like this with the source of your
+ log line as well as a message and an optional exception.
+</summary>
+</member>
+<member name="F:Suave.Log.LogLevel.Fatal">
+<summary>
+ The least verbose level. Will only pass through fatal
+ log lines that cause the application to crash or become
+ unusable.
+</summary>
+</member>
+<member name="F:Suave.Log.LogLevel.Error">
+<summary>
+ Less verbose than Warn, more verbose than Fatal
+</summary>
+</member>
+<member name="F:Suave.Log.LogLevel.Warn">
+<summary>
+ Less verbose than Info, more verbose than Error
+</summary>
+</member>
+<member name="F:Suave.Log.LogLevel.Info">
+<summary>
+ Less verbose than Debug, more verbose than Warn
+</summary>
+</member>
+<member name="F:Suave.Log.LogLevel.Debug">
+<summary>
+ Less verbose than Verbose, more verbose than Info
+</summary>
+</member>
+<member name="F:Suave.Log.LogLevel.Verbose">
+<summary>
+ The most verbose log level, more verbose than Debug.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Log">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.OpenSSL">
+
+</member>
+<member name="M:Suave.Proxy.proxy_server``1(Suave.Types.SuaveConfig,Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Core.FSharpOption{System.Tuple{``0,System.UInt16}}})">
+<summary>
+ Run a proxy server synchronously.
+</summary>
+</member>
+<member name="M:Suave.Proxy.proxy_server_async``1(Suave.Types.SuaveConfig,Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Core.FSharpOption{System.Tuple{``0,System.UInt16}}})">
+<summary>
+ Run a proxy server with the given configuration and given upstream/target
+ resolver.
+</summary>
+</member>
+<member name="M:Suave.Proxy.proxy``1(Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Core.FSharpOption{System.Tuple{``0,System.UInt16}}},Suave.Types.HttpRequest)">
+<summary>
+ Proxy the HttpRequest &apos;r&apos; with the proxy found with &apos;proxy_resolver&apos;
+</summary>
+</member>
+<member name="M:Suave.Proxy.forward(System.Net.IPAddress,System.UInt16,Suave.Types.HttpRequest)">
+<summary>
+ Forward the HttpRequest &apos;p&apos; to the &apos;ip&apos;:&apos;port&apos;
+</summary>
+</member>
+<member name="M:Suave.Proxy.send_web_response(System.Net.HttpWebResponse,Suave.Types.HttpRequest)">
+<summary>
+ Send the web response from HttpWebResponse to the HttpRequest &apos;p&apos;
+</summary>
+</member>
+<member name="M:Suave.Proxy.copy_response_headers(System.Net.WebHeaderCollection,System.Collections.Generic.List{System.Tuple{System.String,System.String}})">
+<summary>
+ Copies the headers from &apos;headers1&apos; to &apos;headers2&apos;
+</summary>
+</member>
+<member name="T:Suave.Proxy">
+<summary>
+ A module for proxying requests to another computer/ip/port
+</summary>
+</member>
+<member name="M:Suave.Session.session(Suave.Types.HttpRequest)">
+<summary>
+ Get the session from the HttpRequest -- WARNING, here be dragons; just a reference implementation
+</summary>
+</member>
+<member name="P:Suave.Session.session_map">
+<summary>
+ Static dictionary of sessions
+</summary>
+</member>
+<member name="M:Suave.Session.session_support(Suave.Types.HttpRequest)">
+<summary>
+ Cookie-based session support
+</summary>
+</member>
+<member name="T:Suave.Session">
+
+</member>
+<member name="F:Suave.Socket.Connection.shutdown">
+<summary>
+ The shutdown function
+</summary>
+</member>
+<member name="F:Suave.Socket.Connection.writer">
+<summary>
+ The writer function
+</summary>
+</member>
+<member name="F:Suave.Socket.Connection.reader">
+<summary>
+ The reader function
+</summary>
+</member>
+<member name="F:Suave.Socket.Connection.ipaddr">
+<summary>
+ IP Address connected to
+</summary>
+</member>
+<member name="T:Suave.Socket.Connection">
+<summary>
+ A connection (TCP implied) is a thing that can read and write from a socket
+ and that can be closed.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Suave.Socket.transfer_len_x(Suave.Socket.Connection,System.IO.Stream,System.Int32)">
+<summary>
+ Asynchronously write from the &apos;from&apos; stream to the &apos;to&apos; stream, with an upper bound on
+ amount to transfer by len
+</summary>
+</member>
+<member name="M:Suave.Socket.transfer_x(Suave.Socket.Connection,System.IO.Stream)">
+<summary>
+ Asynchronouslyo write from the &apos;from&apos; stream to the &apos;to&apos; stream.
+</summary>
+</member>
+<member name="M:Suave.Socket.async_writebytes(Suave.Socket.Connection,System.Byte[])">
+<summary>
+ Write the string s to the stream asynchronously
+ from a byte array
+</summary>
+</member>
+<member name="M:Suave.Socket.async_writeln(Suave.Socket.Connection,System.String)">
+<summary>
+ Write the string s to the stream asynchronously
+ as ASCII encoded text
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Suave.Socket.set_buffer(System.ArraySegment{System.Byte},System.Net.Sockets.SocketAsyncEventArgs)">
+<summary>
+ Prepares the arguments by setting the buffer.
+</summary>
+</member>
+<member name="M:Suave.Socket.async_do``1(Microsoft.FSharp.Core.FSharpFunc{System.Net.Sockets.SocketAsyncEventArgs,System.Boolean},Microsoft.FSharp.Core.FSharpFunc{System.Net.Sockets.SocketAsyncEventArgs,Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc{System.Net.Sockets.SocketAsyncEventArgs,``0},System.Net.Sockets.SocketAsyncEventArgs)">
+<summary>
+ Wraps the Socket.xxxAsync logic into F# async logic.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Socket">
+
+</member>
+<member name="M:Suave.Sscanf.sscanf``5(Microsoft.FSharp.Core.PrintfFormat{``0,``1,``2,``3,``4},System.String)">
+<summary>
+ Parse the format in &apos;pf&apos; from the string &apos;s&apos;, failing and raising an exception
+ otherwise
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:Suave.Sscanf.parsers">
+<summary>
+ The supported characters for the formatter
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:Suave.Sscanf.check(Microsoft.FSharp.Core.FSharpFunc{System.String,System.Boolean},System.String)">
+<summary>
+ Verify that f x, and then return x, otherwise fail witha &apos;format failure&apos; message
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Sscanf.BasicTesting">
+
+</member>
+<member name="T:Suave.Sscanf">
+
+</member>
+<member name="T:Suave.Tcp.TcpWorker`1">
+<summary>
+ A TCP Worker is a thing that takes a TCP client and returns an asynchronous workflow thereof
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Suave.Tcp.mirror(System.IO.Stream,System.IO.Stream)">
+<summary>
+ Mirror the stream byte-by-byte, one byte at a time
+</summary>
+</member>
+<member name="M:Suave.Tcp.stream(System.Net.Sockets.TcpClient)">
+<summary>
+ Get the stream from the TCP client
+</summary>
+</member>
+<member name="M:Suave.Tcp.tcp_ip_server(System.Net.IPAddress,System.UInt16,Microsoft.FSharp.Core.FSharpFunc{Suave.Socket.Connection,Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit}})">
+<summary>
+ Start a new TCP server with a specific IP, Port and with a serve_client worker
+ returning an async workflow whose result can be awaited (for when the tcp server has started
+ listening to its address/port combination), and an asynchronous workflow that
+ yields when the full server is cancelled. If the &apos;has started listening&apos; workflow
+ returns None, then the start timeout expired.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Suave.Tcp.stop_tcp(System.String,System.Net.Sockets.Socket)">
+<summary>
+ Stop the TCP listener server
+</summary>
+</member>
+<member name="M:Suave.Tcp.close(Suave.Socket.Connection)">
+<summary>
+ Close the TCP client by closing its stream and then closing the client itself
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="P:Suave.Tcp.MAX_BACK_LOG">
+<summary>
+ The max backlog of number of requests
+</summary>
+</member>
+<member name="T:Suave.Tcp">
+
+</member>
+<member name="F:Suave.Types.SuaveConfig.ct">
+<summary>
+ A cancellation token for the web server. Signalling this token
+ means that the web server shuts down
+</summary>
+</member>
+<member name="F:Suave.Types.SuaveConfig.listen_timeout">
+<summary>
+ Timeout to wait for the socket bind to finish
+</summary>
+</member>
+<member name="F:Suave.Types.SuaveConfig.web_part_timeout">
+<summary>
+ Timeout for responses to be generated from the web part/user code.
+</summary>
+</member>
+<member name="F:Suave.Types.SuaveConfig.error_handler">
+<summary>
+ An error handler to use for handling exceptions that are
+ are thrown from the web parts
+</summary>
+</member>
+<member name="F:Suave.Types.SuaveConfig.bindings">
+<summary>
+ The bindings for the web server to launch with
+</summary>
+</member>
+<member name="T:Suave.Types.SuaveConfig">
+<summary>
+ The core configuration of suave. See also Suave.Web.default_config which
+ you can use to bootstrap the configuration:
+ &lt;code&gt;{ default_config with bindings = [ ... ] }&lt;/code&gt;
+</summary>
+</member>
+<member name="T:Suave.Types.ErrorHandler">
+<summary>
+ An error handler takes the exception, a programmer-provided message, a request (that failed) and returns
+ an asynchronous workflow for the handling of the error.
+</summary>
+</member>
+<member name="T:Suave.Types.WebPart">
+<summary>
+ A web part is a thing that executes on a HttpRequest, asynchronously, maybe executing
+ on the request.
+</summary>
+</member>
+<member name="F:Suave.Types.HttpBinding.port">
+<summary>
+ The port for the binding
+</summary>
+</member>
+<member name="F:Suave.Types.HttpBinding.ip">
+<summary>
+ The host or IP address to bind to. This will be interpreted by the operating system
+</summary>
+</member>
+<member name="F:Suave.Types.HttpBinding.scheme">
+<summary>
+ The scheme in use
+</summary>
+</member>
+<member name="M:Suave.Types.HttpBinding.ToString">
+<summary>
+ Overrides the default ToString() method to provide an implementation that is assignable
+ to a BaseUri for a RestClient/HttpClient.
+</summary>
+</member>
+<member name="M:Suave.Types.HttpBinding.Create(Suave.Types.Protocol,System.String,System.Int32)">
+<summary>
+ Create a HttpBinding for the given protocol, an IP address to bind to and a port
+ to listen on.
+</summary>
+</member>
+<member name="T:Suave.Types.HttpBinding">
+<summary>
+ A HTTP binding is a protocol is the product of HTTP or HTTP, a DNS or IP binding and a port number
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Types.Protocol.HTTPS">
+<summary>
+ The HTTP protocol tunneled in a TLS tunnel
+</summary>
+</member>
+<member name="T:Suave.Types.Protocol.HTTP">
+<summary>
+ The HTTP protocol is the core protocol
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Types.Protocol">
+<summary>
+ Gets the supported protocols, HTTP and HTTPS with a certificate
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Types.HttpRequest">
+<summary>
+ A holder for the data extracted from the request.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Types.HttpUpload">
+<summary>
+ A holder for uploaded file meta-data
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Types.HttpResponse">
+<summary>
+ A holder for headers for the http response
+</summary>
+</member>
+<member name="M:Suave.Types.delete_files(Suave.Types.HttpRequest)">
+<summary>
+ Delete all HttpRequest files that were uploaded
+</summary>
+</member>
+<member name="M:Suave.Types.clear(Suave.Types.HttpRequest)">
+<summary>
+ Clear the request dictionaries for to reuse the request object instance.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Types.InternalFailure">
+<summary>
+ An exception, raised e.g. if writing to the stream fails
+</summary>
+</member>
+<member name="T:Suave.Types">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Suave.Utils.init_next``1(``0[])">
+<summary>
+ Knuth-Morris-Pratt algorithm
+ http://caml.inria.fr/pub/old_caml_site/Examples/oc/basics/kmp.ml
+</summary>
+</member>
+<member name="M:Suave.Utils.transfer(System.IO.Stream,System.IO.Stream)">
+<summary>
+ Asynchronously write from the &apos;from&apos; stream to the &apos;to&apos; stream.
+</summary>
+</member>
+<member name="M:Suave.Utils.transfer_len(System.IO.Stream,System.IO.Stream,System.Int32)">
+<summary>
+ Asynchronously write from the &apos;from&apos; stream to the &apos;to&apos; stream, with an upper bound on
+ amount to transfer by len
+</summary>
+</member>
+<member name="M:Suave.Utils.unblock``1(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,``0})">
+<summary>
+ Launch the function f on its own asynchronous/thread context
+ so that it doesn&apos;t block execution.
+</summary>
+</member>
+<member name="P:Suave.Utils.EOL">
+<summary>
+ The end-of-line &apos;literal&apos; as bytes, the \r\n (CRLF) byte pair
+</summary>
+</member>
+<member name="M:Suave.Utils.bytes_utf8(System.String)">
+<summary>
+ Get the UTF-8 bytes for the string
+</summary>
+</member>
+<member name="M:Suave.Utils.bytes(System.String)">
+<summary>
+ Get the ASCII bytes for the string
+</summary>
+</member>
+<member name="P:Suave.Utils.eol">
+<summary>
+ The end-of-line literal, \r\n (CRLF)
+</summary>
+</member>
+<member name="M:Suave.Utils.decode_base64(System.String)">
+<summary>
+ Decode the string containing Base64-encoded ASCII string data to
+ a .Net string
+</summary>
+</member>
+<member name="M:Suave.Utils.encode_base64(System.String)">
+<summary>
+ Encode the string as ASCII encoded in Base64.
+</summary>
+</member>
+<member name="M:Suave.Utils.read_fully(System.IO.Stream)">
+<summary>
+ Fully transform the input stream to a byte array.
+</summary>
+</member>
+<member name="M:Suave.Utils.cond``3(Microsoft.FSharp.Core.FSharpOption{``0},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``1,``2}},Microsoft.FSharp.Core.FSharpFunc{``1,``2},``1)">
+<summary>
+ The conditional function that applies f x a if there&apos;s a value in d,
+ or otherwise, applies g a, if there is no value in d.
+</summary>
+</member>
+<member name="M:Suave.Utils.cnst``2(``0,``1)">
+<summary>
+ The constant function, which returns its constant, no matter
+ its input.
+</summary>
+</member>
+<member name="M:Suave.Utils.opt``1(Microsoft.FSharp.Core.FSharpOption{``0})">
+<summary>
+ Force the evaluation of the option, so that if there is no value,
+ an InvalidOperationException is raised.
+</summary>
+</member>
+<member name="M:Suave.Utils.op_DynamicAssignment``1(System.Collections.Generic.IDictionary{System.String,``0},System.String,``0)">
+<summary>
+ Assign a value to the key in the dictionary
+</summary>
+</member>
+<member name="M:Suave.Utils.op_Dynamic``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
+<summary>
+ Try find a value by key in a dictionary
+</summary>
+</member>
+<member name="M:Suave.Utils.look_up``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
+<summary>
+ Try find a value by key in a dictionary
+</summary>
+</member>
+<member name="M:Suave.Utils.op_GreaterGreaterEqualsEquals``3(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpOption{``1}},Microsoft.FSharp.Core.FSharpFunc{``1,Microsoft.FSharp.Core.FSharpFunc{``1,Microsoft.FSharp.Core.FSharpOption{``2}}})">
+<summary>
+ Pipe the request through a bird that can peck at it.
+</summary>
+</member>
+<member name="M:Suave.Utils.warbler``2(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``0,``1}},``0)">
+<summary>
+ Pipe the request through a bird that can peck at it.
+</summary>
+</member>
+<member name="M:Suave.Utils.choose``2(Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpOption{``1}}},``0)">
+<summary>
+ Entry-point for composing the applicative routes of the http application,
+ by iterating the options, applying the context, arg, to the predicate
+ from the list of options, until there&apos;s a match/a Some(x) which can be
+ run.
+</summary>
+</member>
+<member name="M:Suave.Utils.op_GreaterGreaterEquals``3(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpOption{``1}},Microsoft.FSharp.Core.FSharpFunc{``1,Microsoft.FSharp.Core.FSharpOption{``2}},``0)">
+<summary>
+ Compose (bind) two arguments, &apos;a&apos; and &apos;b&apos;, so that the result of
+ the composition can be applied to an argument of &apos;a&apos; and then passed
+ to &apos;b&apos;, if &apos;a&apos; yields a value.
+</summary>
+</member>
+<member name="M:Suave.Utils.delay``1(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,``0})">
+<summary>
+ Delay the computation of f
+</summary>
+</member>
+<member name="M:Suave.Utils.bind``2">
+<summary>
+ bind f inp evaluates to match inp with None -&gt; None | Some x -&gt; f x
+ The same as Option.bind.
+</summary>
+</member>
+<member name="M:Suave.Utils.never``2(``0)">
+<summary>
+ Return failure with a value that is ignored
+</summary>
+</member>
+<member name="M:Suave.Utils.fail``1">
+<summary>
+ Return failure without any value
+</summary>
+</member>
+<member name="M:Suave.Utils.succeed``1(``0)">
+<summary>
+ Return success with some value
+</summary>
+</member>
+<member name="T:Suave.Utils">
+<summary>
+ A module for composing the applicatives.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Suave.Web.HttpProcessor">
+<summary>
+ A HttpProcessor takes a HttpRequest instance, returning asynchronously a HttpRequest that has been parsed
+</summary>
+</member>
+<member name="P:Suave.Web.default_config">
+<summary>
+ The default configuration binds on IPv4, 127.0.0.1:8083 with a regular 500 Internal Error handler,
+ with a timeout of one minute for computations to run. Waiting for 2 seconds for the socket bind
+ to succeed.
+</summary>
+</member>
+<member name="M:Suave.Web.web_server(Suave.Types.SuaveConfig,Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit}}})">
+<summary>
+ Runs the web server and blocks waiting for the asynchronous workflow to be cancelled or
+ it returning itself.
+</summary>
+</member>
+<member name="M:Suave.Web.web_server_async(Suave.Types.SuaveConfig,Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit}}})">
+<summary>
+ Returns the webserver as a tuple of 1) an async computation the yields unit when
+ the web server is ready to serve quests, and 2) an async computation that yields
+ when the web server is being shut down and is being terminated. The async values
+ returned are not &apos;hot&apos; in the sense that they have started running, so you must manually
+ start the &apos;server&apos; (second item in tuple), as this starts the TcpListener.
+ Have a look at the example and the unit tests for more documentation.
+ In other words: don&apos;t block on &apos;listening&apos; unless you have started the server.
+</summary>
+</member>
+<member name="M:Suave.Web.web_worker(Suave.Types.Protocol,System.Net.IPAddress,System.UInt16,Microsoft.FSharp.Core.FSharpFunc{System.Exception,Microsoft.FSharp.Core.FSharpFunc{System.String,Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit}}}},System.TimeSpan,Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit}}})">
+<summary>
+ Starts a new web worker, given the configuration and a web part to serve.
+</summary>
+</member>
+<member name="M:Suave.Web.default_error_handler(System.Exception,System.String,Suave.Types.HttpRequest)">
+<summary>
+ The default error handler returns a 500 Internal Error in response to
+ thrown exceptions.
+</summary>
+</member>
+<member name="M:Suave.Web.is_local_address(System.String)">
+<summary>
+ Gets whether the passed ip is a local IPv4 or IPv6 address.
+ Example: 127.0.0.1, ::1 return true. If the IP cannot be parsed,
+ returns false.
+</summary>
+</member>
+<member name="M:Suave.Web.parallelize``2(System.Collections.Generic.IEnumerable{``0},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Control.FSharpAsync{``1}})">
+<summary>
+ Parallelise the map of &apos;f&apos; onto all items in the &apos;input&apos; seq.
+</summary>
+</member>
+<member name="M:Suave.Web.request_loop(Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Core.FSharpFunc{System.ArraySegment{System.Byte},Microsoft.FSharp.Control.FSharpAsync{System.Tuple{Microsoft.FSharp.Core.FSharpOption{Suave.Types.HttpRequest},System.ArraySegment{System.Byte}}}}},Suave.Types.Protocol,Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit}}},System.TimeSpan,Microsoft.FSharp.Core.FSharpFunc{System.Exception,Microsoft.FSharp.Core.FSharpFunc{System.String,Microsoft.FSharp.Core.FSharpFunc{Suave.Types.HttpRequest,Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit}}}},Suave.Socket.Connection)">
+<summary>
+ The request loop initialises a request with a processor to handle the
+ incoming stream and possibly pass the request to the web parts, a protocol,
+ a web part, an error handler, a timeout value for executing the web part
+ in milliseconds and a Connection to use for read-write
+ communication -- getting the initial request stream.
+</summary>
+</member>
+<member name="M:Suave.Web.load_connection(Suave.Types.Protocol,Suave.Socket.Connection)">
+<summary>
+ Load a readable plain-text stream, based on the protocol in use. If plain HTTP
+ is being used, the stream is returned as it, otherwise a new SslStream is created
+ to decipher the stream, without client certificates.
+</summary>
+</member>
+<member name="M:Suave.Web.process_request(System.Boolean,Suave.Types.HttpRequest,System.ArraySegment{System.Byte})">
+<summary>
+ Process the request, reading as it goes from the incoming &apos;stream&apos;, yielding a HttpRequest
+ when done
+</summary>
+</member>
+<member name="M:Suave.Web.parse_multipart``1(Suave.Socket.Connection,System.String,Suave.Types.HttpRequest,System.ArraySegment{System.Byte})">
+<summary>
+ Parses multipart data from the stream, feeding it into the HttpRequest&apos;s property Files.
+</summary>
+</member>
+<member name="M:Suave.Web.header_params(Microsoft.FSharp.Core.FSharpOption{System.String})">
+<summary>
+ Parse the header parameters into key-value pairs, as a dictionary.
+ Fails if the header is a None.
+</summary>
+</member>
+<member name="M:Suave.Web.parse_key_value_pairs(System.String[])">
+<summary>
+ Parse a string array of key-value-pairs, combined using the equality character &apos;=&apos;
+ into a dictionary
+</summary>
+</member>
+<member name="M:Suave.Web.parse_cookie(System.String)">
+<summary>
+ Parse the cookie data in the string into a dictionary
+</summary>
+</member>
+<member name="M:Suave.Web.read_post_data(Suave.Socket.Connection,System.Int32,System.ArraySegment{System.Byte})">
+<summary>
+ Read the post data from the stream, given the number of bytes that makes up the post data.
+</summary>
+</member>
+<member name="M:Suave.Web.parse_url(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+<summary>
+ TO BE DONE
+</summary>
+</member>
+<member name="M:Suave.Web.parse_data(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+<summary>
+ Parse the data in the string to a dictionary, assuming k/v pairs are separated
+ by the ampersand character.
+</summary>
+</member>
+<member name="M:Suave.Web.form(Suave.Types.HttpRequest)">
+<summary>
+ Gets the form from the HttpRequest // TODO: Move to a module for HttpRequest
+</summary>
+</member>
+<member name="M:Suave.Web.query(Suave.Types.HttpRequest)">
+<summary>
+ Gets the query from the HttpRequest // TODO: Move to a module for HttpRequest
+</summary>
+</member>
+<member name="M:Suave.Web.empty_query_string">
+<summary>
+ Gets the empty query string dictionary
+</summary>
+</member>
+<member name="M:Suave.Web.read_headers(Suave.Socket.Connection,System.ArraySegment{System.Byte},System.Collections.Generic.Dictionary{System.String,System.String})">
+<summary>
+ Read all headers from the stream, returning a dictionary of the headers found
+</summary>
+</member>
+<member name="M:Suave.Web.read_line(Suave.Socket.Connection,System.ArraySegment{System.Byte})">
+<summary>
+ Read a line from the stream, calling to_string on the bytes before the EOL marker
+</summary>
+</member>
+<member name="P:Suave.Web.max_line_size">
+<summary>
+ The maximun line size we will read from the stream
+</summary>
+</member>
+<member name="M:Suave.Web.to_string(System.Byte[],System.Int32,System.Int32)">
+<summary>
+ Convert the byte array of ASCII-encoded chars to a string, starting at &apos;index&apos; for &apos;count&apos; characters
+ (each character is necessarily one byte)
+</summary>
+</member>
+<member name="M:Suave.Web._read_till_EOL(Suave.Socket.Connection,System.Byte[],System.ArraySegment{System.Byte})">
+<summary>
+ Alternative read_till_EOL
+</summary>
+</member>
+<member name="M:Suave.Web.read_until(System.Byte[],Microsoft.FSharp.Core.FSharpFunc{System.ArraySegment{System.Byte},Microsoft.FSharp.Core.FSharpFunc{System.Int32,Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit}}},Suave.Socket.Connection,System.ArraySegment{System.Byte},System.Int32)">
+<summary>
+ Read the stream until the marker appears.
+</summary>
+</member>
+<member name="M:Suave.Web.read_till_EOL``1(Suave.Socket.Connection,System.Byte[],System.ArraySegment{System.Byte},``0)">
+<summary>
+ Read the passed stream into buff until the EOL (CRLF) has been reached 
+ and returns an array containing excess data read past the marker
+</summary>
+</member>
+<member name="M:Suave.Web.scan_crlf(System.ArraySegment{System.Byte})">
+<summary>
+ Returns the index of the first CRLF in the buffer
+</summary>
+</member>
+<member name="P:Suave.Web.BIG_BUFFER_SIZE">
+<summary>
+ When parsing POST data and file uploads we will read from the stream in larger chunk sizes
+</summary>
+</member>
+<member name="P:Suave.Web.SHORT_BUFFER_SIZE">
+<summary>
+ Chunk sizes
+ When parsing headers and lines we will prefer reading from the stream in small chunk sizes
+</summary>
+</member>
+<member name="T:Suave.Web">
+
+</member>
+</members>
+</doc>

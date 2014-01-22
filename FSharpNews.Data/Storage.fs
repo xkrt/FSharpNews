@@ -108,11 +108,17 @@ let getTopActivities count =
     |> Seq.map mapFromDocument
     |> Seq.toList
 
-let getActivities (fromDateExclusive: DateTime) =
+let getAllActivities () =
+    activities.FindAll()
+    |> Seq.cast<BsonDocument>
+    |> Seq.map mapFromDocument
+    |> Seq.toList
+
+let getActivities (addedSinceExclusive: DateTime) =
     let cursor =
         activities
-            .Find(Query.GT("addedDate", BsonDateTime(fromDateExclusive)))
-            .SetSortOrder(SortBy.Descending("activity.creationDate"))
+            .Find(Query.GT("addedDate", BsonDateTime addedSinceExclusive))
+            .SetSortOrder(SortBy.Descending "activity.creationDate")
     cursor
     |> Seq.cast<BsonDocument>
     |> Seq.map mapFromDocument

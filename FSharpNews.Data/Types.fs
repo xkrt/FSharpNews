@@ -22,3 +22,4 @@ type Tweet = { Id: int64
 type Activity =
     | StackExchangeQuestion of StackExchangeQuestion
     | Tweet of Tweet
+    with override x.ToString() = sprintf "%A" x

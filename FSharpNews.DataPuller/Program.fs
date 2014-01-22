@@ -3,6 +3,7 @@ open System.Configuration
 open System.Threading
 open FSharpNews.Data
 open FSharpNews.Data.StackExchange
+open FSharpNews.Data.Twitter
 open FSharpNews.Utils
 
 do Logger.configure()
@@ -42,24 +43,39 @@ let private stackExchange config =
     let repeat = repeatForever (TimeSpan.FromMinutes(5.))
     repeat (fun () -> [Stackoverflow; Programmers] |> List.iter fetchNewQuestions)
 
-let private twitter =
-    async { Twitter.listenStream Storage.save }
+let private twitter config =
+    async { Twitter.listenStream config Storage.save }
 
-let buildConfigs argv =
-    let seApiKey = ConfigurationManager.AppSettings.["StackExchangeApiKey"]
-    let seApiUrl =
+let private buildConfigs argv =
+    let cfg = ConfigurationManager.AppSettings
+
+    let seApiKey = cfg.["StackExchangeApiKey"]
+    let twiConsumerKey = cfg.["TwitterConsumerKey"]
+    let twiConsumerSecret = cfg.["TwitterConsumerSecret"]
+    let twiAccessToken = cfg.["TwitterAccessToken"]
+    let twiAccessTokenSecret = cfg.["TwitterAccessTokenSecret"]
+
+    let seApiUrl, twiStreamApiUrl =
         match Array.toList argv with
-        | opt::stackExchangeUrl::[] when opt = "-test" -> stackExchangeUrl
-        | [] -> Configuration.ConfigurationManager.AppSettings.["StackExchangeApiUrl"]
+        | opt::stackExchangeUrl::twitterUrl::[] when opt = "-test" -> stackExchangeUrl, twitterUrl
+        | [] -> cfg.["StackExchangeApiUrl"],
+                cfg.["TwitterStreamingApiUrl"]
         | _ -> failwith "Wrong command line parameters"
-    { ApiKey=seApiKey
-      ApiUrl=seApiUrl }
+
+    let seConfig = { ApiKey = seApiKey
+                     ApiUrl = seApiUrl }
+    let twiConfig = { ConsumerKey = twiConsumerKey
+                      ConsumerSecret = twiConsumerSecret
+                      AccessToken = twiAccessToken
+                      AccessTokenSecret = twiAccessTokenSecret
+                      StreamApiUrl = twiStreamApiUrl }
+    seConfig, twiConfig
 
 [<EntryPoint>]
 let main argv =
     do log.Info "Started"
-    let seConfig = buildConfigs argv
-    [stackExchange seConfig; twitter]
+    let seConfig, twiConfig = buildConfigs argv
+    [stackExchange seConfig; twitter twiConfig]
     |> Async.Parallel
     |> Async.Ignore
     |> Async.Start

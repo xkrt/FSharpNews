@@ -1,4 +1,4 @@
-﻿module FSharpNews.Tests.Acceptance.DataPullerApp
+﻿module FSharpNews.Tests.DataPuller.DataPullerApp
 
 open System
 open System.Diagnostics
@@ -9,18 +9,13 @@ let private dataPullerExePath =
     IO.Path.GetFullPath(relPath)
 
 let private stop (proc: Process) =
-    do proc.StandardInput.Close()
-    let timeout = TimeSpan.FromSeconds(5.).TotalMilliseconds |> int
-    if proc.WaitForExit(timeout) = true
-    then if proc.ExitCode = 0
-            then ()
-            else failwithf "DataPuller exit with code %d" proc.ExitCode
-    else failwithf "DataPuller exit timeout"
+    do proc.CloseMainWindow() |> ignore
+    let exitTimeout = TimeSpan.FromSeconds(3.).TotalMilliseconds |> int
+    if proc.WaitForExit(exitTimeout) = false
+    then failwithf "DataPuller exit timeout"
 
 let start () =
-    let args = sprintf "-test http://%s:4141/StackExchange" Environment.machine
+    let args = ["-test"; FakeApi.seUrl; FakeApi.twitterUrl] |> String.concat " "
     let info = ProcessStartInfo(dataPullerExePath, args)
-    info.UseShellExecute <- false
-    info.RedirectStandardInput <- true
     let proc = Process.Start(info)
     { new IDisposable with member this.Dispose() = stop proc }

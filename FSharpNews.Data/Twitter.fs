@@ -8,21 +8,34 @@ open LinqToTwitter
 open FSharpNews.Data
 open FSharpNews.Utils
 
+// todo use language=en
+// todo use stall_warnings
+
 [<Literal>]
 let private targetHashtag = "#fsharp"
 
 let private log = Logger.create "Twitter"
 
-let private creds = SingleUserInMemoryCredentials()
-creds.ConsumerKey <- ConfigurationManager.AppSettings.["TwitterConsumerKey"]
-creds.ConsumerSecret <- ConfigurationManager.AppSettings.["TwitterConsumerSecret"]
-creds.TwitterAccessToken <- ConfigurationManager.AppSettings.["TwitterAccessToken"]
-creds.TwitterAccessTokenSecret <- ConfigurationManager.AppSettings.["TwitterAccessTokenSecret"]
+type Configuration = { ConsumerKey: string
+                       ConsumerSecret: string
+                       AccessToken: string
+                       AccessTokenSecret: string
+                       StreamApiUrl: string }
 
-let private authorizer = SingleUserAuthorizer()
-authorizer.Credentials <- creds
+let private createContext config =
+    let creds = SingleUserInMemoryCredentials()
+    creds.ConsumerKey <- config.ConsumerKey
+    creds.ConsumerSecret <- config.ConsumerSecret
+    creds.TwitterAccessToken <- config.AccessToken
+    creds.TwitterAccessTokenSecret <- config.AccessTokenSecret
+    
+    let authorizer = SingleUserAuthorizer()
+    authorizer.Credentials <- creds
 
-let private context = new TwitterContext(authorizer)
+    let context = new TwitterContext(authorizer)
+    context.StreamingUrl <- config.StreamApiUrl
+    context
+
 
 type private CommonMessage = JsonProvider<"DataSamples/Twitter/stream-message.json", SampleList=true>
 type private TweetMessage = JsonProvider<"DataSamples/Twitter/tweet.json", SampleList=true>
@@ -31,7 +44,7 @@ let private parseDate str =
     let dt = DateTime.ParseExact(str, "ddd MMM dd HH:mm:ss %K yyyy", CultureInfo.InvariantCulture.DateTimeFormat)
     dt.ToUniversalTime()
 
-let rec private processStream save (stream: StreamContent) =
+let rec private processStream config save (stream: StreamContent) =
     match stream.Status, stream.Content, stream.Error with
     | TwitterErrorStatus.Success, content, _ when content.IsNullOrWs() ->
         do log.Debug "Status=Success, blank message (keep-alive)"
@@ -49,14 +62,15 @@ let rec private processStream save (stream: StreamContent) =
             do save(activity, content)
         | _, Some disconnect ->
             do log.Debug "Status=Success, disconnect=%O. Reopening stream..." disconnect
-            listenStream save
+            listenStream config save
         | _ ->
             do log.Warn "Status=Success; Unknown message: %s" content
     | status, content, error ->
         do log.Debug "Status=%A; Error=%O; Content=%s" status error (content.IfNullOrWs("<none>"))
 
-and listenStream save =
+and listenStream config save =
+    let context = createContext config
     let q = query { for s in context.Streaming do
                     where (s.Type = StreamingType.Filter && s.Track = targetHashtag)
                     select (s) }
-    q.StreamingCallback(processStream save) |> Seq.head |> ignore
+    q.StreamingCallback(processStream config save) |> Seq.head |> ignore
