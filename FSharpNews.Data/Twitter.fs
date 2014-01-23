@@ -33,9 +33,8 @@ let private createContext config =
     authorizer.Credentials <- creds
 
     let context = new TwitterContext(authorizer)
-    context.StreamingUrl <- config.StreamApiUrl
+    context.StreamingUrl <- config.StreamApiUrl.EnsureEndsWith("/")
     context
-
 
 type private CommonMessage = JsonProvider<"DataSamples/Twitter/stream-message.json", SampleList=true>
 type private TweetMessage = JsonProvider<"DataSamples/Twitter/tweet.json", SampleList=true>
@@ -49,6 +48,7 @@ let rec private processStream config save (stream: StreamContent) =
     | TwitterErrorStatus.Success, content, _ when content.IsNullOrWs() ->
         do log.Debug "Status=Success, blank message (keep-alive)"
     | TwitterErrorStatus.Success, content, _ ->
+        let content = content.TrimEnd(char(0x00)) // need only for tests, for some strange reason content always pads with 0x00 to size 8192
         let msg = CommonMessage.Parse content
         match msg.Id, msg.Disconnect with
         | Some _, _ ->

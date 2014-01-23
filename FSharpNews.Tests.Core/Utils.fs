@@ -14,6 +14,6 @@ module Environment =
 [<AutoOpen>]
 module Utils =
     do Diagnostics.Debug.AutoFlush <- true
-    let dprintf fmt = Printf.ksprintf Diagnostics.Debug.Print fmt
+    let dprintfn fmt = Printf.ksprintf Diagnostics.Debug.Print fmt
 
     let sleep secs = Threading.Thread.Sleep(secs * 1000)

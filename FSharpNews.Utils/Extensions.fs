@@ -11,6 +11,11 @@ type System.String with
        then replacement
        else this
 
+    member this.EnsureEndsWith(suffix: string) =
+       if this.EndsWith(suffix)
+       then this
+       else this + suffix
+
 module DateTime =
     let private startEpoch = DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
 

@@ -55,10 +55,12 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="App.config" />
-    <Compile Include="FakeApi.fs" />
+    <Compile Include="FakeApis.fs" />
     <Compile Include="TestData.fs" />
     <Compile Include="DataPullerApp.fs" />
+    <Compile Include="SorageTests.fs" />
     <Compile Include="StackExchangeTests.fs" />
+    <Compile Include="TwitterTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FSharpNews.Data\FSharpNews.Data.fsproj">
