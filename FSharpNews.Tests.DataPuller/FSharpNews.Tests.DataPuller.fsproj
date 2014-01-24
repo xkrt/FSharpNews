@@ -25,6 +25,8 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Debug\FSharpNews.Tests.DataPuller.XML</DocumentationFile>
     <PlatformTarget>x86</PlatformTarget>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
