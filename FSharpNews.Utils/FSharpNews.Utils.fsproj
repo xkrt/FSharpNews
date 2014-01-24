@@ -52,9 +52,10 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="Logger.fs" />
     <Compile Include="Collections.fs" />
     <Compile Include="Extensions.fs" />
-    <Compile Include="Logger.fs" />
+    <Compile Include="Option.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="log4net">

@@ -15,11 +15,15 @@ type private ActivityType =
     | StackExchange = 0
     | Tweet = 1
 
-let private mongoUrl = ConfigurationManager.ConnectionStrings.["MongoDB"].ConnectionString |> MongoUrl.Create
+[<Literal>]
+let DuplicateKeyError = 11000
 
+let private mongoUrl = ConfigurationManager.ConnectionStrings.["MongoDB"].ConnectionString |> MongoUrl.Create
 let private client = new MongoClient(mongoUrl)
 let private db = client.GetServer().GetDatabase(mongoUrl.DatabaseName)
 let private activities = db.GetCollection("activities")
+do activities.EnsureIndex(IndexKeys.Ascending("activity.site").Ascending("activity.questionId"), IndexOptions.SetUnique(true).SetSparse(true))
+do activities.EnsureIndex(IndexKeys.Ascending("activity.tweetId"), IndexOptions.SetUnique(true).SetSparse(true))
 
 let private i32 value = BsonInt32 value
 let private i64 value = BsonInt64 value
@@ -72,19 +76,36 @@ let private mapFromDocument (document: BsonDocument) =
     let added = document.["addedDate"].ToUniversalTime()
     activity, added
 
+let safeUniq fn description =
+    try
+        fn() |> ignore
+    with
+    | :? WriteConcernException as e ->
+        match e.CommandResult.Code with
+        | Value code when code = DuplicateKeyError -> log.Warn "Duplicate key error while %s, error: %s" (description()) (e.ToString())
+        | _ -> reraise()
+
+let private safeInsert doc =
+    let fn = fun () -> activities.Insert doc
+    let desc = fun () -> sprintf "inserting document %O" doc
+    safeUniq fn desc
+
+let private safeInsertBatch (docs: BsonDocument list) =
+    let fn = fun () -> activities.InsertBatch docs
+    let desc = fun () -> sprintf "inserting documents %A" (docs |> List.map (sprintf "%O"))
+    safeUniq fn desc
+
 let save (activity: Activity, raw: string) =
     (activity, raw)
     |> mapToDocument
-    |> activities.Insert
-    |> ignore
+    |> safeInsert
 
 let saveAll (activitiesWithRaws: (Activity*string) list) =
     match activitiesWithRaws with
     | [] -> ()
     | activitiesToSave -> activitiesToSave
                           |> List.map mapToDocument
-                          |> activities.InsertBatch
-                          |> ignore
+                          |> safeInsertBatch
 
 let getTimeOfLastQuestion (site: StackExchangeSite) =
     let quest = activities.Find(Query.And([ Query.EQ("descriminator", i32 (int ActivityType.StackExchange))

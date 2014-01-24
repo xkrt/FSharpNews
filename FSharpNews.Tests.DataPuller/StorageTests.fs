@@ -102,7 +102,7 @@ let ``getActivitiesAddedSince returns activities since exclusive date ordered by
     let oldT = { tweet with Text = "Old"; Id = 1L } |> saveWithAdded (since.AddDays(-2.))
     let sinceT = { tweet with Text = "Since"; Id = 2L } |> saveWithAdded since
     let newerT = { tweet with Text = "Little bit newer"; CreationDate = utcnow(); Id = 3L } |> saveWithAdded (since.AddMilliseconds(1.))
-    let newT = { tweet with Text = "New"; CreationDate = utcnow().AddDays(-1.); Id = 3L } |> saveWithAdded (since.AddDays(1.))
+    let newT = { tweet with Text = "New"; CreationDate = utcnow().AddDays(-1.); Id = 4L } |> saveWithAdded (since.AddDays(1.))
 
     Storage.getActivitiesAddedSince since
     |> List.map fst
@@ -110,10 +110,10 @@ let ``getActivitiesAddedSince returns activities since exclusive date ordered by
 
 [<Test>]
 let ``getTimeOfLastQuestion returns creation time of last question on specific site``() =
-    let oldSo = { soquest with CreationDate = utcnow().AddDays(-1.) }
-    let newSo = { soquest with CreationDate = utcnow() }
-    let oldProg = { progquest with CreationDate = utcnow().AddDays(-1.) }
-    let newProg = { progquest with CreationDate = utcnow() }
+    let oldSo = { soquest with Id=1; CreationDate = utcnow().AddDays(-1.) }
+    let newSo = { soquest with Id=2; CreationDate = utcnow() }
+    let oldProg = { progquest with Id=1; CreationDate = utcnow().AddDays(-1.) }
+    let newProg = { progquest with Id=2; CreationDate = utcnow() }
 
     [oldSo; newSo; oldProg; newProg]
     |> List.map StackExchangeQuestion
@@ -122,3 +122,38 @@ let ``getTimeOfLastQuestion returns creation time of last question on specific s
 
     Storage.getTimeOfLastQuestion Stackoverflow |> assertEqual newSo.CreationDate
     Storage.getTimeOfLastQuestion Programmers |> assertEqual newProg.CreationDate
+
+[<Test>]
+let ``tweets should be unique``() =
+    tweetA |> withEmptyRaw |> Storage.save
+    tweetA |> withEmptyRaw |> Storage.save
+
+    match Storage.getAllActivities() with
+    | (tweet,_)::[] -> tweet |> assertEqual tweetA
+    | x -> failwithf "Expected: %A\r\nBut was: %A" tweetA x
+
+[<Test>]
+let ``stackexchange questions should be unique``() =
+    let id = 42
+    let so = { soquest with Id=id }
+    let prog = { progquest with Id=id }
+
+    [so; prog; so; prog]
+    |> List.map StackExchangeQuestion
+    |> List.map withEmptyRaw
+    |> List.iter Storage.save
+
+    match Storage.getAllActivities() with
+    | (StackExchangeQuestion q1,_)::(StackExchangeQuestion q2,_)::[] -> [q1; q2] |> Collection.assertEquiv [so; prog]
+    | x -> failwithf "Expected: %A\r\nBut was: %A" [so; prog] x
+
+[<Test>]
+let ``saveAll do not raise duplicate key exception``() =
+    [tweetA; tweetA]
+    |> List.map withEmptyRaw
+    |> Storage.saveAll
+
+    Storage.getAllActivities()
+    |> List.map fst
+    |> List.exactlyOne
+    |> assertEqual tweetA
