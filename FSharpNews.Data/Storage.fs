@@ -97,7 +97,7 @@ let getTimeOfLastQuestion (site: StackExchangeSite) =
     | Some (StackExchangeQuestion quest, _) -> quest.CreationDate
     | _ -> DateTime(2014, 1, 1, 0, 0, 0, DateTimeKind.Utc)
 
-let getTopActivities count =
+let getTopActivitiesByCreation count =
     let cursor =
         activities
             .FindAll()
@@ -114,10 +114,10 @@ let getAllActivities () =
     |> Seq.map mapFromDocument
     |> Seq.toList
 
-let getActivities (addedSinceExclusive: DateTime) =
+let getActivitiesAddedSince (dtExclusive: DateTime) =
     let cursor =
         activities
-            .Find(Query.GT("addedDate", BsonDateTime addedSinceExclusive))
+            .Find(Query.GT("addedDate", BsonDateTime dtExclusive))
             .SetSortOrder(SortBy.Descending "activity.creationDate")
     cursor
     |> Seq.cast<BsonDocument>

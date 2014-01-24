@@ -58,7 +58,7 @@
     <Compile Include="FakeApis.fs" />
     <Compile Include="TestData.fs" />
     <Compile Include="DataPullerApp.fs" />
-    <Compile Include="SorageTests.fs" />
+    <Compile Include="StorageTests.fs" />
     <Compile Include="StackExchangeTests.fs" />
     <Compile Include="TwitterTests.fs" />
   </ItemGroup>
@@ -76,6 +76,14 @@
     <Reference Include="ManagedOpenSsl">
       <HintPath>..\libs\Suave\ManagedOpenSsl.dll</HintPath>
     </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
@@ -88,6 +96,7 @@
       <HintPath>..\libs\Suave\suave.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <ProjectReference Include="..\FSharpNews.Tests.Core\FSharpNews.Tests.Core.fsproj">

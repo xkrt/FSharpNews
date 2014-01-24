@@ -1,6 +1,7 @@
 ﻿[<AutoOpen>]
 module FSharpNews.Tests.Core.TypedAssertions
 
+open System
 open NUnit.Framework
 
 // taken from ExtCore.Tests
@@ -8,6 +9,9 @@ open NUnit.Framework
 /// Asserts that two values are equal.
 let inline assertEqual<'T when 'T : equality> (expected : 'T) (actual : 'T) =
     Assert.AreEqual (expected, actual)
+
+let assertEqualDateWithin (expected : DateTime) (within : TimeSpan) (actual : DateTime) =
+    Assert.That(actual, Is.EqualTo(expected).Within(within))
 
 
 /// Assertion functions for collections.

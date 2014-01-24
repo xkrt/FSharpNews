@@ -10,6 +10,7 @@ open FSharpNews.Utils
 
 // todo use language=en
 // todo use stall_warnings
+// todo use gzip
 
 [<Literal>]
 let private targetHashtag = "#fsharp"

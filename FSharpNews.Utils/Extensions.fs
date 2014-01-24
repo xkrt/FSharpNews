@@ -3,7 +3,7 @@ module FSharpNews.Utils.Extensions
 
 open System
 
-type System.String with
+type String with
     member this.IsNullOrWs() = String.IsNullOrWhiteSpace(this)
 
     member this.IfNullOrWs(replacement: string) =
@@ -15,6 +15,9 @@ type System.String with
        if this.EndsWith(suffix)
        then this
        else this + suffix
+
+type DateTime with
+    member this.Truncate(timeSpan: TimeSpan) = this.AddTicks -(this.Ticks % timeSpan.Ticks)
 
 module DateTime =
     let private startEpoch = DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
