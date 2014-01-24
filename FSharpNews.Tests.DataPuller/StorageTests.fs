@@ -124,6 +124,17 @@ let ``getTimeOfLastQuestion returns creation time of last question on specific s
     Storage.getTimeOfLastQuestion Programmers |> assertEqual newProg.CreationDate
 
 [<Test>]
+let ``saveAll do not raise duplicate key exception``() =
+    [tweetA; tweetA]
+    |> List.map withEmptyRaw
+    |> Storage.saveAll
+
+    Storage.getAllActivities()
+    |> List.map fst
+    |> List.exactlyOne
+    |> assertEqual tweetA
+
+[<Test>]
 let ``tweets should be unique``() =
     tweetA |> withEmptyRaw |> Storage.save
     tweetA |> withEmptyRaw |> Storage.save
@@ -147,13 +158,6 @@ let ``stackexchange questions should be unique``() =
     | (StackExchangeQuestion q1,_)::(StackExchangeQuestion q2,_)::[] -> [q1; q2] |> Collection.assertEquiv [so; prog]
     | x -> failwithf "Expected: %A\r\nBut was: %A" [so; prog] x
 
-[<Test>]
-let ``saveAll do not raise duplicate key exception``() =
-    [tweetA; tweetA]
-    |> List.map withEmptyRaw
-    |> Storage.saveAll
+// todo test unique packages
 
-    Storage.getAllActivities()
-    |> List.map fst
-    |> List.exactlyOne
-    |> assertEqual tweetA
+

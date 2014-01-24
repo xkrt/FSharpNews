@@ -22,30 +22,6 @@ let private waitForCancel () =
         event.Set() |> ignore)
     event.WaitOne() |> ignore
 
-let private repeatForever (interval: TimeSpan) fn =
-    async {
-        let rec loop () =
-            try fn()
-            with
-            | e -> do log.Error "%O" e
-            Thread.Sleep(interval)
-            loop()
-        loop()
-    }
-
-let private stackExchange config =
-    let fetchNewQuestions site =
-        let lastQuestionTime = Storage.getTimeOfLastQuestion site
-        let startDate = lastQuestionTime.AddSeconds(1.)
-        let activitiesWithRaws = StackExchange.fetch config site startDate
-        do log.Info "Fetched questions for %A: %d" site activitiesWithRaws.Length
-        do Storage.saveAll activitiesWithRaws
-    let repeat = repeatForever (TimeSpan.FromMinutes(5.))
-    repeat (fun () -> [Stackoverflow; Programmers] |> List.iter fetchNewQuestions)
-
-let private twitter config =
-    async { Twitter.listenStream config Storage.save }
-
 let private buildConfigs argv =
     let cfg = ConfigurationManager.AppSettings
 
@@ -71,11 +47,43 @@ let private buildConfigs argv =
                       StreamApiUrl = twiStreamApiUrl }
     seConfig, twiConfig
 
+let private repeatForever (interval: TimeSpan) fn =
+    async {
+        let rec loop () =
+            try fn()
+            with
+            | e -> do log.Error "%O" e
+            Thread.Sleep(interval)
+            loop()
+        loop()
+    }
+
+let private stackExchange config =
+    let fetchNewQuestions site =
+        let lastQuestionTime = Storage.getTimeOfLastQuestion site
+        let startDate = lastQuestionTime.AddSeconds(1.)
+        let activitiesWithRaws = StackExchange.fetch config site startDate
+        do log.Info "Fetched questions for %A: %d" site activitiesWithRaws.Length // todo move to module
+        do Storage.saveAll activitiesWithRaws
+    let repeat = repeatForever (TimeSpan.FromMinutes(5.))
+    repeat (fun () -> [Stackoverflow; Programmers] |> List.iter fetchNewQuestions)
+
+let private twitter config =
+    async { Twitter.listenStream config Storage.save }
+
+let private nuget () =
+    let fetchNewPackages () =
+        let lastPackagePublishedDate = Storage.getTimeOfLastPackage()
+        let pkgsWithRaw = NuGet.fetch lastPackagePublishedDate
+        do log.Info "Fetched packages: %d" pkgsWithRaw.Length              // todo move to module
+        do Storage.saveAll pkgsWithRaw
+    repeatForever (TimeSpan.FromMinutes(5.)) fetchNewPackages
+
 [<EntryPoint>]
 let main argv =
     do log.Info "Started"
     let seConfig, twiConfig = buildConfigs argv
-    [stackExchange seConfig; twitter twiConfig]
+    [stackExchange seConfig; twitter twiConfig; nuget()]
     |> Async.Parallel
     |> Async.Ignore
     |> Async.Start

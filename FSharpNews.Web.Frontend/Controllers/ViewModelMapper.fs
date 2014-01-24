@@ -33,3 +33,11 @@ type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: st
                 url = sprintf "https://twitter.com/%s/status/%d" t.UserScreenName t.Id,
                 creationDateUnix = DateTime.toUnix t.CreationDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
+        | NugetPackage p ->
+            ActivityViewModel(
+                iconUrl = "https://www.nuget.org/favicon.ico",
+                iconTitle = "NuGet",
+                text = sprintf "%s %s published" p.Id p.Version,
+                url = p.Url,
+                creationDateUnix = DateTime.toUnix p.PublishedDate,
+                addedDateUnixOffset = DateTime.toUnixOffset added)

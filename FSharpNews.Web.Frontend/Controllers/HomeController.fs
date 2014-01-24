@@ -10,7 +10,7 @@ type HomeController() =
 
     member this.Index () =
         let json =
-            Storage.getTopActivities 100
+            Storage.getTopActivitiesByCreation 100
             |> Seq.map ActivityViewModel.Create
             |> JsonConvert.SerializeObject
         this.View(json :> obj)

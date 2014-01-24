@@ -53,10 +53,12 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="App.config" />
     <Compile Include="Types.fs" />
     <Compile Include="Storage.fs" />
     <Compile Include="StackExchange.fs" />
     <Compile Include="Twitter.fs" />
+    <Compile Include="NuGet.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">
@@ -67,6 +69,7 @@
       <HintPath>..\packages\FSharp.Data.1.1.10\lib\net40\FSharp.Data.DesignTime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FSharp.Data.TypeProviders, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="HttpClient">
       <HintPath>..\packages\Http.fs.0.8.1.0\lib\net40\HttpClient.dll</HintPath>
       <Private>True</Private>
@@ -90,6 +93,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Numerics" />
     <ProjectReference Include="..\FSharpNews.Utils\FSharpNews.Utils.fsproj">
       <Name>FSharpNews.Utils</Name>

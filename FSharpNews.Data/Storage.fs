@@ -14,6 +14,7 @@ let private log = Logger.create "Storage"
 type private ActivityType =
     | StackExchange = 0
     | Tweet = 1
+    | NugetPackage = 2
 
 [<Literal>]
 let DuplicateKeyError = 11000
@@ -24,6 +25,7 @@ let private db = client.GetServer().GetDatabase(mongoUrl.DatabaseName)
 let private activities = db.GetCollection("activities")
 do activities.EnsureIndex(IndexKeys.Ascending("activity.site").Ascending("activity.questionId"), IndexOptions.SetUnique(true).SetSparse(true))
 do activities.EnsureIndex(IndexKeys.Ascending("activity.tweetId"), IndexOptions.SetUnique(true).SetSparse(true))
+// todo add unique index for packages
 
 let private i32 value = BsonInt32 value
 let private i64 value = BsonInt64 value
@@ -42,14 +44,19 @@ let private mapToDocument (activity, raw) =
                                                     el "title" (str q.Title)
                                                     el "userDisplayName" (str q.UserDisplayName)
                                                     el "url" (str q.Url)
-                                                    el "creationDate" (date q.CreationDate) ]
+                                                    el "date" (date q.CreationDate) ]
                                      , i32 (int ActivityType.StackExchange)
         | Tweet t -> BsonDocument [ el "tweetId" (i64 t.Id)
                                     el "text" (str t.Text)
                                     el "userId" (i64 t.UserId)
                                     el "userScreenName" (str t.UserScreenName)
-                                    el "creationDate" (date t.CreationDate) ]
+                                    el "date" (date t.CreationDate) ]
                      , i32 (int ActivityType.Tweet)
+        | NugetPackage p -> BsonDocument [ el "packageId" (str p.Id)
+                                           el "version" (str p.Version)
+                                           el "url" (str p.Url)
+                                           el "date" (date p.PublishedDate) ]
+                            , i32 (int ActivityType.NugetPackage)
     let rawDoc = BsonValue.Create(raw)
     BsonDocument [ el "descriminator" descriminator
                    el "activity" activityDoc
@@ -66,12 +73,16 @@ let private mapFromDocument (document: BsonDocument) =
                                           Title = adoc.["title"].AsString
                                           UserDisplayName = adoc.["userDisplayName"].AsString
                                           Url = adoc.["url"].AsString
-                                          CreationDate = adoc.["creationDate"].ToUniversalTime() } |> StackExchangeQuestion
+                                          CreationDate = adoc.["date"].ToUniversalTime() } |> StackExchangeQuestion
         | ActivityType.Tweet -> { Id = adoc.["tweetId"].AsInt64
                                   Text = adoc.["text"].AsString
                                   UserId = adoc.["userId"].AsInt64
                                   UserScreenName = adoc.["userScreenName"].AsString
-                                  CreationDate = adoc.["creationDate"].ToUniversalTime() } |> Tweet
+                                  CreationDate = adoc.["date"].ToUniversalTime() } |> Tweet
+        | ActivityType.NugetPackage -> { Id = adoc.["packageId"].AsString
+                                         Version = adoc.["version"].AsString
+                                         Url = adoc.["url"].AsString
+                                         PublishedDate = adoc.["date"].ToUniversalTime() } |> NugetPackage
         | t -> failwithf "Mapping for %A is not implemented" t
     let added = document.["addedDate"].ToUniversalTime()
     activity, added
@@ -110,7 +121,7 @@ let saveAll (activitiesWithRaws: (Activity*string) list) =
 let getTimeOfLastQuestion (site: StackExchangeSite) =
     let quest = activities.Find(Query.And([ Query.EQ("descriminator", i32 (int ActivityType.StackExchange))
                                             Query.EQ("activity.site", siteToBson site) ]))
-                         .SetSortOrder(SortBy.Descending("activity.creationDate"))
+                         .SetSortOrder(SortBy.Descending("activity.date"))
                          .SetLimit(1)
                 |> Seq.map mapFromDocument
                 |> Seq.tryHead
@@ -118,12 +129,21 @@ let getTimeOfLastQuestion (site: StackExchangeSite) =
     | Some (StackExchangeQuestion quest, _) -> quest.CreationDate
     | _ -> DateTime(2014, 1, 1, 0, 0, 0, DateTimeKind.Utc)
 
+let getTimeOfLastPackage () =
+    let pkg = activities.Find(Query.EQ("descriminator", i32 (int ActivityType.NugetPackage)))
+                        .SetSortOrder(SortBy.Descending("activity.date"))
+                        .SetLimit(1)
+              |> Seq.map mapFromDocument
+              |> Seq.tryHead
+    match pkg with
+    | Some (NugetPackage pkg, _) -> pkg.PublishedDate
+    | _ -> DateTime(2014, 1, 1, 0, 0, 0, DateTimeKind.Utc) // todo extract to var
+
 let getTopActivitiesByCreation count =
-    let cursor =
-        activities
-            .FindAll()
-            .SetSortOrder(SortBy.Descending("activity.creationDate"))
-            .SetLimit(count)
+    let cursor = activities
+                    .FindAll()
+                    .SetSortOrder(SortBy.Descending("activity.date"))
+                    .SetLimit(count)
     cursor
     |> Seq.cast<BsonDocument>
     |> Seq.map mapFromDocument
@@ -139,7 +159,7 @@ let getActivitiesAddedSince (dtExclusive: DateTime) =
     let cursor =
         activities
             .Find(Query.GT("addedDate", BsonDateTime dtExclusive))
-            .SetSortOrder(SortBy.Descending "activity.creationDate")
+            .SetSortOrder(SortBy.Descending "activity.date")
     cursor
     |> Seq.cast<BsonDocument>
     |> Seq.map mapFromDocument

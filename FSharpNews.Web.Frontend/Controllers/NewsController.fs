@@ -10,6 +10,8 @@ type NewsController() =
 
     member this.Get(addedFromDate: int64) : IHttpActionResult =
         let activityViewModels =
-            Storage.getActivities (DateTime.unixOffsetToUtcDate addedFromDate)
+            addedFromDate
+            |> DateTime.unixOffsetToUtcDate
+            |> Storage.getActivitiesAddedSince
             |> Seq.map ActivityViewModel.Create
         this.Json(activityViewModels) :> _
