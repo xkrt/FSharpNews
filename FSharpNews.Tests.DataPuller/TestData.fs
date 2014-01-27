@@ -92,7 +92,6 @@ module StackExchange =
                                 Url = "http://programmers.stackexchange.com/questions/218779/is-there-a-way-to-created-nested-computation-expressions"
                                 CreationDate = DateTime.unixToUtcDate 1384788003 }
 
-
 module Twitter =
     let json = toLine """{
   "created_at": "Wed Jan 22 14:34:07 +0000 2014",
@@ -178,3 +177,75 @@ module Twitter =
                 UserId = 404119861L
                 UserScreenName = "OweinReese"
                 CreationDate = DateTime(2014, 1, 22, 14, 34, 7, DateTimeKind.Utc) }
+
+module NuGet =
+    let emptyXml = """<?xml version="1.0" encoding="utf-8"?>
+<feed xml:base="https://www.nuget.org/api/v2/" 
+    xmlns="http://www.w3.org/2005/Atom" 
+    xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" 
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <id>https://www.nuget.org/api/v2/Packages</id>
+    <title type="text">Packages</title>
+    <updated>2014-01-27T15:28:09Z</updated>
+    <link rel="self" title="Packages" href="Packages" />
+    <author>
+        <name />
+    </author>
+</feed>"""
+
+    let xml = """<?xml version="1.0" encoding="utf-8"?>
+<feed xml:base="https://www.nuget.org/api/v2/" xmlns="http://www.w3.org/2005/Atom" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <id>https://www.nuget.org/api/v2/Packages</id>
+    <title type="text">Packages</title>
+    <updated>2014-01-27T13:40:37Z</updated>
+    <link href="Packages" rel="self" title="Packages"/>
+    <entry>
+        <id>https://www.nuget.org/api/v2/Packages(Id='FSharp.Formatting',Version='2.3.5-beta')</id>
+        <category scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" term="NuGetGallery.V2FeedPackage"/>
+        <link href="Packages(Id='FSharp.Formatting',Version='2.3.5-beta')" rel="edit" title="V2FeedPackage"/>
+        <title type="text">FSharp.Formatting</title>
+        <summary type="text">A package of libraries for building great F# documentation, samples and blogs</summary>
+        <updated>2014-01-27T13:38:12Z</updated>
+        <author>
+            <name>Tomas Petricek,  Oleg Pestov,  Anh-Dung Phan,  Xiang Zhang</name>
+        </author>
+        <link href="Packages(Id='FSharp.Formatting',Version='2.3.5-beta')/$value" rel="edit-media" title="V2FeedPackage"/>
+        <content src="https://www.nuget.org/api/v2/package/FSharp.Formatting/2.3.5-beta" type="application/zip"/>
+        <m:properties>
+            <d:Version>2.3.5-beta</d:Version>
+            <d:NormalizedVersion>2.3.5-beta</d:NormalizedVersion>
+            <d:Copyright>Copyright 2014</d:Copyright>
+            <d:Created m:type="Edm.DateTime">2014-01-21T02:22:55.767</d:Created>
+            <d:Dependencies>Microsoft.AspNet.Razor:2.0.30506.0:|RazorEngine:3.3.0:|FSharp.Compiler.Service:0.0.11-alpha:</d:Dependencies>
+            <d:Description>The package is a collection of libraries that can be used for literate programming with F# (great for building documentation) and for generating library documentation  from inline code comments. The key componments are Markdown parser, tools for formatting  F# code snippets, including tool tip type information and a tool for generating  documentation from library metadata.</d:Description>
+            <d:DownloadCount m:type="Edm.Int32">1933</d:DownloadCount>
+            <d:GalleryDetailsUrl>https://www.nuget.org/packages/FSharp.Formatting/2.3.5-beta</d:GalleryDetailsUrl>
+            <d:IconUrl>https://raw.github.com/tpetricek/FSharp.Formatting/master/docs/files/misc/logo.png</d:IconUrl>
+            <d:IsLatestVersion m:type="Edm.Boolean">false</d:IsLatestVersion>
+            <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+            <d:IsPrerelease m:type="Edm.Boolean">true</d:IsPrerelease>
+            <d:Language m:null="true"/>
+            <d:Published m:type="Edm.DateTime">2014-01-21T02:22:55.767</d:Published>
+            <d:PackageHash>/t8wb1jAI+SLa71rLm0aquJ7iGdwLk9EcKFEtrdqbBUP90qZLnfqqaXZj1j/tHnWZingYC64hpMEqfoiuVGy+g==</d:PackageHash>
+            <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+            <d:PackageSize m:type="Edm.Int64">432690</d:PackageSize>
+            <d:ProjectUrl>http://github.com/tpetricek/FSharp.Formatting</d:ProjectUrl>
+            <d:ReportAbuseUrl>https://www.nuget.org/package/ReportAbuse/FSharp.Formatting/2.3.5-beta</d:ReportAbuseUrl>
+            <d:ReleaseNotes>Omit non-public members from metadata docs by default.</d:ReleaseNotes>
+            <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+            <d:Tags>F# fsharp formatting markdown code fssnip literate programming</d:Tags>
+            <d:Title m:null="true"/>
+            <d:VersionDownloadCount m:type="Edm.Int32">142</d:VersionDownloadCount>
+            <d:MinClientVersion m:null="true"/>
+            <d:LastEdited m:null="true" m:type="Edm.DateTime"/>
+            <d:LicenseUrl>http://github.com/tpetricek/FSharp.Formatting/blob/master/LICENSE.md</d:LicenseUrl>
+            <d:LicenseNames m:null="true"/>
+            <d:LicenseReportUrl m:null="true"/>
+        </m:properties>
+    </entry>
+</feed>"""
+
+    let activity = NugetPackage { Id = "FSharp.Formatting"
+                                  Version = "2.3.5-beta"
+                                  Url = "https://www.nuget.org/packages/FSharp.Formatting/2.3.5-beta"
+                                  PublishedDate = DateTime(2014, 1, 21, 2, 22, 55, 767, DateTimeKind.Utc) }

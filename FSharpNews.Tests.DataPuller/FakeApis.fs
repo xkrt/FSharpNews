@@ -11,7 +11,8 @@ module WebServer =
         let binding = HttpBinding.Create(HTTP, System.Net.IPAddress.Any.ToString(), port)
         let config = { default_config with bindings = [binding] }
         let pipeline = choose [log_format >> dprintfn "---> %s: %s" name >> never
-                               route]
+                               route
+                               failwithf "Unexpected request to %s: %A" name]
         Async.Start (async { web_server config pipeline })
 
 module StackExchangeApi =
@@ -19,6 +20,7 @@ module StackExchangeApi =
     let path = "/2.1/questions"
     let baseUrl = sprintf "http://%s:%d" Environment.machine port
     let runServer = WebServer.run "StackExchange" port
+    let runEmpty () = runServer (OK TestData.StackExchange.emptyJson)
 
 module TwitterApi =
     let private port = 4142
@@ -55,3 +57,14 @@ module TwitterApi =
         async {
             do! writeHeaderBodyDelimeter req
             do! writeEmptyInfinite req })
+
+    let runEmpty() = runServer (POST >>= url path >>== handleWithEmptyInfinite)
+
+module NuGetApi =
+    let private port = 4143
+
+    let path = "/api/v2/Packages()"
+    let baseUrl = sprintf "http://%s:%d/api/v2" Environment.machine port
+
+    let runServer = WebServer.run "NuGet" port
+    let runEmpty() = runServer (OK TestData.NuGet.emptyXml)
