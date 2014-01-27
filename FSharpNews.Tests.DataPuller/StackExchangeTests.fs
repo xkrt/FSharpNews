@@ -25,7 +25,8 @@ let ``One question on SO and one on Programmers => two activities in storage``()
         | x -> failwithf "Wrong 'site' query item=%A" x
 
     do StackExchangeApi.runServer (GET >>= url StackExchangeApi.path >>== handler)
-    do TwitterApi.runServer (POST >>= url TwitterApi.path >>== TwitterApi.handleWithEmptyInfinite)
+    do TwitterApi.runEmpty()
+    do NuGetApi.runEmpty()
 
     use puller = DataPullerApp.start()
     sleep 10
@@ -37,4 +38,4 @@ let ``One question on SO and one on Programmers => two activities in storage``()
 
     activities
     |> List.map snd
-    |> List.iter (fun addedTime -> Assert.That(addedTime, Is.EqualTo(DateTime.UtcNow).Within(TimeSpan.FromSeconds(30.)), "added time"))
+    |> List.iter (fun addedTime -> Assert.That(addedTime, Is.EqualTo(DateTime.UtcNow).Within(TimeSpan.FromSeconds(15.)), "added time"))

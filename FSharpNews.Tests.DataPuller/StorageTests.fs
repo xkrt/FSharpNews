@@ -31,7 +31,7 @@ let soquest = { Id = 11227809
                 Title = "Why is processing a sorted array faster than an unsorted array?"
                 UserDisplayName = "GManNickG"
                 Url = "http://stackoverflow.com/questions/11227809/why-is-processing-a-sorted-array-faster-than-an-unsorted-array"
-                CreationDate = DateTime(2012,6,27,13,51,36,DateTimeKind.Utc) }
+                CreationDate = DateTime(2012, 6, 27, 13, 51, 36, DateTimeKind.Utc) }
 let soquestA = StackExchangeQuestion soquest
 
 let progquest = { Id = 46716
@@ -39,8 +39,14 @@ let progquest = { Id = 46716
                   Title = "What technical details should a programmer of a web application consider before making the site public?"
                   UserDisplayName = "Joel Coehoorn"
                   Url = "http://programmers.stackexchange.com/users/8057/joel-coehoorn"
-                  CreationDate = DateTime(2008,9,16,13,47,53,DateTimeKind.Utc) }
+                  CreationDate = DateTime(2008, 9, 16, 13, 47, 53, DateTimeKind.Utc) }
 let progquestA = StackExchangeQuestion progquest
+
+let package = { Id = "FSharp.Formatting"
+                Version = "2.3.2-beta"
+                Url = "https://www.nuget.org/packages/FSharp.Formatting/2.3.2-beta"
+                PublishedDate = DateTime(2014, 1, 17, 1, 46, 22, DateTimeKind.Utc) }
+let packageA = NugetPackage package
 
 [<SetUp>]
 let Setup() = collection.RemoveAll() |> ignore
@@ -59,7 +65,7 @@ let ``save saves activity with raw data and time added``() =
     act.["text"].AsString |> assertEqual tweet.Text
     act.["userId"].AsInt64 |> assertEqual tweet.UserId
     act.["userScreenName"].AsString |> assertEqual tweet.UserScreenName
-    act.["creationDate"].ToUniversalTime() |> assertEqual tweet.CreationDate
+    act.["date"].ToUniversalTime() |> assertEqual tweet.CreationDate
 
 [<Test>]
 let ``saveAll activities => getAllActivities returns same activities``() =
@@ -158,6 +164,14 @@ let ``stackexchange questions should be unique``() =
     | (StackExchangeQuestion q1,_)::(StackExchangeQuestion q2,_)::[] -> [q1; q2] |> Collection.assertEquiv [so; prog]
     | x -> failwithf "Expected: %A\r\nBut was: %A" [so; prog] x
 
-// todo test unique packages
+[<Test>]
+let ``nuget packages should be unique``() =
+    packageA |> withEmptyRaw |> Storage.save
+    packageA |> withEmptyRaw |> Storage.save
+
+    match Storage.getAllActivities() with
+    | (savedPackage,_)::[] -> savedPackage |> assertEqual packageA
+    | x -> failwithf "Expected: %A\r\nBut was: %A" packageA x
+
 
 

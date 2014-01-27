@@ -1,4 +1,4 @@
-﻿module FSharpNews.Tests.DataPuller.TwitterTests
+﻿module FSharpNews.Tests.DataPuller.NuGetTests
 
 open System
 open System.Threading
@@ -11,19 +11,16 @@ open FSharpNews.Data
 open FSharpNews.Utils
 open FSharpNews.Tests.Core
 
-let writeTweet json (req: HttpRequest) =
-    async { do! TwitterApi.writeHeaderBodyDelimeter req
-            do! TwitterApi.writeMessage req json
-            do! TwitterApi.writeEmptyInfinite req }
-
 [<SetUp>]
 let Setup() = do Storage.deleteAll()
 
 [<Test>]
-let ``One tweet in stream => one activity in storage``() =
-    do TwitterApi.runServer (POST >>= url TwitterApi.path >>== TwitterApi.handle (writeTweet TestData.Twitter.json))
+let ``One package returned by api => one activity in storage``() =
+    do NuGetApi.runServer (GET >>= url NuGetApi.path
+                               >>= (set_header "Content-Type" "application/atom+xml;type=feed;charset=utf-8"
+                                    >> OK TestData.NuGet.xml))
+    do TwitterApi.runEmpty()
     do StackExchangeApi.runEmpty()
-    do NuGetApi.runEmpty()
 
     use puller = DataPullerApp.start()
     sleep 10
@@ -31,7 +28,7 @@ let ``One tweet in stream => one activity in storage``() =
     let activities = Storage.getAllActivities()
     activities
     |> List.map fst
-    |> Collection.assertEquiv ([ TestData.Twitter.activity ])
+    |> Collection.assertEquiv ([ TestData.NuGet.activity ])
 
     activities
     |> List.map snd

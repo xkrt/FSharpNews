@@ -1,9 +1,8 @@
-﻿open System
-open System.Configuration
+﻿module FSharpNews.DataPuller.Program
+
+open System
 open System.Threading
 open FSharpNews.Data
-open FSharpNews.Data.StackExchange
-open FSharpNews.Data.Twitter
 open FSharpNews.Utils
 
 do Logger.configure()
@@ -22,41 +21,14 @@ let private waitForCancel () =
         event.Set() |> ignore)
     event.WaitOne() |> ignore
 
-let private buildConfigs argv =
-    let cfg = ConfigurationManager.AppSettings
-
-    let seApiKey = cfg.["StackExchangeApiKey"]
-    let twiConsumerKey = cfg.["TwitterConsumerKey"]
-    let twiConsumerSecret = cfg.["TwitterConsumerSecret"]
-    let twiAccessToken = cfg.["TwitterAccessToken"]
-    let twiAccessTokenSecret = cfg.["TwitterAccessTokenSecret"]
-
-    let seApiUrl, twiStreamApiUrl =
-        match Array.toList argv with
-        | opt::stackExchangeUrl::twitterUrl::[] when opt = "-test" -> stackExchangeUrl, twitterUrl
-        | [] -> cfg.["StackExchangeApiUrl"],
-                cfg.["TwitterStreamingApiUrl"]
-        | _ -> failwith "Wrong command line parameters"
-
-    let seConfig = { ApiKey = seApiKey
-                     ApiUrl = seApiUrl }
-    let twiConfig = { ConsumerKey = twiConsumerKey
-                      ConsumerSecret = twiConsumerSecret
-                      AccessToken = twiAccessToken
-                      AccessTokenSecret = twiAccessTokenSecret
-                      StreamApiUrl = twiStreamApiUrl }
-    seConfig, twiConfig
-
 let private repeatForever (interval: TimeSpan) fn =
-    async {
-        let rec loop () =
-            try fn()
-            with
-            | e -> do log.Error "%O" e
-            Thread.Sleep(interval)
-            loop()
-        loop()
-    }
+    async { let rec loop () =
+                try fn()
+                with
+                | e -> do log.Error "%O" e
+                Thread.Sleep(interval)
+                loop()
+            loop() }
 
 let private stackExchange config =
     let fetchNewQuestions site =
@@ -71,10 +43,11 @@ let private stackExchange config =
 let private twitter config =
     async { Twitter.listenStream config Storage.save }
 
-let private nuget () =
+let private nuget config =
+    let fetchSince = NuGet.fetch config
     let fetchNewPackages () =
         let lastPackagePublishedDate = Storage.getTimeOfLastPackage()
-        let pkgsWithRaw = NuGet.fetch lastPackagePublishedDate
+        let pkgsWithRaw = fetchSince lastPackagePublishedDate
         do log.Info "Fetched packages: %d" pkgsWithRaw.Length              // todo move to module
         do Storage.saveAll pkgsWithRaw
     repeatForever (TimeSpan.FromMinutes(5.)) fetchNewPackages
@@ -82,8 +55,8 @@ let private nuget () =
 [<EntryPoint>]
 let main argv =
     do log.Info "Started"
-    let seConfig, twiConfig = buildConfigs argv
-    [stackExchange seConfig; twitter twiConfig; nuget()]
+    let seConfig, twiConfig, nuConfig = Configuration.get argv
+    [stackExchange seConfig; twitter twiConfig; nuget nuConfig]
     |> Async.Parallel
     |> Async.Ignore
     |> Async.Start

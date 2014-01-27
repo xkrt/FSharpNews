@@ -4,10 +4,12 @@ open System
 open Microsoft.FSharp.Data.TypeProviders
 open FSharpNews.Utils
 
-type private NuGet = ODataService<"https://www.nuget.org/api/v2">
-let private context = NuGet.GetDataContext()
+type Configuration = { Url: string }
 
-let fetch sinceDateExclusive =
+type private NuGet = ODataService<"https://www.nuget.org/api/v2">
+
+let fetch config sinceDateExclusive =
+    let context = NuGet.GetDataContext(Uri config.Url)
     let rec loop result toSkip =
         let batchSize = 40
         let batch =

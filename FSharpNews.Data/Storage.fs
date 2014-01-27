@@ -25,7 +25,7 @@ let private db = client.GetServer().GetDatabase(mongoUrl.DatabaseName)
 let private activities = db.GetCollection("activities")
 do activities.EnsureIndex(IndexKeys.Ascending("activity.site").Ascending("activity.questionId"), IndexOptions.SetUnique(true).SetSparse(true))
 do activities.EnsureIndex(IndexKeys.Ascending("activity.tweetId"), IndexOptions.SetUnique(true).SetSparse(true))
-// todo add unique index for packages
+do activities.EnsureIndex(IndexKeys.Ascending("activity.packageId").Ascending("activity.version"), IndexOptions.SetUnique(true).SetSparse(true))
 
 let private i32 value = BsonInt32 value
 let private i64 value = BsonInt64 value
