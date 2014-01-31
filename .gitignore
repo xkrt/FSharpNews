@@ -5,3 +5,9 @@ packages/
 *.user
 Production.Settings.config
 chromedriver*
+FSharpNews.Web.Frontend\Content\bootstrap*css
+FSharpNews.Web.Frontend\fonts\*
+FSharpNews.Web.Frontend\Scripts\bootstrap*js
+FSharpNews.Web.Frontend\Scripts\jquery*
+FSharpNews.Web.Frontend\Scripts\knockout*
+FSharpNews.Web.Frontend\Scripts\moment*
