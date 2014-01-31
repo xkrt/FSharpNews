@@ -1,3 +1,21 @@
 ﻿.nowrap {
     white-space: nowrap;
 }
+
+.hidden-news-bar {
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    cursor: pointer;
+    padding: 10px 1px;
+    padding: 10px;
+    color: #428bca;
+}
+
+.hidden-news-bar:hover {
+    background-color:#eee;
+}
+
+.activityIcon {
+    height: 16px;
+    width: 16px;
+}

@@ -6,16 +6,16 @@
     <title>F# News</title>
     @Styles.Render("~/Content/css")
 </head>
-    <body>
-        <div class="container">
-            <header>
-                <h1><strong>F# News</strong></h1>
-            </header>
-            <article>
-                @RenderBody()
-            </article>
-        </div>
-        @Scripts.Render("~/bundles/libs")
-        @RenderSection("scripts", required: false)
-    </body>
+<body>
+    <div class="container">
+        <header>
+            <h1><strong>F# News</strong></h1>
+        </header>
+        <article>
+            @RenderBody()
+        </article>
+    </div>
+    @Scripts.Render("~/bundles/libs")
+    @RenderSection("scripts", required: false)
+</body>
 </html>

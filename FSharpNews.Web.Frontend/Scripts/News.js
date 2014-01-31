@@ -28,35 +28,42 @@ $(function () {
     };
 
     var requestNews = function () {
-        if (pageViewModel.News().length === 0)
+        if (pageViewModel.ShowedNews().length === 0)
             return;
 
+        // todo: extract
         var lastAddedStamp = 0;
-        $.each(pageViewModel.News(), function(_, activity) { if (activity.AddedAt > lastAddedStamp) lastAddedStamp = activity.AddedAt; });
+        $.each([].concat(pageViewModel.ShowedNews(), pageViewModel.HiddenNews()), function (_, activity) { if (activity.AddedAt > lastAddedStamp) lastAddedStamp = activity.AddedAt; });
 
         $.get('/api/news', { addedFromDate: lastAddedStamp })
             .done(function(activities) {
                 var vms = activities.map(activityToViewModel);
                 vms.reverse();
-                vms.forEach(function (vm) { pageViewModel.News.unshift(vm); });
+                vms.forEach(function (vm) { pageViewModel.HiddenNews.unshift(vm); });
             })
             .done(function() { pageViewModel.UpdatedDate(moment()); })
             .always(delayRequestNews);
     };
 
-    var delayRequestNews = function() {
+    var delayRequestNews = function () {
         window.setTimeout(requestNews, requestIntervalSec * 1000);
     };
 
     var pageViewModel = {
         UpdatedDate: ko.observable(moment()),
-        News: ko.observableArray(window.initialNews.map(activityToViewModel))
+        ShowedNews: ko.observableArray(window.initialActivities.map(activityToViewModel)),
+        HiddenNews: ko.observableArray([])
     };
     pageViewModel.UpdatedAgo = ko.computed(function () { return pageViewModel.UpdatedDate().from(now()); });
     pageViewModel.UpdatedTitle = ko.computed(function () {
         var updated = 'updated at ' + pageViewModel.UpdatedDate().format('HH:mm:ss');
         return updated + ', updates every ' + requestIntervalSec + ' secs';
     });
+    pageViewModel.showHiddenNews = function() {
+        while (this.HiddenNews().length > 0) {
+            this.ShowedNews.unshift(this.HiddenNews.pop());
+        }
+    };
 
     ko.applyBindings(pageViewModel);
     delayRequestNews();

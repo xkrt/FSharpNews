@@ -15,7 +15,7 @@ let pIcoUrl = "http://cdn.sstatic.net/programmers/img/favicon.ico"
 let indexUrl = sprintf "http://%s:4040" Environment.machine
 
 let ajaxInterval = 60
-let waitAjax() = sleep ajaxInterval
+let waitAjax() = sleep (ajaxInterval + 3)
 
 [<SetUp>]
 let Setup() =
@@ -54,13 +54,13 @@ let checkMatch ((iconSrc,linkText,linkHref,ago), row) =
 let table() = element "#news"
 
 [<Test>]
-let ``Show special message if no activities``() =
+let ``Show special message if no news at all``() =
     do url indexUrl
     notDisplayed "#news"
     displayed "#noNews"
 
 [<Test>]
-let ``Special message hidden if has activities``() =
+let ``Special message hidden if has news``() =
     do saveQuest soQuest
     do url indexUrl
     displayed "#news"
@@ -68,9 +68,9 @@ let ``Special message hidden if has activities``() =
 
 [<Test>]
 let ``Order by creation date descending``() =
-    let questOld = { soQuest with Title = "Old"; CreationDate = DateTime.UtcNow.AddHours(-2.) }
-    let questMiddle = { soQuest with Title = "Middle"; CreationDate = DateTime.UtcNow.AddHours(-1.) }
-    let questNew = { soQuest with Title = "New"; CreationDate = DateTime.UtcNow }
+    let questOld = { soQuest with Title = "Old"; CreationDate = DateTime.UtcNow.AddHours(-2.); Id = 1 }
+    let questMiddle = { soQuest with Title = "Middle"; CreationDate = DateTime.UtcNow.AddHours(-1.); Id = 2 }
+    let questNew = { soQuest with Title = "New"; CreationDate = DateTime.UtcNow; Id = 3 }
     [questMiddle; questNew; questOld] |> List.iter saveQuest
 
     let expected = [soIcoUrl, "User1: New", soQuest.Url, "a few seconds ago"
@@ -84,14 +84,19 @@ let ``Order by creation date descending``() =
     |> List.iter checkMatch
 
 [<Test>]
-let ``Request news over ajax``() =
+let ``Ajax news hidden with bar``() =
     do saveQuest soQuest
-
     do url indexUrl
+
+    notDisplayed ".hidden-news-bar"
     (table() |> elementsWithin "tr").Length |> assertEqual 1
 
     do saveQuest pQuest
     do waitAjax()
+
+    displayed ".hidden-news-bar"
+    ".hidden-news-bar" == "1 news"
+    click ".hidden-news-bar"
 
     let rows = table() |> elementsWithin "tr"
     rows.Length |> assertEqual 2

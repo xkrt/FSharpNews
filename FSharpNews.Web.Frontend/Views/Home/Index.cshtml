@@ -4,7 +4,7 @@
     @Scripts.Render("~/bundles/news")
 
     <script type="text/javascript">
-        window.initialNews = $.parseJSON(@Html.Raw(Json.Encode(@Model)));
+        window.initialActivities = $.parseJSON(@Html.Raw(Json.Encode(@Model)));
     </script>
 }
 
@@ -13,11 +13,15 @@
     <span data-bind="text: UpdatedAgo"></span>
 </small>
 
-<table id="news" class="table table-condensed" data-bind="visible: News().length > 0">
-    <tbody data-bind="foreach: News">
+<div data-bind="visible: HiddenNews().length > 0, click: showHiddenNews" class="text-center hidden-news-bar">
+    <span data-bind="text: HiddenNews().length"></span> news @*todo pluralize*@
+</div>
+
+<table id="news" class="table table-condensed" data-bind="visible: ShowedNews().length > 0">
+    <tbody data-bind="foreach: ShowedNews">
         <tr>
             <td>
-                <img data-bind="attr: { src: IconUrl, title: IconTitle, alt: IconTitle }" />
+                <img data-bind="attr: { src: IconUrl, title: IconTitle, alt: IconTitle }" class="activityIcon" />
             </td>
             <td>
                 <a data-bind="attr: { href: Url }, text: Text"></a>
@@ -32,6 +36,6 @@
 </table>
 
 @* todo: use bootstrap panel here *@
-<div id="noNews" data-bind="visible: News().length == 0">
+<div id="noNews" data-bind="visible: (ShowedNews().length == 0) && (HiddenNews().length == 0)">
     For some strange reason there is no news!
 </div>
