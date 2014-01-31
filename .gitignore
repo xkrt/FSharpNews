@@ -5,9 +5,9 @@ packages/
 *.user
 Production.Settings.config
 chromedriver*
-FSharpNews.Web.Frontend\Content\bootstrap*css
-FSharpNews.Web.Frontend\fonts\*
-FSharpNews.Web.Frontend\Scripts\bootstrap*js
-FSharpNews.Web.Frontend\Scripts\jquery*
-FSharpNews.Web.Frontend\Scripts\knockout*
-FSharpNews.Web.Frontend\Scripts\moment*
+FSharpNews.Web.Frontend/Content/bootstrap*
+FSharpNews.Web.Frontend/fonts/glyphicons-halflings-regular.*
+FSharpNews.Web.Frontend/Scripts/bootstrap.*
+FSharpNews.Web.Frontend/Scripts/jquery*
+FSharpNews.Web.Frontend/Scripts/knockout*
+FSharpNews.Web.Frontend/Scripts/moment*
