@@ -1,4 +1,4 @@
-﻿module FSharpNews.Tests.Acceptance.Tests
+﻿module FSharpNews.Tests.Frontend.Tests
 
 open System
 open System.Reflection
@@ -14,8 +14,8 @@ let soIcoUrl = "http://cdn.sstatic.net/stackoverflow/img/favicon.ico"
 let pIcoUrl = "http://cdn.sstatic.net/programmers/img/favicon.ico"
 let indexUrl = sprintf "http://%s:4040" Environment.machine
 
-let ajaxInterval = 60
-let waitAjax() = sleep (ajaxInterval + 3)
+let ajaxInterval = 5
+let waitAjax() = sleep (ajaxInterval + 1)
 
 [<SetUp>]
 let Setup() =
@@ -101,17 +101,8 @@ let ``Ajax news hidden with bar``() =
     let rows = table() |> elementsWithin "tr"
     rows.Length |> assertEqual 2
 
-    let expected = [pIcoUrl, (sprintf "%s: %s" pQuest.UserDisplayName pQuest.Title), pQuest.Url, "a minute ago"
-                    soIcoUrl, (sprintf "%s: %s" soQuest.UserDisplayName soQuest.Title), soQuest.Url, "a minute ago"]
+    let expected = [pIcoUrl, (sprintf "%s: %s" pQuest.UserDisplayName pQuest.Title), pQuest.Url, "a few seconds ago"
+                    soIcoUrl, (sprintf "%s: %s" soQuest.UserDisplayName soQuest.Title), soQuest.Url, "a few seconds ago"]
     rows
     |> List.zip expected
     |> List.iter checkMatch
-
-[<Test>]
-let ``Updated ago``() =
-    do saveQuest soQuest
-    do url indexUrl
-
-    "#updated" == "Updated a few seconds ago"
-    sleep (ajaxInterval - 5)
-    "#updated" == "Updated a minute ago"

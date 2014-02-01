@@ -1,9 +1,11 @@
 namespace FSharpNews.Web.Frontend.Controllers
+
 open System
 open System.Web.Http
 open Newtonsoft.Json
 open FSharpNews.Data
 open FSharpNews.Utils
+open FSharpNews.Web.Frontend.Models
 
 type NewsController() =
     inherit ApiController()

@@ -4,7 +4,10 @@
     @Scripts.Render("~/bundles/news")
 
     <script type="text/javascript">
-        window.initialActivities = $.parseJSON(@Html.Raw(Json.Encode(@Model)));
+        $(function() {
+            var config = $.parseJSON(@Html.Raw(Json.Encode(@Model)));
+            var page = new Page(config);
+        });
     </script>
 }
 

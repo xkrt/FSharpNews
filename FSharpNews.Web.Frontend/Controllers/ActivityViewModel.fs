@@ -5,12 +5,12 @@ open FSharpNews.Data
 open FSharpNews.Utils
 
 type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: string, creationDateUnix: int, addedDateUnixOffset: int64) =
-    member val IconUrl = iconUrl with get, set
-    member val IconTitle = iconTitle with get, set
-    member val Text = text with get, set
-    member val Url = url with get, set
-    member val CreationDateUnix = creationDateUnix with get, set
-    member val AddedDateUnixOffset = addedDateUnixOffset with get, set
+    member val IconUrl = iconUrl with get
+    member val IconTitle = iconTitle with get
+    member val Text = text with get
+    member val Url = url with get
+    member val CreationDateUnix = creationDateUnix with get
+    member val AddedDateUnixOffset = addedDateUnixOffset with get
 
     static member Create(activity: Activity, added: DateTime) =
         match activity with

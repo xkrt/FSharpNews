@@ -1,4 +1,4 @@
-﻿namespace FSharpNews.Tests.Acceptance
+﻿namespace FSharpNews.Tests.Frontend
 
 open System.Diagnostics
 open NUnit.Framework
