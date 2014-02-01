@@ -1,8 +1,6 @@
 ﻿module FSharpNews.Tests.Frontend.Tests
 
 open System
-open System.Reflection
-open System.Diagnostics
 open NUnit.Framework
 open canopy
 open OpenQA.Selenium
@@ -18,12 +16,13 @@ let ajaxInterval = 5
 let waitAjax() = sleep (ajaxInterval + 1)
 
 [<SetUp>]
-let Setup() =
-    do Storage.deleteAll()
+let Setup() = do Storage.deleteAll()
 
 let saveQuest q = Storage.save(StackExchangeQuestion q, "")
 
 let (?) (webEl: IWebElement) attr = webEl.GetAttribute(attr)
+
+let titleEqual text = fun () -> title() = text
 
 let soQuest = { Id = 1
                 Site = Stackoverflow
@@ -40,12 +39,10 @@ let pQuest = { Id = 2
 
 let checkMatch ((iconSrc,linkText,linkHref,ago), row) =
     let img, link, date = match row |> elementsWithin "td" with
-                          | iconTd::linkTd::dateTd::[] ->
-                              iconTd |> elementWithin "img",
-                              linkTd |> elementWithin "a",
-                              dateTd
+                          | iconTd::linkTd::dateTd::[] -> iconTd |> elementWithin "img",
+                                                          linkTd |> elementWithin "a",
+                                                          dateTd
                           | _ -> failwithf "Three cells in row expected"
-
     img?src |> assertEqual iconSrc
     read link |> assertEqual linkText
     link?href |> assertEqual linkHref
@@ -106,3 +103,20 @@ let ``Ajax news hidden with bar``() =
     rows
     |> List.zip expected
     |> List.iter checkMatch
+
+[<Test>]
+let ``Hidden news count in title``() =
+    do saveQuest { soQuest with Id = 1 }
+    do url indexUrl
+    waitFor (titleEqual "F# News")
+
+    do saveQuest { soQuest with Id = 2 }
+    do waitAjax()
+    waitFor (titleEqual "(1) F# News")
+
+    do saveQuest { pQuest with Id = 3 }
+    do waitAjax()
+    waitFor (titleEqual "(2) F# News")
+
+    click ".hidden-news-bar"
+    waitFor (titleEqual "F# News")

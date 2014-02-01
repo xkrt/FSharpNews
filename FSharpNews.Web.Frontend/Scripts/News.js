@@ -1,4 +1,12 @@
 function Page(config) {
+    var title = $('title');
+    var setTitleCount = function (hiddenNews) {
+        if (hiddenNews.length === 0)
+            title.text('F# News');
+        else
+            title.text('(' + hiddenNews.length + ') F# News');
+    };
+
     var createAutoMoment = function (periodSec) {
         var observableNow = ko.observable(moment());
         window.setInterval(function () { observableNow(moment()); }, periodSec * 1000);
@@ -25,6 +33,13 @@ function Page(config) {
         };
     };
 
+    var addHidden = function(activities) {
+        var vms = activities.map(activityToViewModel);
+        vms.reverse();
+        vms.forEach(function(vm) { pageViewModel.HiddenNews.unshift(vm); });
+        setTitleCount(pageViewModel.HiddenNews());
+    };
+
     var requestNews = function () {
         if (pageViewModel.ShowedNews().length === 0)
             return;
@@ -34,17 +49,13 @@ function Page(config) {
         $.each([].concat(pageViewModel.ShowedNews(), pageViewModel.HiddenNews()), function (_, activity) { if (activity.AddedAt > lastAddedStamp) lastAddedStamp = activity.AddedAt; });
 
         $.get('/api/news', { addedFromDate: lastAddedStamp })
-            .done(function (activities) {
-                var vms = activities.map(activityToViewModel);
-                vms.reverse();
-                vms.forEach(function (vm) { pageViewModel.HiddenNews.unshift(vm); });
-            })
+            .done(addHidden.bind(this))
             .done(function () { pageViewModel.UpdatedDate(moment()); })
             .always(delayRequestNews);
     };
 
     var delayRequestNews = function () {
-        window.setTimeout(requestNews, config.NewsRequestPeriod * 1000);
+        window.setTimeout(requestNews.bind(this), config.NewsRequestPeriod * 1000);
     };
 
     var pageViewModel = {
@@ -61,6 +72,7 @@ function Page(config) {
         while (this.HiddenNews().length > 0) {
             this.ShowedNews.unshift(this.HiddenNews.pop());
         }
+        this.setTitleCount(this.HiddenNews());
     };
 
     ko.applyBindings(pageViewModel);
