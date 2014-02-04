@@ -1,4 +1,11 @@
-function Page(config) {
+function PageViewModel(config) {
+    var createAutoMoment = function (periodSec) {
+        var observableNow = ko.observable(moment());
+        window.setInterval(function () { observableNow(moment()); }, periodSec * 1000);
+        return observableNow;
+    };
+    var now = createAutoMoment(30);
+
     var title = $('title');
     var setTitleCount = function (hiddenNews) {
         if (hiddenNews.length === 0)
@@ -7,18 +14,11 @@ function Page(config) {
             title.text('(' + hiddenNews.length + ') F# News');
     };
 
-    var createAutoMoment = function (periodSec) {
-        var observableNow = ko.observable(moment());
-        window.setInterval(function () { observableNow(moment()); }, periodSec * 1000);
-        return observableNow;
-    };
-    var now = createAutoMoment(10);
-
     var timeAgoObservable = function (moment) {
         return ko.computed(function () { return moment.from(now()); });
     };
 
-    var activityToViewModel = function (activity) {
+    var buildActivityViewModel = function (activity) {
         var createMoment = moment.unix(activity.CreationDateUnix).utc();
         var createdAgo = timeAgoObservable(createMoment);
         var createdTitle = createMoment.format('YYYY-MM-DD HH:mm:ss') + 'Z';
@@ -33,61 +33,53 @@ function Page(config) {
         };
     };
 
-    var addHidden = function(activities) {
-        var vms = activities.map(activityToViewModel);
-        vms.reverse();
-        vms.forEach(function(vm) { pageViewModel.HiddenNews.unshift(vm); });
-        setTitleCount(pageViewModel.HiddenNews());
+    var self = this;
+    this.UpdatedDate = ko.observable(moment());
+    this.UpdatedAgo = ko.computed(function() { return self.UpdatedDate().from(now()); }),
+        this.UpdatedTitle = ko.computed(function() {
+            var updated = 'updated at ' + self.UpdatedDate().format('HH:mm:ss');
+            return updated + ', updates every ' + config.NewsRequestPeriod + ' secs';
+        });
+    this.ShowedNews = ko.observableArray(config.InitialNews.map(buildActivityViewModel));
+    this.HiddenNews = ko.observableArray([]);
+    this.HasMoreOldNews = ko.observable(true);
+    this.showHiddenNews = function () {
+        this.ShowedNews.unshift.apply(this.ShowedNews, this.HiddenNews.removeAll().reverse());
+        setTitleCount(this.HiddenNews());
     };
-
-    var requestNews = function () {
-        if (pageViewModel.ShowedNews().length === 0)
-            return;
-
-        // todo: extract
+    this.loadMore = function() {
+        var showedNews = self.ShowedNews();
+        var oldestShowedActivity = showedNews[showedNews.length - 1];
+        return $.get('/api/news/earlier', { time: oldestShowedActivity.AddedAt })
+            .done(function(activities) {
+                self.HasMoreOldNews(activities.length === config.BatchSize);
+                var avms = activities.map(buildActivityViewModel);
+                self.ShowedNews.push.apply(self.ShowedNews, avms);
+            });
+    };
+    this._getOldestActivityAddedStamp = function() {
+        var allActivities = [].concat(this.ShowedNews(), this.HiddenNews());
         var lastAddedStamp = 0;
-        $.each([].concat(pageViewModel.ShowedNews(), pageViewModel.HiddenNews()), function (_, activity) { if (activity.AddedAt > lastAddedStamp) lastAddedStamp = activity.AddedAt; });
-
-        $.get('/api/news/since', { time: lastAddedStamp })
-            .done(addHidden.bind(this))
-            .done(function () { pageViewModel.UpdatedDate(moment()); })
-            .always(delayRequestNews);
+        $.each(allActivities, function (_, activity) {
+            if (activity.AddedAt > lastAddedStamp)
+                lastAddedStamp = activity.AddedAt;
+        });
+        return lastAddedStamp;
     };
-
-    var delayRequestNews = function () {
-        window.setTimeout(requestNews.bind(this), config.NewsRequestPeriod * 1000);
+    this.requestNews = function() {
+        if (this.ShowedNews().length === 0)
+            return;
+        $.get('/api/news/since', { time: this._getOldestActivityAddedStamp() })
+            .done(function(activities) {
+                var vms = activities.map(buildActivityViewModel);
+                vms.reverse();
+                vms.forEach(function(avm) { self.HiddenNews.unshift(avm); });
+                setTitleCount(self.HiddenNews());
+            }.bind(this))
+            .done(function() { self.UpdatedDate(moment()); })
+            .always(this.delayRequestNews);
     };
-
-    var pageViewModel = {
-        UpdatedDate: ko.observable(moment()),
-        ShowedNews: ko.observableArray(config.InitialNews.map(activityToViewModel)),
-        HiddenNews: ko.observableArray([]),
-        HasMoreOldNews: ko.observable(true)
+    this.delayRequestNews = function() {
+        window.setTimeout(self.requestNews.bind(self), config.NewsRequestPeriod * 1000);
     };
-    pageViewModel.UpdatedAgo = ko.computed(function () { return pageViewModel.UpdatedDate().from(now()); });
-    pageViewModel.UpdatedTitle = ko.computed(function () {
-        var updated = 'updated at ' + pageViewModel.UpdatedDate().format('HH:mm:ss');
-        return updated + ', updates every ' + config.NewsRequestPeriod + ' secs';
-    });
-    pageViewModel.showHiddenNews = function () {
-        // todo use apply
-        while (this.HiddenNews().length > 0) {
-            this.ShowedNews.unshift(this.HiddenNews.pop());
-        }
-        this.setTitleCount(this.HiddenNews());
-    };
-    pageViewModel.loadMore = function () {
-        var showedNews = pageViewModel.ShowedNews();
-        var oldestActivity = showedNews[showedNews.length - 1];
-        return $.get('/api/news/earlier', { time: oldestActivity.AddedAt })
-                .done(function (activities) {
-                    pageViewModel.HasMoreOldNews(activities.length === config.BatchSize);
-                    activities
-                        .map(activityToViewModel)
-                        .forEach(function (vm) { pageViewModel.ShowedNews.push(vm); }); // todo apply?
-                });
-    };
-
-    ko.applyBindings(pageViewModel);
-    delayRequestNews();
 };

@@ -6,7 +6,9 @@
     <script type="text/javascript">
         $(function() {
             var config = $.parseJSON(@Html.Raw(Json.Encode(@Model)));
-            var page = new Page(config);
+            var viewModel = new PageViewModel(config);
+            ko.applyBindings(viewModel);
+            viewModel.delayRequestNews();
         });
     </script>
 }

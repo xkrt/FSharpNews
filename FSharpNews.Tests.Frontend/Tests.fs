@@ -171,3 +171,9 @@ let ``Infinite scroll``() =
     |> Seq.zip (takeExpected 210)
     |> Seq.iter checkMatch
     displayed "#noMoreNews"
+
+[<Test>]
+let ``Loader initially hidden``() =
+    do saveQuest { soQuest with Id = 1 }
+    do url indexUrl
+    notDisplayed ".loader"
