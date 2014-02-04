@@ -19,7 +19,13 @@ type private ActivityType =
 [<Literal>]
 let DuplicateKeyError = 11000
 
-let private mongoUrl = ConfigurationManager.ConnectionStrings.["MongoDB"].ConnectionString |> MongoUrl.Create
+#if INTERACTIVE
+let connectionString = "mongodb://localhost/fsharpnews"
+#else
+let connectionString = ConfigurationManager.ConnectionStrings.["MongoDB"].ConnectionString
+#endif
+
+let private mongoUrl = MongoUrl.Create connectionString
 let private client = new MongoClient(mongoUrl)
 let private db = client.GetServer().GetDatabase(mongoUrl.DatabaseName)
 let private activities = db.GetCollection("activities")
@@ -87,7 +93,7 @@ let private mapFromDocument (document: BsonDocument) =
     let added = document.["addedDate"].ToUniversalTime()
     activity, added
 
-let safeUniq fn description =
+let private safeUniq fn description =
     try
         fn() |> ignore
     with
@@ -161,6 +167,15 @@ let getActivitiesAddedSince (dtExclusive: DateTime) =
             .Find(Query.GT("addedDate", BsonDateTime dtExclusive))
             .SetSortOrder(SortBy.Descending "activity.date")
     cursor
+    |> Seq.cast<BsonDocument>
+    |> Seq.map mapFromDocument
+    |> Seq.toList
+
+let getActivitiesAddedEarlier count (dtExclusive: DateTime) =
+    let cursor = activities.Find(Query.LT("addedDate", BsonDateTime dtExclusive))
+                           .SetSortOrder(SortBy.Descending "activity.date")
+                           .SetLimit(count)
+    cursor // todo: extract function
     |> Seq.cast<BsonDocument>
     |> Seq.map mapFromDocument
     |> Seq.toList

@@ -48,7 +48,11 @@ let checkMatch ((iconSrc,linkText,linkHref,ago), row) =
     link?href |> assertEqual linkHref
     read date |> assertEqual ago
 
+let goIndex() = url indexUrl
+
 let table() = element "#news"
+let rows() = table() |> elementsWithin "tr"
+
 
 [<Test>]
 let ``Show special message if no news at all``() =
@@ -86,7 +90,7 @@ let ``Ajax news hidden with bar``() =
     do url indexUrl
 
     notDisplayed ".hidden-news-bar"
-    (table() |> elementsWithin "tr").Length |> assertEqual 1
+    rows().Length |> assertEqual 1
 
     do saveQuest pQuest
     do waitAjax()
@@ -95,12 +99,11 @@ let ``Ajax news hidden with bar``() =
     ".hidden-news-bar" == "1 news"
     click ".hidden-news-bar"
 
-    let rows = table() |> elementsWithin "tr"
-    rows.Length |> assertEqual 2
+    rows().Length |> assertEqual 2
 
     let expected = [pIcoUrl, (sprintf "%s: %s" pQuest.UserDisplayName pQuest.Title), pQuest.Url, "a few seconds ago"
                     soIcoUrl, (sprintf "%s: %s" soQuest.UserDisplayName soQuest.Title), soQuest.Url, "a few seconds ago"]
-    rows
+    rows()
     |> List.zip expected
     |> List.iter checkMatch
 
@@ -120,3 +123,51 @@ let ``Hidden news count in title``() =
 
     click ".hidden-news-bar"
     waitFor (titleEqual "F# News")
+
+[<Test>]
+let ``Infinite scroll``() =
+    let savedQuests =
+        [1..210]
+        |> List.map (fun i -> { soQuest with Id = i
+                                             Title = sprintf "Test question #%d" i
+                                             CreationDate = soQuest.CreationDate.AddMilliseconds(float i) })
+    savedQuests
+    |> List.map StackExchangeQuestion
+    |> List.iter (fun a -> Storage.save(a, "")
+                           Threading.Thread.Sleep(10))
+
+    let takeExpected n =
+        savedQuests
+        |> List.rev
+        |> Seq.map (fun q -> soIcoUrl, (sprintf "%s: %s" q.UserDisplayName q.Title), q.Url, "a few seconds ago")
+        |> Seq.take n
+
+    let scrollToBottom () =
+        let jsExecutor = browser :?> IJavaScriptExecutor
+        let script = 
+            """var targetHeight = $(document).height()
+               while($(window).scrollTop() + $(window).height() < targetHeight)
+                   scrollTo(0, $(window).scrollTop() + $(window).height() + 100)"""
+        jsExecutor.ExecuteScript(script) |> ignore
+
+    do goIndex()
+    
+    rows().Length |> assertEqual 100
+    rows()
+    |> Seq.zip (takeExpected 100)
+    |> Seq.iter checkMatch
+    notDisplayed "#noMoreNews"
+
+    do scrollToBottom()
+    rows().Length |> assertEqual 200
+    rows()
+    |> Seq.zip (takeExpected 200)
+    |> Seq.iter checkMatch
+    notDisplayed "#noMoreNews"
+
+    do scrollToBottom()
+    rows().Length |> assertEqual 210
+    rows()
+    |> Seq.zip (takeExpected 210)
+    |> Seq.iter checkMatch
+    displayed "#noMoreNews"

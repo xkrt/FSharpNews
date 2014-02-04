@@ -114,15 +114,17 @@
   </ProjectExtensions>
   <ItemGroup>
     <Content Include="Content\Site.css" />
+    <Content Include="Content\loader.gif" />
     <None Include="Content\bootstrap-theme.min.css" />
     <None Include="Content\bootstrap-theme.css" />
     <None Include="Content\bootstrap.min.css" />
     <None Include="Content\bootstrap.css" />
     <None Include="Content\bootstrap-theme.css.map" />
     <None Include="Content\bootstrap.css.map" />
+    <Content Include="Scripts\News.js" />
+    <Content Include="Scripts\knockout.extensions.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\News.js" />
     <Content Include="Scripts\knockout-3.0.0.js" />
     <Content Include="Scripts\knockout-3.0.0.debug.js" />
     <Content Include="Scripts\moment-with-langs.min.js" />

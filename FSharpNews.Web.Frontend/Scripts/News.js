@@ -48,7 +48,7 @@ function Page(config) {
         var lastAddedStamp = 0;
         $.each([].concat(pageViewModel.ShowedNews(), pageViewModel.HiddenNews()), function (_, activity) { if (activity.AddedAt > lastAddedStamp) lastAddedStamp = activity.AddedAt; });
 
-        $.get('/api/news', { addedFromDate: lastAddedStamp })
+        $.get('/api/news/since', { time: lastAddedStamp })
             .done(addHidden.bind(this))
             .done(function () { pageViewModel.UpdatedDate(moment()); })
             .always(delayRequestNews);
@@ -61,7 +61,8 @@ function Page(config) {
     var pageViewModel = {
         UpdatedDate: ko.observable(moment()),
         ShowedNews: ko.observableArray(config.InitialNews.map(activityToViewModel)),
-        HiddenNews: ko.observableArray([])
+        HiddenNews: ko.observableArray([]),
+        HasMoreOldNews: ko.observable(true)
     };
     pageViewModel.UpdatedAgo = ko.computed(function () { return pageViewModel.UpdatedDate().from(now()); });
     pageViewModel.UpdatedTitle = ko.computed(function () {
@@ -69,10 +70,22 @@ function Page(config) {
         return updated + ', updates every ' + config.NewsRequestPeriod + ' secs';
     });
     pageViewModel.showHiddenNews = function () {
+        // todo use apply
         while (this.HiddenNews().length > 0) {
             this.ShowedNews.unshift(this.HiddenNews.pop());
         }
         this.setTitleCount(this.HiddenNews());
+    };
+    pageViewModel.loadMore = function () {
+        var showedNews = pageViewModel.ShowedNews();
+        var oldestActivity = showedNews[showedNews.length - 1];
+        return $.get('/api/news/earlier', { time: oldestActivity.AddedAt })
+                .done(function (activities) {
+                    pageViewModel.HasMoreOldNews(activities.length === config.BatchSize);
+                    activities
+                        .map(activityToViewModel)
+                        .forEach(function (vm) { pageViewModel.ShowedNews.push(vm); }); // todo apply?
+                });
     };
 
     ko.applyBindings(pageViewModel);

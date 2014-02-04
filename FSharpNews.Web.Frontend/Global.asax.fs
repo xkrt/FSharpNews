@@ -18,7 +18,9 @@ type BundleConfig() =
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/knockout-3.0.0.js",
                         "~/Scripts/moment.min.js"))
-        bundles.Add(ScriptBundle("~/bundles/news").Include([|"~/Scripts/News.js"|]))
+        bundles.Add(ScriptBundle("~/bundles/news").Include(
+                        "~/Scripts/News.js",
+                        "~/Scripts/knockout.extensions.js"))
         bundles.Add(StyleBundle("~/Content/css").Include(
                         "~/Content/bootstrap.css",
                         "~/Content/Site.css"))
@@ -37,8 +39,7 @@ type Global() =
         config.MapHttpAttributeRoutes()
         config.Routes.MapHttpRoute(
             "DefaultApi",
-            "api/{controller}/{id}",
-            { controller = "{controller}"; id = RouteParameter.Optional }
+            "api/{controller}/{action}"
         ) |> ignore
 
     static member RegisterFilters(filters: GlobalFilterCollection) =

@@ -61,6 +61,7 @@
     <Compile Include="StackExchange.fs" />
     <Compile Include="Twitter.fs" />
     <Compile Include="NuGet.fs" />
+    <None Include="FillStorage.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">

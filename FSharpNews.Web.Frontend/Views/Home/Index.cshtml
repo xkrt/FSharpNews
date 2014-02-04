@@ -17,7 +17,7 @@
 </small>
 
 <div data-bind="visible: HiddenNews().length > 0, click: showHiddenNews" class="text-center hidden-news-bar">
-    <span data-bind="text: HiddenNews().length"></span> news @*todo pluralize*@
+    <span data-bind="text: HiddenNews().length"></span> news
 </div>
 
 <table id="news" class="table table-condensed" data-bind="visible: ShowedNews().length > 0">
@@ -37,6 +37,15 @@
         </tr>
     </tbody>
 </table>
+
+<div data-bind="scroll: loadMore, scrollOptions: { offset: 200 }">
+    <span class="loader" title="Loading..."></span>
+</div>
+
+@* todo: visualize *@
+<div id="noMoreNews" data-bind="visible: !HasMoreOldNews()">
+    No more news!
+</div>
 
 @* todo: use bootstrap panel here *@
 <div id="noNews" data-bind="visible: (ShowedNews().length == 0) && (HiddenNews().length == 0)">

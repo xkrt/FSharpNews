@@ -19,3 +19,11 @@
     height: 16px;
     width: 16px;
 }
+
+.loader {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: url(/Content/loader.gif) center center no-repeat;
+    margin: 0 auto;
+}
