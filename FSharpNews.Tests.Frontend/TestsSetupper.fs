@@ -2,7 +2,6 @@
 
 open System.Diagnostics
 open NUnit.Framework
-open canopy
 open FSharpNews.Tests.Core
 
 [<SetUpFixture>]
@@ -14,12 +13,9 @@ type TestsSetupper() =
     [<SetUp>]
     member x.Setup() =
         do killChromeDriver()
-        canopy.configuration.elementTimeout <- 5.
-        canopy.configuration.chromeDir <- Environment.executingAssemblyDirPath()
-        do start chrome
-        do pin Left
+        do Browser.start()
 
     [<TearDown>]
     member x.Teardown() =
-        do quit chrome
+        do Browser.close()
         do killChromeDriver()
