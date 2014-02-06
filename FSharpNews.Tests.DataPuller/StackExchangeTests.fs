@@ -24,9 +24,9 @@ let ``One question on SO and one on Programmers => two activities in storage``()
         | Some "programmers" -> OK TestData.StackExchange.progJson
         | x -> failwithf "Wrong 'site' query item=%A" x
 
-    do StackExchangeApi.runServer (GET >>= url StackExchangeApi.path >>== handler)
-    do TwitterApi.runEmpty()
-    do NuGetApi.runEmpty()
+    use se = StackExchangeApi.runServer (GET >>= url StackExchangeApi.path >>== handler)
+    use tw = TwitterApi.runEmpty()
+    use nu = NuGetApi.runEmpty()
 
     use puller = DataPullerApp.start()
     sleep 10

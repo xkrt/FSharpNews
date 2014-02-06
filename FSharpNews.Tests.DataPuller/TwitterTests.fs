@@ -21,9 +21,9 @@ let Setup() = do Storage.deleteAll()
 
 [<Test>]
 let ``One tweet in stream => one activity in storage``() =
-    do TwitterApi.runServer (POST >>= url TwitterApi.path >>== TwitterApi.handle (writeTweet TestData.Twitter.json))
-    do StackExchangeApi.runEmpty()
-    do NuGetApi.runEmpty()
+    use tw = TwitterApi.runServer (POST >>= url TwitterApi.path >>== TwitterApi.handle (writeTweet TestData.Twitter.json))
+    use se = StackExchangeApi.runEmpty()
+    use nu = NuGetApi.runEmpty()
 
     use puller = DataPullerApp.start()
     sleep 10

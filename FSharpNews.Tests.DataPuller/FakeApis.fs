@@ -1,5 +1,6 @@
 ﻿namespace FSharpNews.Tests.DataPuller
 
+open System
 open Suave.Http
 open Suave.Types
 open Suave.Web
@@ -9,11 +10,15 @@ open FSharpNews.Tests.Core
 module WebServer =
     let run name port route =
         let binding = HttpBinding.Create(HTTP, System.Net.IPAddress.Any.ToString(), port)
-        let config = { default_config with bindings = [binding] }
+        let cts = new Threading.CancellationTokenSource()
+        let config = { default_config with bindings = [binding]
+                                           ct = cts.Token }
         let pipeline = choose [log_format >> dprintfn "---> %s: %s" name >> never
                                route
                                failwithf "Unexpected request to %s: %A" name]
         Async.Start (async { web_server config pipeline })
+        { new IDisposable
+          with member this.Dispose() = cts.Cancel() }
 
 module StackExchangeApi =
     let private port = 4141
