@@ -14,18 +14,18 @@ let start () = ()
 let close () = driver.Quit()
 let go (url: string) = driver.Navigate().GoToUrl url
 
-let private waitFor f =
-    let wait = WebDriverWait(driver, TimeSpan.FromSeconds(10.))
+let private waitFor assertFn =
+    let wait = WebDriverWait(driver, TimeSpan.FromSeconds(20.))
     let lastException = ref null
     try
         wait.Until(fun _ ->
             try
-                f()
+                assertFn(); true
             with
-            | exn -> lastException := exn; false
+            | ex -> lastException := ex; false
         ) |> ignore
     with
-    | :? WebDriverTimeoutException -> failwithf "Timeout exception: %O" lastException
+    | :? WebDriverTimeoutException -> failwithf "Timeout exception: %O" !lastException
 
 let element selector = fun () -> driver.FindElement(By.CssSelector selector)
 let elementWithin selector (parentElementFn: unit -> IWebElement) = parentElementFn().FindElement(By.CssSelector selector)
@@ -39,10 +39,10 @@ let private text (elem: IWebElement) = elem.Text
 
 let click (elementFn: unit -> IWebElement) = elementFn().Click()
 
-let checkDisplayed elementFn = waitFor (fun () -> elementFn() |> displayed)
-let checkNotDisplayed elementFn = waitFor (fun () -> elementFn() |> displayed |> not)
-let checkTextIs expectedText elementFn = waitFor (fun () -> elementFn() |> text |> ((=) expectedText))
-let waitTitle text = waitFor (fun () -> driver.Title = text)
+let checkDisplayed elementFn = waitFor (fun () -> elementFn() |> displayed |> assertEqual true)
+let checkNotDisplayed elementFn = waitFor (fun () -> elementFn() |> displayed |> assertEqual false)
+let checkTextIs expectedText elementFn = waitFor (fun () -> elementFn() |> text |> assertEqual expectedText)    
+let waitTitle text = waitFor (fun () -> driver.Title |> assertEqual text)
 
 let scrollToBottom () =
     let script =

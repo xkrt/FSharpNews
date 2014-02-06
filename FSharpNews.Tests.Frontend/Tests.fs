@@ -40,7 +40,9 @@ let checkMatch ((iconSrc,linkText,linkHref,ago), (row: IWebElement)) =
     link?href |> assertEqual linkHref
     fn date |> checkTextIs ago
 
-let waitAjax() = Threading.Thread.Sleep(5000)
+let sleepMs (ms: int) = Threading.Thread.Sleep(ms)
+let waitAjax() = sleepMs 5000
+
 
 module Page =
     let private indexUrl = sprintf "http://%s:4040" Environment.machine
@@ -52,6 +54,7 @@ module Page =
     let loader = element ".loader"
     let noMoreNews = element "#noMoreNews"
     let noNewsAtAll = element "#noNews"
+
 
 [<Test>]
 let ``Show special message if no news at all``() =
@@ -124,7 +127,6 @@ let ``Hidden news count in title``() =
 
 [<Test>]
 let ``Infinite scroll``() =
-    let sw = System.Diagnostics.Stopwatch.StartNew()
     let savedQuests =
         [1..210]
         |> List.map (fun i -> { soQuest with Id = i
@@ -132,8 +134,7 @@ let ``Infinite scroll``() =
                                              CreationDate = soQuest.CreationDate.AddMilliseconds(float i) })
     savedQuests
     |> List.map StackExchangeQuestion
-    |> List.iter (fun a -> Storage.save(a, "")
-                           Threading.Thread.Sleep(1))
+    |> List.iter (fun a -> Storage.save(a, ""); sleepMs 5)
 
     let takeExpected n =
         savedQuests
@@ -162,8 +163,6 @@ let ``Infinite scroll``() =
     |> Seq.zip (takeExpected 210)
     |> Seq.iter checkMatch
     checkDisplayed Page.noMoreNews
-
-    dprintfn "Test elapsed: %O" (sw.Elapsed)
 
 [<Test>]
 let ``Loader initially hidden``() =
