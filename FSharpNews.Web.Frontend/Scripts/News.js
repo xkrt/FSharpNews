@@ -67,8 +67,6 @@ function PageViewModel(config) {
         return lastAddedStamp;
     };
     this.requestNews = function() {
-        if (this.ShowedNews().length === 0)
-            return;
         $.get('/api/news/since', { time: this._getOldestActivityAddedStamp() })
             .done(function(activities) {
                 var vms = activities.map(buildActivityViewModel);

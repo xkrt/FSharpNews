@@ -4,7 +4,7 @@
     @Scripts.Render("~/bundles/news")
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             var config = $.parseJSON(@Html.Raw(Json.Encode(@Model)));
             var viewModel = new PageViewModel(config);
             ko.applyBindings(viewModel);
@@ -13,10 +13,12 @@
     </script>
 }
 
-<small id="updated" class="text-muted" data-bind="attr: { title: UpdatedTitle }">
-    <span>Updated</span>
-    <span data-bind="text: UpdatedAgo"></span>
-</small>
+@section header {
+    <small id="updated" class="text-muted" data-bind="attr: { title: UpdatedTitle }">
+        <span>updated</span>
+        <span data-bind="text: UpdatedAgo"></span>
+    </small>
+}
 
 <div data-bind="visible: HiddenNews().length > 0, click: showHiddenNews" class="text-center hidden-news-bar">
     <span data-bind="text: HiddenNews().length"></span> news
@@ -31,7 +33,7 @@
             <td>
                 <a data-bind="attr: { href: Url }, text: Text"></a>
             </td>
-            <td class="nowrap">
+            <td>
                 <small>
                     <em class="text-muted" data-bind="attr: { title: CreationDateTitle }, text: CreationDateAgo"></em>
                 </small>
@@ -44,12 +46,10 @@
     <span class="loader" title="Loading..."></span>
 </div>
 
-@* todo: visualize *@
-<div id="noMoreNews" data-bind="visible: !HasMoreOldNews()">
-    No more news!
+<div id="noMoreNews" data-bind="visible: !HasMoreOldNews()" class="alert alert-info">
+    Well done! You get to the oldest news. Please <a href="https://twitter.com/xkrt" class="alert-link">give me feedback</a> about F# News.
 </div>
 
-@* todo: use bootstrap panel here *@
-<div id="noNews" data-bind="visible: (ShowedNews().length == 0) && (HiddenNews().length == 0)">
-    For some strange reason there is no news!
+<div id="noNews" data-bind="visible: (ShowedNews().length == 0) && (HiddenNews().length == 0)" class="alert alert-danger">
+    For some strange reason we can not show the news. Please <a href="mailto:mr.xkurt@gmail.com" class="alert-link">contact me</a>.
 </div>
