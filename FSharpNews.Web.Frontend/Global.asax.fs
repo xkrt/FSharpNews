@@ -13,17 +13,21 @@ open System.Web.Optimization
 
 type BundleConfig() =
     static member RegisterBundles (bundles:BundleCollection) =
-        bundles.Add(ScriptBundle("~/bundles/libs").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/bootstrap.js",
-                        "~/Scripts/knockout-3.0.0.js",
-                        "~/Scripts/moment.min.js"))
-        bundles.Add(ScriptBundle("~/bundles/news").Include(
+        bundles.UseCdn <- true
+        // libs
+        bundles.Add(ScriptBundle("~/bundles/js/jquery", "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js")
+                        .Include [| "~/Scripts/jquery-2.1.0.js" |])
+        bundles.Add(ScriptBundle("~/bundles/js/knockout", "//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js")
+                        .Include [| "~/Scripts/knockout-3.0.0.js" |])
+        bundles.Add(ScriptBundle("~/bundles/js/moment", "//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js")
+                        .Include [| "~/Scripts/moment.min.js" |])
+        bundles.Add(StyleBundle("~/Content/css/bootstrap", "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.0/css/bootstrap.min.css")
+                        .Include [| "~/Content/bootstrap.css" |])
+        // fsharpnews
+        bundles.Add(ScriptBundle("~/bundles/js/fsharpnews").Include(
                         "~/Scripts/News.js",
                         "~/Scripts/knockout.extensions.js"))
-        bundles.Add(StyleBundle("~/Content/css").Include(
-                        "~/Content/bootstrap.css",
-                        "~/Content/Site.css"))
+        bundles.Add(StyleBundle("~/Content/css/fsharpnews").Include [| "~/Content/Site.css" |])
 
 type Route = { controller: string
                action: string

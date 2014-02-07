@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>F# News</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css/bootstrap")
+    @Styles.Render("~/Content/css/fsharpnews")
 </head>
 <body>
     <div class="container">
@@ -17,7 +18,10 @@
             @RenderBody()
         </article>
     </div>
-    @Scripts.Render("~/bundles/libs")
+    @Scripts.Render("~/bundles/js/jquery")
+    @Scripts.Render("~/bundles/js/knockout")
+    @Scripts.Render("~/bundles/js/moment")
+    @Scripts.Render("~/bundles/js/fsharpnews")
     @RenderSection("scripts", required: false)
 </body>
 </html>
