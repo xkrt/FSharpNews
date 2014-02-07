@@ -1,12 +1,9 @@
 ﻿module FSharpNews.Tests.DataPuller.StackExchangeTests
 
 open System
-open System.Threading
 open NUnit.Framework
 open Suave.Types
-open Suave.Socket
 open Suave.Http
-open Suave.Web
 open FSharpNews.Data
 open FSharpNews.Utils
 open FSharpNews.Tests.Core

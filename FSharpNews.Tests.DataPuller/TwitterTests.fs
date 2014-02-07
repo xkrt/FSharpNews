@@ -1,10 +1,8 @@
 ﻿module FSharpNews.Tests.DataPuller.TwitterTests
 
 open System
-open System.Threading
 open NUnit.Framework
 open Suave.Types
-open Suave.Socket
 open Suave.Http
 open Suave.Web
 open FSharpNews.Data

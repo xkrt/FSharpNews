@@ -8,9 +8,7 @@ open LinqToTwitter
 open FSharpNews.Data
 open FSharpNews.Utils
 
-// todo use language=en
 // todo use stall_warnings
-// todo use gzip
 
 [<Literal>]
 let private targetHashtag = "#fsharp"
@@ -23,18 +21,26 @@ type Configuration = { ConsumerKey: string
                        AccessTokenSecret: string
                        StreamApiUrl: string }
 
+type private LinqToTwitterLog() =
+    inherit IO.TextWriter()
+    let log = Logger.create "Linq2Twitter"
+    override this.Encoding with get () = Text.UTF8Encoding() :> Text.Encoding
+    override this.WriteLine(str: string) = log.Debug "%s" str
+
 let private createContext config =
     let creds = SingleUserInMemoryCredentials()
     creds.ConsumerKey <- config.ConsumerKey
     creds.ConsumerSecret <- config.ConsumerSecret
     creds.TwitterAccessToken <- config.AccessToken
     creds.TwitterAccessTokenSecret <- config.AccessTokenSecret
-    
+
     let authorizer = SingleUserAuthorizer()
     authorizer.Credentials <- creds
+    authorizer.UseCompression <- true
 
     let context = new TwitterContext(authorizer)
     context.StreamingUrl <- config.StreamApiUrl.EnsureEndsWith("/")
+    context.Log <- new LinqToTwitterLog() :> IO.TextWriter
     context
 
 type private CommonMessage = JsonProvider<"DataSamples/Twitter/stream-message.json", SampleList=true>
@@ -72,6 +78,6 @@ let rec private processStream config save (stream: StreamContent) =
 and listenStream config save =
     let context = createContext config
     let q = query { for s in context.Streaming do
-                    where (s.Type = StreamingType.Filter && s.Track = targetHashtag)
+                    where (s.Type = StreamingType.Filter && s.Track = targetHashtag && s.Language = "en")
                     select (s) }
     q.StreamingCallback(processStream config save) |> Seq.head |> ignore
