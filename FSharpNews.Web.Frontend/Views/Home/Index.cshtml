@@ -1,8 +1,7 @@
 @model string
 
-@section scripts {
-    @Scripts.Render("~/bundles/news")
-
+@section scripts
+{
     <script type="text/javascript">
         $(function () {
             var config = $.parseJSON(@Html.Raw(Json.Encode(@Model)));
@@ -13,7 +12,8 @@
     </script>
 }
 
-@section header {
+@section header
+{
     <small id="updated" class="text-muted" data-bind="attr: { title: UpdatedTitle }">
         <span>updated</span>
         <span data-bind="text: UpdatedAgo"></span>
@@ -31,7 +31,7 @@
                 <img data-bind="attr: { src: IconUrl, title: IconTitle, alt: IconTitle }" class="activityIcon" />
             </td>
             <td>
-                <a data-bind="attr: { href: Url }, text: Text"></a>
+                <a data-bind="attr: { href: Url }, text: Text" href="#" target="_blank"></a>
             </td>
             <td>
                 <small>
