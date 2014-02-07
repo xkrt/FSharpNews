@@ -5,6 +5,8 @@ open System
 type StackExchangeSite =
     | Stackoverflow
     | Programmers
+    | CodeReview
+    | CodeGolf
 
 type StackExchangeQuestion = { Id: int
                                Site: StackExchangeSite

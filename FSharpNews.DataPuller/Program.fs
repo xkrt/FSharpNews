@@ -14,12 +14,13 @@ do AppDomain.CurrentDomain.UnhandledException.Add(fun e ->
     then log.Error "Domain unhandled exception of type %s occured (%s)" (e.GetType().Name) (e.ExceptionObject.ToString())
     else log.Error "Unhandled non-CLR exception occured (%s)" (e.ExceptionObject.ToString()))
 
-let private waitForCancel () =
+let private waitForCancelKey() =
     let event = new AutoResetEvent(false)
     Console.CancelKeyPress.Add(fun args ->
+        do log.Info "Ctrl-C pressed, cancel"
         args.Cancel <- true
-        event.Set() |> ignore)
-    event.WaitOne() |> ignore
+        do event.Set() |> ignore)
+    do event.WaitOne() |> ignore
 
 let private repeatForever (interval: TimeSpan) fn =
     async { let rec loop () =
@@ -38,7 +39,7 @@ let private stackExchange config =
         do log.Info "Fetched questions for %A: %d" site activitiesWithRaws.Length // todo move to module
         do Storage.saveAll activitiesWithRaws
     let repeat = repeatForever (TimeSpan.FromMinutes(5.))
-    repeat (fun () -> [Stackoverflow; Programmers] |> List.iter fetchNewQuestions)
+    repeat (fun () -> StackExchange.allSites |> List.iter fetchNewQuestions)
 
 let private twitter config =
     async { Twitter.listenStream config Storage.save }
@@ -60,5 +61,5 @@ let main argv =
     |> Async.Parallel
     |> Async.Ignore
     |> Async.Start
-    waitForCancel()
+    waitForCancelKey()
     0

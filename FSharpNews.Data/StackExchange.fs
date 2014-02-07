@@ -6,6 +6,8 @@ open FSharp.Data
 open HttpClient
 open FSharpNews.Utils
 
+let allSites = [Stackoverflow; Programmers; CodeReview; CodeGolf]
+
 type Configuration = { ApiKey: string
                        ApiUrl: string }
 
@@ -27,6 +29,8 @@ let private siteToStr site =
     match site with
     | StackExchangeSite.Stackoverflow -> "stackoverflow"
     | StackExchangeSite.Programmers -> "programmers"
+    | StackExchangeSite.CodeReview -> "codereview"
+    | StackExchangeSite.CodeGolf -> "codegolf"
 
 let fetch config site startDateInclusive =
     let fromDateUnixInclusive = DateTime.toUnix startDateInclusive

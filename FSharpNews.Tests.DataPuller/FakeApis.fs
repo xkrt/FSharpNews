@@ -10,8 +10,11 @@ open FSharpNews.Tests.Core
 module WebServer =
     let run name port route =
         let binding = HttpBinding.Create(HTTP, System.Net.IPAddress.Any.ToString(), port)
+        let errorhandler (ex : Exception) msg (request : HttpRequest) =
+            async { dprintfn "WebServer error: %s\n%O\nWhile processing request: %A" msg ex request }
         let cts = new Threading.CancellationTokenSource()
         let config = { default_config with bindings = [binding]
+                                           error_handler = errorhandler
                                            ct = cts.Token }
         let pipeline = choose [log_format >> dprintfn "---> %s: %s" name >> never
                                route

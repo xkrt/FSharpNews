@@ -25,6 +25,8 @@ let connectionString = "mongodb://localhost/fsharpnews"
 let connectionString = ConfigurationManager.ConnectionStrings.["MongoDB"].ConnectionString
 #endif
 
+// todo extract all copy-pasted strings
+
 let private mongoUrl = MongoUrl.Create connectionString
 let private client = new MongoClient(mongoUrl)
 let private db = client.GetServer().GetDatabase(mongoUrl.DatabaseName)
@@ -39,8 +41,8 @@ let private str value = BsonString value
 let private date (value: DateTime) = BsonDateTime value
 let private el (name: string) (value: BsonValue) = BsonElement(name, value)
 
-let private siteToBson = function Stackoverflow -> i32 0 | Programmers -> i32 1
-let private bsonToSite = function 0 -> Stackoverflow | 1 -> Programmers | x -> failwithf "Unknown %d StackExchange site" x
+let private siteToBson = function Stackoverflow -> i32 0 | Programmers -> i32 1 | CodeReview -> i32 2 | CodeGolf -> i32 3
+let private bsonToSite = function 0 -> Stackoverflow | 1 -> Programmers | 2 -> CodeReview | 3 -> CodeGolf | x -> failwithf "Unknown %d StackExchange site" x
 
 let private mapToDocument (activity, raw) =
     let activityDoc, descriminator =

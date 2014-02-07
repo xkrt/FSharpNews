@@ -92,6 +92,87 @@ module StackExchange =
                                 Url = "http://programmers.stackexchange.com/questions/218779/is-there-a-way-to-created-nested-computation-expressions"
                                 CreationDate = DateTime.unixToUtcDate 1384788003 }
 
+    let reviewJson = """{
+  "items": [
+    {
+      "tags": [
+        "c#",
+        "f#"
+      ],
+      "owner": {
+        "reputation": 365,
+        "user_id": 7452,
+        "user_type": "registered",
+        "accept_rate": 50,
+        "profile_image": "https://www.gravatar.com/avatar/016b90d0f548f6f649e24f2916ccf4b6?s=128&d=identicon&r=PG",
+        "display_name": "Oxinabox",
+        "link": "http://codereview.stackexchange.com/users/7452/oxinabox"
+      },
+      "is_answered": true,
+      "view_count": 309,
+      "answer_count": 2,
+      "score": 3,
+      "last_activity_date": 1391532420,
+      "creation_date": 1317564163,
+      "question_id": 5115,
+      "link": "http://codereview.stackexchange.com/questions/5115/using-a-function-to-emulate-f-match-in-c",
+      "title": "Using a Function to emulate F# Match in C#"
+    }
+  ],
+  "has_more": false,
+  "quota_max": 10000,
+  "quota_remaining": 8811
+}"""
+    let reviewActivity =
+        StackExchangeQuestion { Id = 5115
+                                Site = CodeReview
+                                Title = "Using a Function to emulate F# Match in C#"
+                                UserDisplayName = "Oxinabox"
+                                Url = "http://codereview.stackexchange.com/questions/5115/using-a-function-to-emulate-f-match-in-c"
+                                CreationDate = DateTime.unixToUtcDate 1317564163 }
+
+    let golfJson = """{
+  "items": [
+    {
+      "tags": [
+        "code-golf",
+        "tips",
+        "f#"
+      ],
+      "owner": {
+        "reputation": 1874,
+        "user_id": 9275,
+        "user_type": "registered",
+        "accept_rate": 100,
+        "profile_image": "http://i.stack.imgur.com/iCodV.png?s=128&g=1",
+        "display_name": "ProgramFOX",
+        "link": "http://codegolf.stackexchange.com/users/9275/programfox"
+      },
+      "is_answered": false,
+      "view_count": 67,
+      "answer_count": 0,
+      "community_owned_date": 1387685622,
+      "score": 0,
+      "last_activity_date": 1387618185,
+      "creation_date": 1387618185,
+      "question_id": 16116,
+      "link": "http://codegolf.stackexchange.com/questions/16116/tips-for-golfing-in-f",
+      "title": "Tips for golfing in F#"
+    }
+  ],
+  "has_more": false,
+  "quota_max": 10000,
+  "quota_remaining": 8802
+}"""
+
+    let golfActivity =
+        StackExchangeQuestion { Id = 16116
+                                Site = CodeGolf
+                                Title = "Tips for golfing in F#"
+                                UserDisplayName = "ProgramFOX"
+                                Url = "http://codegolf.stackexchange.com/questions/16116/tips-for-golfing-in-f"
+                                CreationDate = DateTime.unixToUtcDate 1387618185 }
+
 module Twitter =
     let json = toLine """{
   "created_at": "Wed Jan 22 14:34:07 +0000 2014",
