@@ -65,4 +65,6 @@ let fetch config site startDateInclusive =
                        then loop (page+1) result'
                        else result'
         | None -> failwithf "Response code %d" response.StatusCode
-    loop 1 []
+    let questions = loop 1 []
+    do log.Info "Fetched questions for %A: %d" site questions.Length
+    questions

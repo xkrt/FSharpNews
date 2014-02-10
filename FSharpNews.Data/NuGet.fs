@@ -4,8 +4,9 @@ open System
 open Microsoft.FSharp.Data.TypeProviders
 open FSharpNews.Utils
 
-type Configuration = { Url: string }
+let private log = Logger.create "StackExchange"
 
+type Configuration = { Url: string }
 type private NuGet = ODataService<"https://www.nuget.org/api/v2">
 
 let fetch config sinceDateExclusive =
@@ -27,9 +28,9 @@ let fetch config sinceDateExclusive =
         | _ -> result'
 
     let pkgs = loop [] 0
-    pkgs
-    |> List.map (fun p -> NugetPackage { Id = p.Id
-                                         Version = p.NormalizedVersion
-                                         Url = p.GalleryDetailsUrl
-                                         PublishedDate = DateTime(p.Published.Ticks, DateTimeKind.Utc) }
-                          , Serializer.toJson p)
+    do log.Info "Fetched packages: %d" pkgs.Length
+    pkgs |> List.map (fun p -> NugetPackage { Id = p.Id
+                                              Version = p.NormalizedVersion
+                                              Url = p.GalleryDetailsUrl
+                                              PublishedDate = DateTime(p.Published.Ticks, DateTimeKind.Utc) }
+                               , Serializer.toJson p)

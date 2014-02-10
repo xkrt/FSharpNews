@@ -36,7 +36,6 @@ let private stackExchange config =
         let lastQuestionTime = Storage.getTimeOfLastQuestion site
         let startDate = lastQuestionTime.AddSeconds(1.)
         let activitiesWithRaws = StackExchange.fetch config site startDate
-        do log.Info "Fetched questions for %A: %d" site activitiesWithRaws.Length // todo move to module
         do Storage.saveAll activitiesWithRaws
     let repeat = repeatForever (TimeSpan.FromMinutes(5.))
     repeat (fun () -> StackExchange.allSites |> List.iter fetchNewQuestions)
@@ -49,7 +48,6 @@ let private nuget config =
     let fetchNewPackages () =
         let lastPackagePublishedDate = Storage.getTimeOfLastPackage()
         let pkgsWithRaw = fetchSince lastPackagePublishedDate
-        do log.Info "Fetched packages: %d" pkgsWithRaw.Length              // todo move to module
         do Storage.saveAll pkgsWithRaw
     repeatForever (TimeSpan.FromMinutes(5.)) fetchNewPackages
 

@@ -55,7 +55,6 @@ let rec private processStream config save (stream: StreamContent) =
     | TwitterErrorStatus.Success, content, _ when content.IsNullOrWs() ->
         do log.Debug "Status=Success, blank message (keep-alive)"
     | TwitterErrorStatus.Success, content, _ ->
-        let content = content.TrimEnd(char(0x00)) // need only for tests, for some strange reason content always pads with 0x00 to size 8192
         let msg = CommonMessage.Parse content
         match msg.Id, msg.Disconnect with
         | Some _, _ ->
@@ -73,7 +72,7 @@ let rec private processStream config save (stream: StreamContent) =
         | _ ->
             do log.Warn "Status=Success; Unknown message: %s" content
     | status, content, error ->
-        do log.Debug "Status=%A; Error=%O; Content=%s" status error (content.IfNullOrWs("<none>"))
+        do log.Warn "Status=%A; Error=%O; Content=%s" status error (content.IfNullOrWs("<none>"))
 
 and listenStream config save =
     let context = createContext config
