@@ -19,6 +19,8 @@ type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: st
             let iconUrl, iconTitle = match q.Site with
                                      | Stackoverflow -> "http://cdn.sstatic.net/stackoverflow/img/favicon.ico", "StackOverflow"
                                      | Programmers -> "http://cdn.sstatic.net/programmers/img/favicon.ico", "Programmers"
+                                     | CodeReview -> "http://cdn.sstatic.net/codereview/img/favicon.ico", "Code Review"
+                                     | CodeGolf -> "http://cdn.sstatic.net/codegolf/img/favicon.ico", "Programming Puzzles & Code Golf"
             ActivityViewModel(
                 iconUrl = iconUrl,
                 iconTitle = iconTitle,
