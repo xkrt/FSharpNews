@@ -34,3 +34,14 @@ let ``One tweet in stream => one activity in storage``() =
     activities
     |> List.map snd
     |> List.iter (fun addedTime -> Assert.That(addedTime, Is.EqualTo(DateTime.UtcNow).Within(TimeSpan.FromSeconds(15.)), "added time"))
+
+[<Test>]
+let ``Retweets are filtered``() =
+    use tw = TwitterApi.runServer (POST >>= url TwitterApi.path >>== TwitterApi.handle (writeTweet TestData.Twitter.retweetJson))
+    use se = StackExchangeApi.runEmpty()
+    use nu = NuGetApi.runEmpty()
+
+    use puller = DataPullerApp.start()
+    sleep 10
+
+    Storage.getAllActivities().Length |> assertEqual 0

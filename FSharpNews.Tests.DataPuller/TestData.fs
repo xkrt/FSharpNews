@@ -92,7 +92,7 @@ module StackExchange =
                                 Url = "http://programmers.stackexchange.com/questions/218779/is-there-a-way-to-created-nested-computation-expressions"
                                 CreationDate = DateTime.unixToUtcDate 1384788003 }
 
-    let reviewJson = """{
+    let reviewJson = toLine """{
   "items": [
     {
       "tags": [
@@ -131,7 +131,7 @@ module StackExchange =
                                 Url = "http://codereview.stackexchange.com/questions/5115/using-a-function-to-emulate-f-match-in-c"
                                 CreationDate = DateTime.unixToUtcDate 1317564163 }
 
-    let golfJson = """{
+    let golfJson = toLine """{
   "items": [
     {
       "tags": [
@@ -258,6 +258,213 @@ module Twitter =
                 UserId = 404119861L
                 UserScreenName = "OweinReese"
                 CreationDate = DateTime(2014, 1, 22, 14, 34, 7, DateTimeKind.Utc) }
+
+    let retweetJson = toLine """{
+  "created_at": "Wed Jan 22 14:16:39 +0000 2014",
+  "id": 425995429973860352,
+  "id_str": "425995429973860352",
+  "text": "RT @davidalpert: This is impressive: “@dsyme: Seamless integration of code, spreadsheet and data, combining Excel with F#... http://t.co/Ji…",
+  "source": "web",
+  "truncated": false,
+  "in_reply_to_status_id": null,
+  "in_reply_to_status_id_str": null,
+  "in_reply_to_user_id": null,
+  "in_reply_to_user_id_str": null,
+  "in_reply_to_screen_name": null,
+  "user": {
+    "id": 390596620,
+    "id_str": "390596620",
+    "name": "Søren Engel",
+    "screen_name": "soren_engel",
+    "location": "Denmark",
+    "url": null,
+    "description": null,
+    "protected": false,
+    "followers_count": 30,
+    "friends_count": 183,
+    "listed_count": 0,
+    "created_at": "Fri Oct 14 07:00:18 +0000 2011",
+    "favourites_count": 541,
+    "utc_offset": null,
+    "time_zone": null,
+    "geo_enabled": false,
+    "verified": false,
+    "statuses_count": 489,
+    "lang": "en",
+    "contributors_enabled": false,
+    "is_translator": false,
+    "profile_background_color": "C0DEED",
+    "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+    "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+    "profile_background_tile": false,
+    "profile_image_url": "http://pbs.twimg.com/profile_images/3490857112/51f09f2e8b0833be7a16113f759bfd9d_normal.jpeg",
+    "profile_image_url_https": "https://pbs.twimg.com/profile_images/3490857112/51f09f2e8b0833be7a16113f759bfd9d_normal.jpeg",
+    "profile_link_color": "0084B4",
+    "profile_sidebar_border_color": "C0DEED",
+    "profile_sidebar_fill_color": "DDEEF6",
+    "profile_text_color": "333333",
+    "profile_use_background_image": true,
+    "default_profile": true,
+    "default_profile_image": false,
+    "following": null,
+    "follow_request_sent": null,
+    "notifications": null
+  },
+  "geo": null,
+  "coordinates": null,
+  "place": null,
+  "contributors": null,
+  "retweeted_status": {
+    "created_at": "Wed Jan 22 13:43:01 +0000 2014",
+    "id": 425986964681003008,
+    "id_str": "425986964681003008",
+    "text": "This is impressive: “@dsyme: Seamless integration of code, spreadsheet and data, combining Excel with F#... http://t.co/Jim8wNISZf #fsharp”",
+    "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+    "truncated": false,
+    "in_reply_to_status_id": 424653658673131520,
+    "in_reply_to_status_id_str": "424653658673131520",
+    "in_reply_to_user_id": 25663453,
+    "in_reply_to_user_id_str": "25663453",
+    "in_reply_to_screen_name": "dsyme",
+    "user": {
+      "id": 17907937,
+      "id_str": "17907937",
+      "name": "David Alpert",
+      "screen_name": "davidalpert",
+      "location": "Winnipeg, MB, Canada",
+      "url": "http://www.spinthemoose.com/",
+      "description": "husband, father, UX designer, front-end engineer, and software craftsman.",
+      "protected": false,
+      "followers_count": 528,
+      "friends_count": 399,
+      "listed_count": 68,
+      "created_at": "Fri Dec 05 21:03:32 +0000 2008",
+      "favourites_count": 630,
+      "utc_offset": -25200,
+      "time_zone": "Mountain Time (US & Canada)",
+      "geo_enabled": true,
+      "verified": false,
+      "statuses_count": 9187,
+      "lang": "en",
+      "contributors_enabled": false,
+      "is_translator": false,
+      "profile_background_color": "C0DEED",
+      "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+      "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+      "profile_background_tile": false,
+      "profile_image_url": "http://pbs.twimg.com/profile_images/1375779237/David3_cropped_normal.jpg",
+      "profile_image_url_https": "https://pbs.twimg.com/profile_images/1375779237/David3_cropped_normal.jpg",
+      "profile_link_color": "0084B4",
+      "profile_sidebar_border_color": "C0DEED",
+      "profile_sidebar_fill_color": "DDEEF6",
+      "profile_text_color": "333333",
+      "profile_use_background_image": true,
+      "default_profile": true,
+      "default_profile_image": false,
+      "following": null,
+      "follow_request_sent": null,
+      "notifications": null
+    },
+    "geo": null,
+    "coordinates": null,
+    "place": null,
+    "contributors": null,
+    "retweet_count": 2,
+    "favorite_count": 2,
+    "entities": {
+      "hashtags": [
+        {
+          "text": "fsharp",
+          "indices": [
+            131,
+            138
+          ]
+        }
+      ],
+      "symbols": [],
+      "urls": [
+        {
+          "url": "http://t.co/Jim8wNISZf",
+          "expanded_url": "http://bit.ly/1cUI4Kh",
+          "display_url": "bit.ly/1cUI4Kh",
+          "indices": [
+            108,
+            130
+          ]
+        }
+      ],
+      "user_mentions": [
+        {
+          "screen_name": "dsyme",
+          "name": "Don Syme",
+          "id": 25663453,
+          "id_str": "25663453",
+          "indices": [
+            21,
+            27
+          ]
+        }
+      ]
+    },
+    "favorited": false,
+    "retweeted": false,
+    "possibly_sensitive": false,
+    "lang": "en"
+  },
+  "retweet_count": 0,
+  "favorite_count": 0,
+  "entities": {
+    "hashtags": [
+      {
+        "text": "fsharp",
+        "indices": [
+          139,
+          140
+        ]
+      }
+    ],
+    "symbols": [],
+    "urls": [
+      {
+        "url": "http://t.co/Jim8wNISZf",
+        "expanded_url": "http://bit.ly/1cUI4Kh",
+        "display_url": "bit.ly/1cUI4Kh",
+        "indices": [
+          139,
+          140
+        ]
+      }
+    ],
+    "user_mentions": [
+      {
+        "screen_name": "davidalpert",
+        "name": "David Alpert",
+        "id": 17907937,
+        "id_str": "17907937",
+        "indices": [
+          3,
+          15
+        ]
+      },
+      {
+        "screen_name": "dsyme",
+        "name": "Don Syme",
+        "id": 25663453,
+        "id_str": "25663453",
+        "indices": [
+          38,
+          44
+        ]
+      }
+    ]
+  },
+  "favorited": false,
+  "retweeted": false,
+  "possibly_sensitive": false,
+  "filter_level": "medium",
+  "lang": "en"
+}"""
+
 
 module NuGet =
     let emptyXml = """<?xml version="1.0" encoding="utf-8"?>

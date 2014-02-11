@@ -52,27 +52,27 @@ let private parseDate str =
 
 let rec private processStream config save (stream: StreamContent) =
     match stream.Status, stream.Content, stream.Error with
-    | TwitterErrorStatus.Success, content, _ when content.IsNullOrWs() ->
-        do log.Debug "Status=Success, blank message (keep-alive)"
+    | TwitterErrorStatus.Success, content, _ when content.IsNullOrWs() -> do log.Debug "Status=Success, blank message (keep-alive)"
     | TwitterErrorStatus.Success, content, _ ->
         let msg = CommonMessage.Parse content
-        match msg.Id, msg.Disconnect with
-        | Some _, _ ->
+        match msg.Id, msg.Disconnect, msg.Warning with
+        | Some _, _, _ ->
+            do log.Debug "Status=Success; Content=%s" content
             let tweet = TweetMessage.Parse content
-            do log.Info "Status=Success; User=%s; At %s; Text=%s" tweet.User.ScreenName tweet.CreatedAt tweet.Text
-            let activity = (Tweet { Id = tweet.Id
-                                    CreationDate = parseDate tweet.CreatedAt
-                                    Text = tweet.Text
-                                    UserId = tweet.User.Id
-                                    UserScreenName = tweet.User.ScreenName })
-            do save(activity, content)
-        | _, Some disconnect ->
-            do log.Debug "Status=Success, disconnect=%O. Reopening stream..." disconnect
-            listenStream config save
-        | _ ->
-            do log.Warn "Status=Success; Unknown message: %s" content
-    | status, content, error ->
-        do log.Warn "Status=%A; Error=%O; Content=%s" status error (content.IfNullOrWs("<none>"))
+            match tweet.RetweetedStatus with
+            | Some _ -> do log.Info "Id=%d is retweet, skip" tweet.Id
+            | None -> do log.Info "User=%s; At %s; Text=%s" tweet.User.ScreenName tweet.CreatedAt tweet.Text
+                      let activity = (Tweet { Id = tweet.Id
+                                              CreationDate = parseDate tweet.CreatedAt
+                                              Text = tweet.Text
+                                              UserId = tweet.User.Id
+                                              UserScreenName = tweet.User.ScreenName })
+                      do save(activity, content)
+        | _, Some disconnect, _ -> do log.Debug "Status=Success, disconnect=%O. Reopening stream..." disconnect
+                                   listenStream config save
+        | _, _, Some warning -> do log.Warn "Twitter warning: %O" warning
+        | _ -> do log.Warn "Status=Success; Unknown message: %s" content
+    | status, content, error -> do log.Warn "Status=%A; Error=%O; Content=%s" status error (content.IfNullOrWs("<none>"))
 
 and listenStream config save =
     let context = createContext config
