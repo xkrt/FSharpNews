@@ -58,11 +58,8 @@ let main argv =
         |> Async.Ignore
         |> Async.Start
 
-    let start _ =
-        log.Info "Service starting..."
-        do startPullingData()
-        true
-    let stop _ = log.Info "Service stopping..."; true
+    let start _ = startPullingData(); true
+    let stop _ = true
     let runService () = serviceControl start stop
 
     let configureService conf =
@@ -72,6 +69,7 @@ let main argv =
         conf |> startAutomatically
         conf |> dependsOnMongoDB
         conf |> enableServiceRecovery <| restartService 1
+        conf |> useLog4Net
         conf |> addCommandLineDefinition "stackExchangeUrl" (fun url -> seUrl := Some url)
         conf |> addCommandLineDefinition "twitterUrl" (fun url -> twiUrl := Some url)
         conf |> addCommandLineDefinition "nugetUrl" (fun url -> nuUrl := Some url)

@@ -32,6 +32,8 @@ let description str (conf: HostConfigurator) =
 let serviceName str (conf: HostConfigurator) =
     conf.SetServiceName str
 
+let useLog4Net (conf: HostConfigurator) = conf.UseLog4Net()
+
 let startAutomatically (conf : HostConfigurator) =
     conf.StartAutomatically() |> ignore
 
