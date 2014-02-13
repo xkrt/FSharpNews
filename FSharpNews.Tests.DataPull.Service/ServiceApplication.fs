@@ -1,18 +1,18 @@
-﻿module FSharpNews.Tests.DataPuller.DataPullerApp
+﻿module FSharpNews.Tests.DataPull.Service.ServiceApplication
 
 open System
 open System.Diagnostics
 open FSharpNews.Tests.Core
 
 let private dataPullerExePath =
-    let relPath = IO.Path.Combine(Environment.executingAssemblyDirPath(), "../../../FSharpNews.DataPuller/bin/Debug/FSharpNews.DataPuller.exe")
+    let relPath = IO.Path.Combine(Environment.executingAssemblyDirPath(), "../../../FSharpNews.DataPull.Service/bin/Debug/FSharpNews.DataPull.Service.exe")
     IO.Path.GetFullPath(relPath)
 
 let private stop (proc: Process) =
     do proc.CloseMainWindow() |> ignore
     let exitTimeout = TimeSpan.FromSeconds(3.).TotalMilliseconds |> int
     if proc.WaitForExit(exitTimeout) = false
-    then failwithf "DataPuller exit timeout"
+    then failwithf "FSharpNews.DataPull.Service exit timeout"
 
 let start () =
     let args = [ sprintf "-stackExchangeUrl:%s" StackExchangeApi.baseUrl

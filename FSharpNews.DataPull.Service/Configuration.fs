@@ -1,4 +1,4 @@
-﻿module FSharpNews.DataPuller.Configuration
+﻿module FSharpNews.DataPull.Service.Configuration
 
 open System.Configuration
 open FSharpNews.Data

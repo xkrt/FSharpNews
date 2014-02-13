@@ -1,4 +1,4 @@
-﻿module FSharpNews.Tests.DataPuller.TestData
+﻿module FSharpNews.Tests.DataPull.Service.TestData
 
 open System
 open System.Text.RegularExpressions

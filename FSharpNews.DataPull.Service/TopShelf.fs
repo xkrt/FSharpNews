@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-module FSharpNews.DataPuller.TopShelf
+﻿module FSharpNews.DataPull.Service.TopShelf
 
 open System
 open Topshelf

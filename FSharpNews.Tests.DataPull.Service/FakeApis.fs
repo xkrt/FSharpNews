@@ -1,4 +1,4 @@
-﻿namespace FSharpNews.Tests.DataPuller
+﻿namespace FSharpNews.Tests.DataPull.Service
 
 open System
 open Suave.Http

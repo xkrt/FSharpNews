@@ -1,4 +1,4 @@
-﻿module FSharpNews.Tests.DataPuller.NuGetTests
+﻿module FSharpNews.Tests.DataPull.Service.NuGetTests
 
 open System
 open NUnit.Framework
@@ -19,7 +19,7 @@ let ``One package returned by api => one activity in storage``() =
     use tw = TwitterApi.runEmpty()
     use se = StackExchangeApi.runEmpty()
 
-    use puller = DataPullerApp.start()
+    use puller = ServiceApplication.start()
     sleep 10
 
     let activities = Storage.getAllActivities()
@@ -29,4 +29,4 @@ let ``One package returned by api => one activity in storage``() =
 
     activities
     |> List.map snd
-    |> List.iter (fun addedTime -> Assert.That(addedTime, Is.EqualTo(DateTime.UtcNow).Within(TimeSpan.FromSeconds(15.)), "added time"))
+    |> List.iter (assertEqualDateWithin DateTime.UtcNow (TimeSpan.FromSeconds(15.)))

@@ -1,4 +1,4 @@
-﻿module FSharpNews.Tests.DataPuller.TwitterTests
+﻿module FSharpNews.Tests.DataPull.Service.TwitterTests
 
 open System
 open NUnit.Framework
@@ -23,7 +23,7 @@ let ``One tweet in stream => one activity in storage``() =
     use se = StackExchangeApi.runEmpty()
     use nu = NuGetApi.runEmpty()
 
-    use puller = DataPullerApp.start()
+    use puller = ServiceApplication.start()
     sleep 10
 
     let activities = Storage.getAllActivities()
@@ -33,7 +33,7 @@ let ``One tweet in stream => one activity in storage``() =
 
     activities
     |> List.map snd
-    |> List.iter (fun addedTime -> Assert.That(addedTime, Is.EqualTo(DateTime.UtcNow).Within(TimeSpan.FromSeconds(15.)), "added time"))
+    |> List.iter (assertEqualDateWithin DateTime.UtcNow (TimeSpan.FromSeconds(15.)))
 
 [<Test>]
 let ``Retweets are filtered``() =
@@ -41,7 +41,7 @@ let ``Retweets are filtered``() =
     use se = StackExchangeApi.runEmpty()
     use nu = NuGetApi.runEmpty()
 
-    use puller = DataPullerApp.start()
+    use puller = ServiceApplication.start()
     sleep 10
 
     Storage.getAllActivities().Length |> assertEqual 0

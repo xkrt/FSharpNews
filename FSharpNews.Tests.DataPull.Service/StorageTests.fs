@@ -1,4 +1,4 @@
-﻿module FSharpNews.Tests.DataPuller.StorageTests
+﻿module FSharpNews.Tests.DataPull.Service.StorageTests
 
 open System
 open System.Configuration

@@ -1,9 +1,10 @@
-﻿module FSharpNews.DataPuller.Program
+﻿module FSharpNews.DataPull.Service.Program
 
 open System
 open System.Threading
 open FSharpNews.Data
 open FSharpNews.Utils
+open FSharpNews.DataPull.Service.TopShelf
 
 do Logger.configure()
 let private log = Logger.create "Program"
