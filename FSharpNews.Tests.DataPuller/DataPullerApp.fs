@@ -15,7 +15,9 @@ let private stop (proc: Process) =
     then failwithf "DataPuller exit timeout"
 
 let start () =
-    let args = ["-test"; StackExchangeApi.baseUrl; TwitterApi.baseUrl; NuGetApi.baseUrl ] |> String.concat " "
+    let args = [ sprintf "-stackExchangeUrl:%s" StackExchangeApi.baseUrl
+                 sprintf "-twitterUrl:%s" TwitterApi.baseUrl
+                 sprintf "-nugetUrl:%s" NuGetApi.baseUrl ] |> String.concat " "
     let info = ProcessStartInfo(dataPullerExePath, args)
     let proc = Process.Start(info)
     { new IDisposable with member this.Dispose() = stop proc }

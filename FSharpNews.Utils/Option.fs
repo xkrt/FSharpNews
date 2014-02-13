@@ -3,6 +3,9 @@ module FSharpNews.Utils.Option
 
 open System
 
+let inline fill defaultValue (value: 'T option) =
+    defaultArg value defaultValue
+
 let fromNullable (n: _ Nullable) =
     if n.HasValue
         then Some n.Value
