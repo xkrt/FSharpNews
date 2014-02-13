@@ -15,7 +15,7 @@ let dependsOn (conf : HostConfigurator) name =
     conf.DependsOn name |> ignore
 
 let dependsOnMongoDB (conf : HostConfigurator) =
-    "Mongo DB" |> dependsOn conf
+    "MongoDB" |> dependsOn conf
 
 let enableServiceRecovery (conf : HostConfigurator) f =
     conf.EnableServiceRecovery(new Action<_>(f)) |> ignore
