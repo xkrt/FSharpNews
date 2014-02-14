@@ -37,12 +37,16 @@ let getRowItems (row: IWebElement) =
 
 let F x = fun () -> x
 
-let checkMatch ((iconSrc,linkText,linkHref,ago), (row: IWebElement)) =
+let checkMatchRow ((iconSrc,linkText,linkHref,ago), (row: IWebElement)) =
     let img, link, date = getRowItems row
     img?src |> assertEqual iconSrc
     F link |> checkTextIs linkText
     link?href |> assertEqual linkHref
     F date |> checkTextIs ago
+
+let checkMatchText (expectedLinkText, row: IWebElement) =
+    let _, link, _ = getRowItems row
+    F link |> checkTextIs expectedLinkText
 
 let sleepMs (ms: int) = Threading.Thread.Sleep(ms)
 let waitAjax() = sleepMs 5000
@@ -87,7 +91,7 @@ let ``Order by creation date descending``() =
     do Page.go()
     Page.rows()
     |> List.zip expected
-    |> List.iter checkMatch
+    |> List.iter checkMatchRow
 
 [<Test>]
 let ``Ajax news hidden with bar``() =
@@ -110,7 +114,7 @@ let ``Ajax news hidden with bar``() =
                     soIcoUrl, (sprintf "%s: %s" soQuest.UserDisplayName soQuest.Title), soQuest.Url, "a few seconds ago"]
     Page.rows()
     |> List.zip expected
-    |> List.iter checkMatch
+    |> List.iter checkMatchRow
 
 [<Test>]
 let ``Hidden news count in title``() =
@@ -132,7 +136,8 @@ let ``Hidden news count in title``() =
 [<Test>]
 let ``Infinite scroll``() =
     let savedQuests =
-        [1..210]
+        let pageSize = 100
+        [1..pageSize*2 + 10]
         |> List.map (fun i -> { soQuest with Id = i
                                              Title = sprintf "Test question #%d" i
                                              CreationDate = soQuest.CreationDate.AddMilliseconds(float i) })
@@ -143,29 +148,29 @@ let ``Infinite scroll``() =
     let takeExpected n =
         savedQuests
         |> List.rev
-        |> Seq.map (fun q -> soIcoUrl, (sprintf "%s: %s" q.UserDisplayName q.Title), q.Url, "a few seconds ago")
+        |> Seq.map (fun q -> sprintf "%s: %s" q.UserDisplayName q.Title)
         |> Seq.take n
 
     do Page.go()
-    
+
     Page.rows().Length |> assertEqual 100
     Page.rows()
     |> Seq.zip (takeExpected 100)
-    |> Seq.iter checkMatch
+    |> Seq.iter checkMatchText
     checkNotDisplayed Page.noMoreNews
 
     do scrollToBottom()
     Page.rows().Length |> assertEqual 200
     Page.rows()
     |> Seq.zip (takeExpected 200)
-    |> Seq.iter checkMatch
+    |> Seq.iter checkMatchText
     checkNotDisplayed Page.noMoreNews
 
     do scrollToBottom()
     Page.rows().Length |> assertEqual 210
     Page.rows()
     |> Seq.zip (takeExpected 210)
-    |> Seq.iter checkMatch
+    |> Seq.iter checkMatchText
     checkDisplayed Page.noMoreNews
 
 [<Test>]

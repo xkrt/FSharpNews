@@ -46,9 +46,9 @@ let waitTitle text = waitFor (fun () -> driver.Title |> assertEqual text)
 
 let scrollToBottom () =
     let script =
-        """var targetHeight = $(document).height()
+        """var targetHeight = $(document).height();
            while($(window).scrollTop() + $(window).height() < targetHeight)
-               scrollTo(0, $(window).scrollTop() + $(window).height() + 100)"""
+               scrollTo(0, $(window).scrollTop() + $(window).height() + 50)"""
     jsexecutor.ExecuteScript(script) |> ignore
 
 let (?) (element: IWebElement) attr = element.GetAttribute(attr)
