@@ -14,6 +14,7 @@ type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: st
     member val AddedDateUnixOffset = addedDateUnixOffset with get
 
     static member Create(activity: Activity, added: DateTime) =
+        let decode = Net.WebUtility.HtmlDecode
         match activity with
         | StackExchangeQuestion q ->
             let iconUrl, iconTitle = match q.Site with
@@ -24,7 +25,7 @@ type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: st
             ActivityViewModel(
                 iconUrl = iconUrl,
                 iconTitle = iconTitle,
-                text = sprintf "%s: %s" q.UserDisplayName (Net.WebUtility.HtmlDecode q.Title),
+                text = sprintf "%s: %s" q.UserDisplayName (decode q.Title),
                 url = q.Url,
                 creationDateUnix = DateTime.toUnix q.CreationDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
@@ -32,7 +33,7 @@ type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: st
             ActivityViewModel(
                 iconUrl = "http://abs.twimg.com/favicons/favicon.ico",
                 iconTitle = "Twitter",
-                text = sprintf "%s: %s" t.UserScreenName t.Text,
+                text = sprintf "%s: %s" t.UserScreenName (decode t.Text),
                 url = sprintf "https://twitter.com/%s/status/%d" t.UserScreenName t.Id,
                 creationDateUnix = DateTime.toUnix t.CreationDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)

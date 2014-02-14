@@ -11,6 +11,7 @@ open FSharpNews.Tests.Core
 let Setup() = do Storage.deleteAll()
 
 let saveQuest q = Storage.save(StackExchangeQuestion q, "")
+let saveTweet t = Storage.save(Tweet t, "")
 
 let soIcoUrl = "http://cdn.sstatic.net/stackoverflow/img/favicon.ico"
 let pIcoUrl = "http://cdn.sstatic.net/programmers/img/favicon.ico"
@@ -27,6 +28,12 @@ let pQuest = { Id = 2
                UserDisplayName = "User2"
                Url = "http://programmers.stackexchange.com/questions/2/test-programmers-question"
                CreationDate = DateTime.UtcNow }
+
+let tweet = { Id = 3L
+              Text = "Test tweet"
+              UserId = 42L
+              UserScreenName = "TestUser"
+              CreationDate = DateTime.UtcNow }
 
 let getRowItems (row: IWebElement) =
     match row |> findElements "td" with
@@ -180,9 +187,12 @@ let ``Loader initially hidden``() =
     checkNotDisplayed Page.loader
 
 [<Test>]
-let ``Stackexchange question title should be html decoded``() =
-    let quest = { soQuest with UserDisplayName = "Jack"; Title = "Converting a Union&lt;&#39;a&gt; to a Union&lt;&#39;b&gt;" }
-    do saveQuest quest
+let ``Stackexchange question title and twitter tweet should be html decoded``() =
+    do saveQuest { soQuest with UserDisplayName = "Jack"; Title = "Converting a Union&lt;&#39;a&gt; to a Union&lt;&#39;b&gt;" }
+    do saveTweet { tweet with UserScreenName = "Jack"; Text = "Converting a Union&lt;&#39;a&gt; to a Union&lt;&#39;b&gt;" }
+
     do Page.go()
-    let _, link, _ = Page.rows().Head |> getRowItems
-    F link |> checkTextIs "Jack: Converting a Union<'a> to a Union<'b>"
+
+    Page.rows()
+    |> Seq.map getRowItems
+    |> Seq.iter (fun (_, link, _) -> F link |> checkTextIs "Jack: Converting a Union<'a> to a Union<'b>")
