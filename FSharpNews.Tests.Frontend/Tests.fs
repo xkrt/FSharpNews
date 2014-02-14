@@ -28,17 +28,21 @@ let pQuest = { Id = 2
                Url = "http://programmers.stackexchange.com/questions/2/test-programmers-question"
                CreationDate = DateTime.UtcNow }
 
+let getRowItems (row: IWebElement) =
+    match row |> findElements "td" with
+    | iconTd::linkTd::dateTd::[] -> iconTd |> findElement "img",
+                                    linkTd |> findElement "a",
+                                    dateTd
+    | _ -> failwithf "Three cells in row expected"
+
+let F x = fun () -> x
+
 let checkMatch ((iconSrc,linkText,linkHref,ago), (row: IWebElement)) =
-    let fn x = fun () -> x
-    let img, link, date = match row |> findElements "td" with
-                          | iconTd::linkTd::dateTd::[] -> iconTd |> findElement "img",
-                                                          linkTd |> findElement "a",
-                                                          dateTd
-                          | _ -> failwithf "Three cells in row expected"
+    let img, link, date = getRowItems row
     img?src |> assertEqual iconSrc
-    fn link |> checkTextIs linkText
+    F link |> checkTextIs linkText
     link?href |> assertEqual linkHref
-    fn date |> checkTextIs ago
+    F date |> checkTextIs ago
 
 let sleepMs (ms: int) = Threading.Thread.Sleep(ms)
 let waitAjax() = sleepMs 5000
@@ -169,3 +173,11 @@ let ``Loader initially hidden``() =
     do saveQuest soQuest
     do Page.go()
     checkNotDisplayed Page.loader
+
+[<Test>]
+let ``Stackexchange question title should be html decoded``() =
+    let quest = { soQuest with UserDisplayName = "Jack"; Title = "Converting a Union&lt;&#39;a&gt; to a Union&lt;&#39;b&gt;" }
+    do saveQuest quest
+    do Page.go()
+    let _, link, _ = Page.rows().Head |> getRowItems
+    F link |> checkTextIs "Jack: Converting a Union<'a> to a Union<'b>"

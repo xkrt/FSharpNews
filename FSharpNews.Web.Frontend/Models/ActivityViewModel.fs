@@ -24,7 +24,7 @@ type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: st
             ActivityViewModel(
                 iconUrl = iconUrl,
                 iconTitle = iconTitle,
-                text = sprintf "%s: %s" q.UserDisplayName q.Title,
+                text = sprintf "%s: %s" q.UserDisplayName (Net.WebUtility.HtmlDecode q.Title),
                 url = q.Url,
                 creationDateUnix = DateTime.toUnix q.CreationDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
