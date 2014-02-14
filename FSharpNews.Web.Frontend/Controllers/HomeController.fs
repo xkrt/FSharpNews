@@ -9,10 +9,10 @@ open FSharpNews.Web.Frontend.Models
 type HomeController() =
     inherit Controller()
 
-#if RELEASE
-    let requestNewsPeriod = 60 // secs
-#else
+#if DEBUG
     let requestNewsPeriod = 5 // secs
+#else
+    let requestNewsPeriod = 60 // secs
 #endif
 
     member this.Index () =
