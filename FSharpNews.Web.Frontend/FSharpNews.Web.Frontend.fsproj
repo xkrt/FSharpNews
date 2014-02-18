@@ -113,9 +113,10 @@
     </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>
+    <Content Include="Content\Images\loader.gif" />
+    <Content Include="Content\Images\favicon152.png" />
+    <Content Include="Content\Images\Web.config" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\loader.gif" />
-    <Content Include="Content\favicon152.png" />
     <None Include="Content\bootstrap-theme.min.css" />
     <None Include="Content\bootstrap-theme.css" />
     <None Include="Content\bootstrap.min.css" />

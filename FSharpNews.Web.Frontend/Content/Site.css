@@ -43,6 +43,6 @@
     display: block;
     width: 32px;
     height: 32px;
-    background: url(/Content/loader.gif) center center no-repeat;
+    background: url(/Content/Images/loader.gif) center center no-repeat;
     margin: 0 auto;
 }
