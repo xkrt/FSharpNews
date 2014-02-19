@@ -23,19 +23,34 @@
 }
 
 /* table */
+@media (max-width: 767px) {
+    #news {
+        table-layout: fixed;
+    }
+}
+
 #news tr td:first-child {
     padding-right: 10px;
-    width: 1%;
+}
+@media (max-width: 767px) {
+    #news tr td:first-child {
+        width: 26px;
+    }
+}
+
+#news tr td:first-child img {
+    height: 16px;
+    width: 16px;
 }
 
 #news tr td:last-child {
     white-space: nowrap;
-    width: 1%;
 }
-
-.activityIcon {
-    height: 16px;
-    width: 16px;
+@media (max-width: 767px) {
+    #news tr td:last-child {
+        white-space: normal;
+        width: 70px;
+    }
 }
 
 /* loader */
