@@ -54,6 +54,7 @@
 }
 @media (max-width: 767px) {
     #news tr td:last-child {
+        font-size: 75%;
         white-space: normal;
         width: 70px;
     }
