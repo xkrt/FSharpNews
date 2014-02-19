@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>F# News</title>
     <link rel="apple-touch-icon-precomposed" href="/Content/Images/favicon152.png">
+
     @Styles.Render("~/Content/css/bootstrap")
     @Styles.Render("~/Content/css/fsharpnews")
+
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
@@ -22,13 +24,22 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1><strong>F# News</strong></h1>
-            @RenderSection("header", required: false)
+            <div class="pull-left">
+                <h1><strong>F# News</strong></h1>
+                @RenderSection("header", required: false)
+            </div>
+            <div class="hidden-xs pull-right small text-muted">
+                Created by <a href="https://twitter.com/xkrt">Pavel Martynov</a>
+                | <a href="https://github.com/xkrt/FSharpNews">Source code</a>
+            </div>
+            <div class="clearfix"></div>
         </header>
+
         <article style="display: none" data-bind="visible: true">
             @RenderBody()
         </article>
     </div>
+
     @Scripts.Render("~/bundles/js/jquery")
     @Scripts.Render("~/bundles/js/knockout")
     @Scripts.Render("~/bundles/js/moment")
