@@ -50,6 +50,7 @@
 }
 
 #news tr td:last-child {
+    text-align: right;
     white-space: nowrap;
 }
 @media (max-width: 767px) {
