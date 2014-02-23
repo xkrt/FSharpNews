@@ -45,3 +45,14 @@ let ``Retweets are filtered``() =
     sleep 10
 
     Storage.getAllActivities().Length |> assertEqual 0
+
+[<Test>]
+let ``Replies are filtered``() =
+    use tw = TwitterApi.runServer (POST >>= url TwitterApi.path >>== TwitterApi.handle (writeTweet TestData.Twitter.replyJson))
+    use se = StackExchangeApi.runEmpty()
+    use nu = NuGetApi.runEmpty()
+
+    use puller = ServiceApplication.start()
+    sleep 10
+
+    Storage.getAllActivities().Length |> assertEqual 0

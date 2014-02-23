@@ -59,15 +59,16 @@ let rec private processStream config save (stream: StreamContent) =
         | Some _, _, _ ->
             do log.Debug "Status=Success; Content=%s" content
             let tweet = TweetMessage.Parse content
-            match tweet.RetweetedStatus with
-            | Some _ -> do log.Info "Id=%d is retweet, skip" tweet.Id
-            | None -> do log.Info "User=%s; At %s; Text=%s" tweet.User.ScreenName tweet.CreatedAt tweet.Text
-                      let activity = (Tweet { Id = tweet.Id
-                                              CreationDate = parseDate tweet.CreatedAt
-                                              Text = tweet.Text
-                                              UserId = tweet.User.Id
-                                              UserScreenName = tweet.User.ScreenName })
-                      do save(activity, content)
+            match tweet.RetweetedStatus, tweet.InReplyToStatusId.Number with
+            | Some _, _ -> do log.Info "Id=%d is retweet, skip" tweet.Id
+            | _, Some _ -> do log.Info "Id=%d is reply, skip" tweet.Id
+            | None, None -> do log.Info "User=%s; At %s; Text=%s" tweet.User.ScreenName tweet.CreatedAt tweet.Text
+                            let activity = (Tweet { Id = tweet.Id
+                                                    CreationDate = parseDate tweet.CreatedAt
+                                                    Text = tweet.Text
+                                                    UserId = tweet.User.Id
+                                                    UserScreenName = tweet.User.ScreenName })
+                            do save(activity, content)
         | _, Some disconnect, _ -> do log.Debug "Status=Success, disconnect=%O. Reopening stream..." disconnect
                                    listenStream config save
         | _, _, Some warning -> do log.Warn "Twitter warning: %O" warning

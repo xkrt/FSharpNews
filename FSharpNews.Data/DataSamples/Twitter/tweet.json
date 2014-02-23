@@ -279,4 +279,92 @@
   "possibly_sensitive": false,
   "filter_level": "medium",
   "lang": "en"
+},
+{
+  "created_at": "Sun Feb 23 09:02:11 +0000 2014",
+  "id": 437512703427764224,
+  "id_str": "437512703427764224",
+  "text": "@bradwilson If you ever solve this then please tell the #fsharp community how.",
+  "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+  "truncated": false,
+  "in_reply_to_status_id": 437421541031022592,
+  "in_reply_to_status_id_str": "437421541031022592",
+  "in_reply_to_user_id": 988341,
+  "in_reply_to_user_id_str": "988341",
+  "in_reply_to_screen_name": "bradwilson",
+  "user": {
+    "id": 22477880,
+    "id_str": "22477880",
+    "name": "Steffen Forkmann",
+    "screen_name": "sforkmann",
+    "location": "Essen / Germany",
+    "url": "http://www.navision-blog.de",
+    "description": "F# and Dynamics NAV developer, blogger and sometimes speaker. Creator of FAKE - F# Make and NaturalSpec. MVP for F#.",
+    "protected": false,
+    "followers_count": 1147,
+    "friends_count": 665,
+    "listed_count": 81,
+    "created_at": "Mon Mar 02 12:04:39 +0000 2009",
+    "favourites_count": 202,
+    "utc_offset": 3600,
+    "time_zone": "Berlin",
+    "geo_enabled": true,
+    "verified": false,
+    "statuses_count": 11942,
+    "lang": "en",
+    "contributors_enabled": false,
+    "is_translator": false,
+    "is_translation_enabled": false,
+    "profile_background_color": "EDECE9",
+    "profile_background_image_url": "http://abs.twimg.com/images/themes/theme3/bg.gif",
+    "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme3/bg.gif",
+    "profile_background_tile": false,
+    "profile_image_url": "http://pbs.twimg.com/profile_images/1280550984/buddy_lueneburg_normal.jpg",
+    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1280550984/buddy_lueneburg_normal.jpg",
+    "profile_link_color": "088253",
+    "profile_sidebar_border_color": "D3D2CF",
+    "profile_sidebar_fill_color": "E3E2DE",
+    "profile_text_color": "634047",
+    "profile_use_background_image": true,
+    "default_profile": false,
+    "default_profile_image": false,
+    "following": null,
+    "follow_request_sent": null,
+    "notifications": null
+  },
+  "geo": null,
+  "coordinates": null,
+  "place": null,
+  "contributors": null,
+  "retweet_count": 0,
+  "favorite_count": 0,
+  "entities": {
+    "hashtags": [
+      {
+        "text": "fsharp",
+        "indices": [
+          56,
+          63
+        ]
+      }
+    ],
+    "symbols": [],
+    "urls": [],
+    "user_mentions": [
+      {
+        "screen_name": "bradwilson",
+        "name": "Brad Wilson",
+        "id": 988341,
+        "id_str": "988341",
+        "indices": [
+          0,
+          11
+        ]
+      }
+    ]
+  },
+  "favorited": false,
+  "retweeted": false,
+  "filter_level": "medium",
+  "lang": "en"
 }]
