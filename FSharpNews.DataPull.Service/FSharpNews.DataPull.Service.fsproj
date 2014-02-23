@@ -76,10 +76,11 @@
     <None Include="Log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Production.Settings.config">
+    <None Include="App.config" />
+    <None Include="Settings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="App.config" />
+    <None Include="Settings.template.config" />
     <Compile Include="TopShelf.fs" />
     <Compile Include="Configuration.fs" />
     <Compile Include="Program.fs" />

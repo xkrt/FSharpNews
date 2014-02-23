@@ -3,8 +3,7 @@
 packages/
 *.suo
 *.user
-Production.Settings.config
-chromedriver*
+Settings.config
 FSharpNews.Web.Frontend/Content/bootstrap*
 FSharpNews.Web.Frontend/fonts/glyphicons-halflings-regular.*
 FSharpNews.Web.Frontend/Scripts/bootstrap.*
