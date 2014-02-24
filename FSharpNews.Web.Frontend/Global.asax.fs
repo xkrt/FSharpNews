@@ -7,9 +7,7 @@ open System.Web.Http
 open System.Web.Mvc
 open System.Web.Routing
 open System.Web.Optimization
-
-// todo handle unhandled exceptions
-// todo setup logging
+open FSharpNews.Utils
 
 type BundleConfig() =
     static member RegisterBundles (bundles:BundleCollection) =
@@ -39,6 +37,9 @@ type HttpRoute = { controller: string
 type Global() =
     inherit System.Web.HttpApplication()
 
+    do Logger.configure()
+    let log = Logger.create "Program"
+
     static member RegisterWebApi(config: HttpConfiguration) =
         config.MapHttpAttributeRoutes()
         config.Routes.MapHttpRoute(
@@ -58,8 +59,18 @@ type Global() =
         ) |> ignore
 
     member x.Application_Start() =
+        log.Info "Application start"
+        do AppDomain.CurrentDomain.UnhandledException.Add(fun e ->
+            let log = Logger.create "Unhandled"
+            if (e.ExceptionObject :? Exception)
+            then log.Error "Domain unhandled exception of type %s occured (%s)" (e.GetType().Name) (e.ExceptionObject.ToString())
+            else log.Error "Unhandled non-CLR exception occured (%s)" (e.ExceptionObject.ToString()))
+
         AreaRegistration.RegisterAllAreas()
         GlobalConfiguration.Configure(Action<_> Global.RegisterWebApi)
         Global.RegisterFilters(GlobalFilters.Filters)
         Global.RegisterRoutes(RouteTable.Routes)
         BundleConfig.RegisterBundles BundleTable.Bundles
+
+    member x.Application_End() =
+        log.Info "Application end"
