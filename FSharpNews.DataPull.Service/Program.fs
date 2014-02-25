@@ -6,14 +6,9 @@ open FSharpNews.Data
 open FSharpNews.Utils
 open FSharpNews.DataPull.Service.TopShelf
 
-do Logger.configure()
 let private log = Logger.create "Program"
 
-do AppDomain.CurrentDomain.UnhandledException.Add(fun e ->
-    let log = Logger.create "Unhandled"
-    if (e.ExceptionObject :? Exception)
-    then log.Error "Domain unhandled exception of type %s occured (%s)" (e.GetType().Name) (e.ExceptionObject.ToString())
-    else log.Error "Unhandled non-CLR exception occured (%s)" (e.ExceptionObject.ToString()))
+do AppDomain.CurrentDomain.UnhandledException.Add UnhandledExceptionLogger.handle
 
 let private repeatForever (interval: TimeSpan) fn =
     async { let rec loop () =
@@ -69,7 +64,7 @@ let main argv =
         conf |> startAutomatically
         conf |> dependsOnMongoDB
         conf |> enableServiceRecovery <| restartService 1
-        conf |> useLog4Net
+        conf |> useNLog
         conf |> addCommandLineDefinition "stackExchangeUrl" (fun url -> seUrl := Some url)
         conf |> addCommandLineDefinition "twitterUrl" (fun url -> twiUrl := Some url)
         conf |> addCommandLineDefinition "nugetUrl" (fun url -> nuUrl := Some url)

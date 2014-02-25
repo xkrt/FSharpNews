@@ -37,7 +37,6 @@ type HttpRoute = { controller: string
 type Global() =
     inherit System.Web.HttpApplication()
 
-    do Logger.configure()
     let log = Logger.create "Program"
 
     static member RegisterWebApi(config: HttpConfiguration) =
@@ -60,11 +59,7 @@ type Global() =
 
     member x.Application_Start() =
         log.Info "Application start"
-        do AppDomain.CurrentDomain.UnhandledException.Add(fun e ->
-            let log = Logger.create "Unhandled"
-            if (e.ExceptionObject :? Exception)
-            then log.Error "Domain unhandled exception of type %s occured (%s)" (e.GetType().Name) (e.ExceptionObject.ToString())
-            else log.Error "Unhandled non-CLR exception occured (%s)" (e.ExceptionObject.ToString()))
+        do AppDomain.CurrentDomain.UnhandledException.Add UnhandledExceptionLogger.handle
 
         AreaRegistration.RegisterAllAreas()
         GlobalConfiguration.Configure(Action<_> Global.RegisterWebApi)
