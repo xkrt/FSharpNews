@@ -4,10 +4,10 @@ open System
 open Microsoft.FSharp.Data.TypeProviders
 open FSharpNews.Utils
 
-let private log = Logger.create "StackExchange"
+let private log = Logger.create "NuGet"
 
 type Configuration = { Url: string }
-type private NuGet = ODataService<"https://www.nuget.org/api/v2">
+type private NuGet = ODataService<"http://www.nuget.org/api/v2">
 
 let fetch config sinceDateExclusive =
     let context = NuGet.GetDataContext(Uri config.Url)

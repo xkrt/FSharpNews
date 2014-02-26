@@ -10,3 +10,4 @@ FSharpNews.Web.Frontend/Scripts/bootstrap.*
 FSharpNews.Web.Frontend/Scripts/jquery*
 FSharpNews.Web.Frontend/Scripts/knockout-*
 FSharpNews.Web.Frontend/Scripts/moment*
+FSharpNews.Web.Frontend/Logs/*
