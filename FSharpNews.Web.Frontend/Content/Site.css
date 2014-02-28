@@ -8,6 +8,10 @@
     display: inline;
 }
 
+.smallest {
+    font-size: 70%;
+}
+
 @media (max-width: 767px) {
     #updated {
         font-size: 75%;
