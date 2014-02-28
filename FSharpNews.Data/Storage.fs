@@ -147,40 +147,32 @@ let getTimeOfLastPackage () =
     | Some (NugetPackage pkg, _) -> pkg.PublishedDate
     | _ -> DateTime(2014, 1, 1, 0, 0, 0, DateTimeKind.Utc) // todo extract to var
 
-let getTopActivitiesByCreation count =
-    let cursor = activities
-                    .FindAll()
-                    .SetSortOrder(SortBy.Descending("activity.date"))
-                    .SetLimit(count)
+let mapToActivities cursor =
     cursor
     |> Seq.cast<BsonDocument>
     |> Seq.map mapFromDocument
     |> Seq.toList
 
-let getAllActivities () =
-    activities.FindAll()
-    |> Seq.cast<BsonDocument>
-    |> Seq.map mapFromDocument
-    |> Seq.toList
+let getTopActivitiesByCreation count =
+    activities
+        .FindAll()
+        .SetSortOrder(SortBy.Descending("activity.date"))
+        .SetLimit(count)
+    |> mapToActivities
+
+let getAllActivities () = activities.FindAll() |> mapToActivities
 
 let getActivitiesAddedSince (dtExclusive: DateTime) =
-    let cursor =
-        activities
-            .Find(Query.GT("addedDate", BsonDateTime dtExclusive))
-            .SetSortOrder(SortBy.Descending "activity.date")
-    cursor
-    |> Seq.cast<BsonDocument>
-    |> Seq.map mapFromDocument
-    |> Seq.toList
+    activities
+        .Find(Query.GT("addedDate", BsonDateTime dtExclusive))
+        .SetSortOrder(SortBy.Descending "activity.date")
+    |> mapToActivities
 
 let getActivitiesAddedEarlier count (dtExclusive: DateTime) =
-    let cursor = activities.Find(Query.LT("addedDate", BsonDateTime dtExclusive))
-                           .SetSortOrder(SortBy.Descending "activity.date")
-                           .SetLimit(count)
-    cursor // todo: extract function
-    |> Seq.cast<BsonDocument>
-    |> Seq.map mapFromDocument
-    |> Seq.toList
+    activities.Find(Query.LT("addedDate", BsonDateTime dtExclusive))
+                        .SetSortOrder(SortBy.Descending "activity.date")
+                        .SetLimit(count)
+    |> mapToActivities
 
 let deleteAll () =
     do activities.RemoveAll() |> ignore

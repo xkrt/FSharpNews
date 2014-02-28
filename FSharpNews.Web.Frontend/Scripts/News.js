@@ -69,9 +69,9 @@ function PageViewModel(config) {
     this.requestNews = function() {
         $.get('/api/news/since', { time: this._getOldestActivityAddedStamp() })
             .done(function(activities) {
-                var vms = activities.map(buildActivityViewModel);
-                vms.reverse();
-                vms.forEach(function(avm) { self.HiddenNews.unshift(avm); });
+                activities
+                    .map(buildActivityViewModel)
+                    .forEach(function(avm) { self.HiddenNews.unshift(avm); });
                 setTitleCount(self.HiddenNews());
             }.bind(this))
             .done(function() { self.UpdatedDate(moment()); })

@@ -56,7 +56,7 @@ let checkMatchText (expectedLinkText, row: IWebElement) =
     F link |> checkTextIs expectedLinkText
 
 let sleepMs (ms: int) = Threading.Thread.Sleep(ms)
-let waitAjax() = sleepMs 5000
+let waitAjax() = sleepMs 5500
 
 
 module Page =
@@ -96,6 +96,27 @@ let ``Order by creation date descending``() =
                     soIcoUrl, "User1: Old", soQuest.Url, "2 hours ago"]
 
     do Page.go()
+    Page.rows()
+    |> List.zip expected
+    |> List.iter checkMatchRow
+
+[<Test>]
+let ``Preserve order by creation date for ajax loaded news``() =
+    let questOld = { soQuest with Title = "Old"; CreationDate = DateTime.UtcNow.AddHours(-2.); Id = 1 }
+    do saveQuest questOld
+    do Page.go()
+
+    let questMiddle = { soQuest with Title = "Middle"; CreationDate = DateTime.UtcNow.AddHours(-1.); Id = 2 }
+    let questNew = { soQuest with Title = "New"; CreationDate = DateTime.UtcNow; Id = 3 }
+    [questMiddle; questNew] |> List.iter saveQuest
+
+    do waitAjax()
+    do click Page.hiddenNews
+
+    let expected = [soIcoUrl, "User1: New", soQuest.Url, "a few seconds ago"
+                    soIcoUrl, "User1: Middle", soQuest.Url, "an hour ago"
+                    soIcoUrl, "User1: Old", soQuest.Url, "2 hours ago"]
+
     Page.rows()
     |> List.zip expected
     |> List.iter checkMatchRow
