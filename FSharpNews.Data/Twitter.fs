@@ -74,6 +74,7 @@ let rec private processStream config save (stream: StreamContent) =
         | _, _, Some warning -> do log.Warn "Twitter warning: %O" warning
         | _ -> do log.Warn "Status=Success; Unknown message: %s" content
     | status, content, error -> do log.Warn "Status=%A; Error=%O; Content=%s" status error (content.IfNullOrWs("<none>"))
+                                listenStream config save
 
 and listenStream config save =
     let context = createContext config
