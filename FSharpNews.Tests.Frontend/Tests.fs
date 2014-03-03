@@ -102,20 +102,24 @@ let ``Order by creation date descending``() =
 
 [<Test>]
 let ``Preserve order by creation date for ajax loaded news``() =
-    let questOld = { soQuest with Title = "Old"; CreationDate = DateTime.UtcNow.AddHours(-2.); Id = 1 }
-    do saveQuest questOld
+    let questOldest = { soQuest with Title = "Oldest"; CreationDate = DateTime.UtcNow.AddHours(-3.); Id = 1 }
+    do saveQuest questOldest
     do Page.go()
 
-    let questMiddle = { soQuest with Title = "Middle"; CreationDate = DateTime.UtcNow.AddHours(-1.); Id = 2 }
-    let questNew = { soQuest with Title = "New"; CreationDate = DateTime.UtcNow; Id = 3 }
-    [questMiddle; questNew] |> List.iter saveQuest
+    let questOlder = { soQuest with Title = "Older"; CreationDate = DateTime.UtcNow.AddHours(-2.); Id = 2 }
+    let questMiddle = { soQuest with Title = "Middle"; CreationDate = DateTime.UtcNow.AddHours(-1.); Id = 3 }
+    [questOlder; questMiddle] |> List.iter saveQuest
+    waitAjax()
 
-    do waitAjax()
+    let questNew = { soQuest with Title = "New"; CreationDate = DateTime.UtcNow; Id = 4 }
+    do saveQuest questNew
+    waitAjax()
+
     do click Page.hiddenNews
-
     let expected = [soIcoUrl, "User1: New", soQuest.Url, "a few seconds ago"
                     soIcoUrl, "User1: Middle", soQuest.Url, "an hour ago"
-                    soIcoUrl, "User1: Old", soQuest.Url, "2 hours ago"]
+                    soIcoUrl, "User1: Older", soQuest.Url, "2 hours ago"
+                    soIcoUrl, "User1: Oldest", soQuest.Url, "3 hours ago"]
 
     Page.rows()
     |> List.zip expected

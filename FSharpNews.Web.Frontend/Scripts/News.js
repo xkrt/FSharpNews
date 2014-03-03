@@ -44,7 +44,7 @@ function PageViewModel(config) {
     this.HiddenNews = ko.observableArray([]);
     this.HasMoreOldNews = ko.observable(true);
     this.showHiddenNews = function () {
-        this.ShowedNews.unshift.apply(this.ShowedNews, this.HiddenNews.removeAll().reverse());
+        this.ShowedNews.unshift.apply(this.ShowedNews, this.HiddenNews.removeAll());
         setTitleCount(this.HiddenNews());
     };
     this.loadMore = function() {
@@ -69,9 +69,8 @@ function PageViewModel(config) {
     this.requestNews = function() {
         $.get('/api/news/since', { time: this._getOldestActivityAddedStamp() })
             .done(function(activities) {
-                activities
-                    .map(buildActivityViewModel)
-                    .forEach(function(avm) { self.HiddenNews.unshift(avm); });
+                var vms = activities.map(buildActivityViewModel);
+                self.HiddenNews.unshift.apply(self.HiddenNews, vms);
                 setTitleCount(self.HiddenNews());
             }.bind(this))
             .done(function() { self.UpdatedDate(moment()); })
