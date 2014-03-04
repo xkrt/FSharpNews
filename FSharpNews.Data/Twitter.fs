@@ -81,4 +81,4 @@ and listenStream config save =
     let q = query { for s in context.Streaming do
                     where (s.Type = StreamingType.Filter && s.Track = targetHashtag && s.Language = "en")
                     select (s) }
-    q.StreamingCallback(processStream config save) |> Seq.head |> ignore
+    q.StreamingCallback(processStream config save) |> Seq.tryHead |> ignore
