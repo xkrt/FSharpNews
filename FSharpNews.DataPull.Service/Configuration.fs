@@ -9,9 +9,10 @@ open FSharpNews.Utils
 
 type Type = { StackExchange: StackExchange.Configuration
               Twitter: Twitter.Configuration
-              NuGet: NuGet.Configuration }
+              NuGet: NuGet.Configuration
+              FsSnip: Fssnip.Configuration }
 
-let build (seUrl: string option) (twiUrl: string option) (nuUrl: string option) =
+let build (seUrl: string option) (twiUrl: string option) (nuUrl: string option) (fssnipUrl: string option) =
     let cfg = ConfigurationManager.AppSettings
 
     let seApiKey = cfg.["StackExchangeApiKey"]
@@ -23,6 +24,7 @@ let build (seUrl: string option) (twiUrl: string option) (nuUrl: string option) 
     let seUrl = seUrl |> Option.fill "https://api.stackexchange.com"
     let twiUrl = twiUrl |> Option.fill "https://stream.twitter.com/1.1/"
     let nuUrl = nuUrl |> Option.fill "https://www.nuget.org/api/v2"
+    let fssnipUrl = fssnipUrl |> Option.fill "http://api.fssnip.net"
 
     { StackExchange = { ApiKey = seApiKey
                         ApiUrl = seUrl }
@@ -31,4 +33,5 @@ let build (seUrl: string option) (twiUrl: string option) (nuUrl: string option) 
                   AccessToken = twiAccessToken
                   AccessTokenSecret = twiAccessTokenSecret
                   StreamApiUrl = twiUrl }
-      NuGet = { Url = nuUrl } }
+      NuGet = { Url = nuUrl }
+      FsSnip = { Url = fssnipUrl } }

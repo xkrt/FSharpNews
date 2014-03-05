@@ -45,4 +45,11 @@ type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: st
                 url = p.Url,
                 creationDateUnix = DateTime.toUnix p.PublishedDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
-
+        | FsSnippet s ->
+            ActivityViewModel(
+                iconUrl = "http://fssnip.net/favicon.ico",
+                iconTitle = "F# Snippets",
+                text = sprintf "%s: %s published" s.Author s.Title,
+                url = s.Url,
+                creationDateUnix = DateTime.toUnix s.PublishedDate,
+                addedDateUnixOffset = DateTime.toUnixOffset added)

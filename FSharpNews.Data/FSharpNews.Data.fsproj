@@ -35,6 +35,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Release\FSharpNews.Data.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
   </PropertyGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
@@ -61,6 +63,7 @@
     <Compile Include="StackExchange.fs" />
     <Compile Include="Twitter.fs" />
     <Compile Include="NuGet.fs" />
+    <Compile Include="Fssnip.fs" />
     <None Include="FillStorage.fsx" />
   </ItemGroup>
   <ItemGroup>
@@ -72,7 +75,19 @@
       <HintPath>..\packages\FSharp.Data.1.1.10\lib\net40\FSharp.Data.DesignTime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FSharp.Data.Experimental">
+      <HintPath>..\packages\FSharp.Data.Experimental.1.1.10\lib\net40\FSharp.Data.Experimental.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.Data.Experimental.DesignTime">
+      <HintPath>..\packages\FSharp.Data.Experimental.1.1.10\lib\net40\FSharp.Data.Experimental.DesignTime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FSharp.Data.TypeProviders, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="FSharpx.Core">
+      <HintPath>..\packages\FSharpx.Core.1.8.41\lib\40\FSharpx.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="HttpClient">
       <HintPath>..\packages\Http.fs.0.8.1.0\lib\net40\HttpClient.dll</HintPath>
       <Private>True</Private>
@@ -97,6 +112,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Numerics" />
     <ProjectReference Include="..\FSharpNews.Utils\FSharpNews.Utils.fsproj">
       <Name>FSharpNews.Utils</Name>

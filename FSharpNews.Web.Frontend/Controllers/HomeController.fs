@@ -17,8 +17,7 @@ type HomeController() =
 
     member this.Index () =
         let batchSize = 100
-        let news = Storage.getTopActivitiesByCreation batchSize
-                   |> List.map ActivityViewModel.Create
+        let news = Storage.getTopActivitiesByCreation batchSize |> List.map ActivityViewModel.Create
         let config = PageConfiguration(news, requestNewsPeriod, batchSize)
         let json = Serializer.toJson config
         this.View(json :> obj)

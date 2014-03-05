@@ -39,16 +39,23 @@ let private nuget (conf: Configuration.Type) =
         do Storage.saveAll pkgsWithRaw
     repeatForever (TimeSpan.FromMinutes(5.)) fetchNewPackages
 
+let private fssnip (conf: Configuration.Type) =
+    let fetchSnippets () =
+        let snippets = Fssnip.fetch conf.FsSnip
+        do Storage.saveAll snippets
+    repeatForever (TimeSpan.FromMinutes(5.)) fetchSnippets
+
 [<EntryPoint>]
 let main argv =
     do log.Info "Program started"
     let seUrl = ref None
     let twiUrl = ref None
     let nuUrl = ref None
+    let fssnipUrl = ref None
 
     let startPullingData() =
-        let conf = Configuration.build !seUrl !twiUrl !nuUrl
-        [stackExchange conf; twitter conf; nuget conf]
+        let conf = Configuration.build !seUrl !twiUrl !nuUrl !fssnipUrl
+        [stackExchange conf; twitter conf; nuget conf; fssnip conf]
         |> Async.Parallel
         |> Async.Ignore
         |> Async.Start

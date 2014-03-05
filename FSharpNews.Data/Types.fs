@@ -26,8 +26,15 @@ type NugetPackage = { Id: string
                       Url: string
                       PublishedDate: DateTime }
 
+type FsSnippet = { Id: string
+                   Title: string
+                   Author: string
+                   PublishedDate: DateTime
+                   Url: string }
+
 type Activity =
     | StackExchangeQuestion of StackExchangeQuestion
     | Tweet of Tweet
     | NugetPackage of NugetPackage
+    | FsSnippet of FsSnippet
     with override x.ToString() = sprintf "%A" x
