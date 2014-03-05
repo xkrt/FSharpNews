@@ -4,8 +4,11 @@ open System
 open System.IO
 open FSharp.Data
 open FSharpx
+open FSharpNews.Utils
 
 type Configuration = { Url: string }
+
+let private log = Logger.create "FsSnip"
 
 let private parseId url = (Uri url).AbsolutePath.TrimStart('/').Trim()
 let private toDateTime (publishedAgo: string) =
@@ -23,7 +26,7 @@ let private toDateTime (publishedAgo: string) =
 let fetch config =
     let api = new ApiaryProvider<"fssnip">(config.Url)
     let snips = api.Snippet.List() |> Array.toList
-    let c = snips.Length
+    do log.Info "Fetched snippets: %d" snips.Length
     snips
     |> List.map (fun s -> FsSnippet { Id = parseId s.Link
                                       Title = s.Title

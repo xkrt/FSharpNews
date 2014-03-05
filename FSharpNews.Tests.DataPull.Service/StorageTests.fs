@@ -48,6 +48,13 @@ let package = { Id = "FSharp.Formatting"
                 PublishedDate = DateTime(2014, 1, 17, 1, 46, 22, DateTimeKind.Utc) }
 let packageA = NugetPackage package
 
+let snippet =  { Id = "lQ"
+                 Title = "Rabbits and Recurrence Relations"
+                 Author = "Michel Caradec"
+                 Url = "http://fssnip.net/lQ"
+                 PublishedDate = DateTime(2014, 3, 5, 5, 10, 11, DateTimeKind.Utc) }
+let snippetA = FsSnippet snippet
+
 [<SetUp>]
 let Setup() = collection.RemoveAll() |> ignore
 
@@ -172,3 +179,12 @@ let ``nuget packages should be unique``() =
     match Storage.getAllActivities() with
     | (savedPackage,_)::[] -> savedPackage |> assertEqual packageA
     | x -> failwithf "Expected: %A\r\nBut was: %A" packageA x
+
+[<Test>]
+let ``snippets should be unique``() =
+    snippetA |> withEmptyRaw |> Storage.save
+    snippetA |> withEmptyRaw |> Storage.save
+
+    match Storage.getAllActivities() with
+    | (savedSnippet,_)::[] -> savedSnippet |> assertEqual snippetA
+    | x -> failwithf "Expected: %A\r\nBut was: %A" snippetA x
