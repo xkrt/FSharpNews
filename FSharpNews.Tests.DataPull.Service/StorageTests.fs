@@ -172,6 +172,3 @@ let ``nuget packages should be unique``() =
     match Storage.getAllActivities() with
     | (savedPackage,_)::[] -> savedPackage |> assertEqual packageA
     | x -> failwithf "Expected: %A\r\nBut was: %A" packageA x
-
-
-

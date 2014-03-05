@@ -626,3 +626,21 @@ module NuGet =
                                   Version = "2.3.5-beta"
                                   Url = "https://www.nuget.org/packages/FSharp.Formatting/2.3.5-beta"
                                   PublishedDate = DateTime(2014, 1, 21, 2, 22, 55, 767, DateTimeKind.Utc) }
+
+module FsSnip =
+    let emptyJson = "[]"
+
+    let json = """[{
+  "author": "Michel Caradec",
+  "description": "One solution to Rosalind rabbits problem.",
+  "likes": 0,
+  "link": "http://fssnip.net/lQ",
+  "published": "7 hours ago",
+  "title": "Rabbits and Recurrence Relations"
+}]"""
+
+    let snippet = { Id = "lQ"
+                    Title = "Rabbits and Recurrence Relations"
+                    Author = "Michel Caradec"
+                    Url = "http://fssnip.net/lQ"
+                    PublishedDate = DateTime.UtcNow.Subtract(TimeSpan.FromHours(7.)) }

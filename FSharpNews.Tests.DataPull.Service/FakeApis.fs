@@ -62,9 +62,8 @@ module TwitterApi =
             succeed asyncHandler
 
     let handleWithEmptyInfinite = handle (fun req ->
-        async {
-            do! writeHeaderBodyDelimeter req
-            do! writeEmptyInfinite req })
+        async { do! writeHeaderBodyDelimeter req
+                do! writeEmptyInfinite req })
 
     let runEmpty() = runServer (POST >>= url path >>== handleWithEmptyInfinite)
 
@@ -76,3 +75,12 @@ module NuGetApi =
 
     let runServer = WebServer.run "NuGet" port
     let runEmpty() = runServer (OK TestData.NuGet.emptyXml)
+
+module FsSnipApi =
+    let private port = 4144
+
+    let path = "/1/snippet"
+    let baseUrl = sprintf "http://%s:%d" Environment.machine port
+
+    let runServer = WebServer.run "FsSnip" port
+    let runEmpty() = runServer (OK TestData.FsSnip.emptyJson)

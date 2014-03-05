@@ -75,6 +75,7 @@ let main argv =
         conf |> addCommandLineDefinition "stackExchangeUrl" (fun url -> seUrl := Some url)
         conf |> addCommandLineDefinition "twitterUrl" (fun url -> twiUrl := Some url)
         conf |> addCommandLineDefinition "nugetUrl" (fun url -> nuUrl := Some url)
+        conf |> addCommandLineDefinition "fssnipUrl" (fun url -> fssnipUrl := Some url)
 
     let exitCode = configureTopShelf <| fun conf ->
         do configureService conf

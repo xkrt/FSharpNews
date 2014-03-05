@@ -14,8 +14,8 @@ let Setup() = do Storage.deleteAll()
 [<Test>]
 let ``One package returned by api => one activity in storage``() =
     use nu = NuGetApi.runServer (GET >>= url NuGetApi.path
-                               >>= (set_header "Content-Type" "application/atom+xml;type=feed;charset=utf-8"
-                                    >> OK TestData.NuGet.xml))
+                                     >>= (set_header "Content-Type" "application/atom+xml;type=feed;charset=utf-8"
+                                     >> OK TestData.NuGet.xml))
     use tw = TwitterApi.runEmpty()
     use se = StackExchangeApi.runEmpty()
 

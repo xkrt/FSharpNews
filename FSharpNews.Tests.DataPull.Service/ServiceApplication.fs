@@ -17,7 +17,8 @@ let private stop (proc: Process) =
 let start () =
     let args = [ sprintf "-stackExchangeUrl:%s" StackExchangeApi.baseUrl
                  sprintf "-twitterUrl:%s" TwitterApi.baseUrl
-                 sprintf "-nugetUrl:%s" NuGetApi.baseUrl ] |> String.concat " "
+                 sprintf "-nugetUrl:%s" NuGetApi.baseUrl
+                 sprintf "-fssnipUrl:%s" FsSnipApi.baseUrl ] |> String.concat " "
     let info = ProcessStartInfo(dataPullerExePath, args)
     let proc = Process.Start(info)
     { new IDisposable with member this.Dispose() = stop proc }
