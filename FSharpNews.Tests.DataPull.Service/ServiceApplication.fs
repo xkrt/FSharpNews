@@ -18,7 +18,8 @@ let start () =
     let args = [ sprintf "-stackExchangeUrl:%s" StackExchangeApi.baseUrl
                  sprintf "-twitterUrl:%s" TwitterApi.baseUrl
                  sprintf "-nugetUrl:%s" NuGetApi.baseUrl
-                 sprintf "-fssnipUrl:%s" FsSnipApi.baseUrl ] |> String.concat " "
+                 sprintf "-fssnipUrl:%s" FsSnipApi.baseUrl
+                 sprintf "-fpishUrl:%s" FPishApi.baseUrl ] |> String.concat " "
     let info = ProcessStartInfo(dataPullerExePath, args)
     let proc = Process.Start(info)
     { new IDisposable with member this.Dispose() = stop proc }

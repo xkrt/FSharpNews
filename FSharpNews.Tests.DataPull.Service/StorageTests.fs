@@ -48,7 +48,7 @@ let package = { Id = "FSharp.Formatting"
                 PublishedDate = DateTime(2014, 1, 17, 1, 46, 22, DateTimeKind.Utc) }
 let packageA = NugetPackage package
 
-let snippet =  { Id = "lQ"
+let snippet =  { FsSnippet.Id = "lQ"
                  Title = "Rabbits and Recurrence Relations"
                  Author = "Michel Caradec"
                  Url = "http://fssnip.net/lQ"
@@ -188,3 +188,13 @@ let ``snippets should be unique``() =
     match Storage.getAllActivities() with
     | (savedSnippet,_)::[] -> savedSnippet |> assertEqual snippetA
     | x -> failwithf "Expected: %A\r\nBut was: %A" snippetA x
+
+[<Test>]
+let ``fpish questions should be unique``() =
+    let questA = FPishQuestion TestData.FPish.question
+    questA |> withEmptyRaw |> Storage.save
+    questA |> withEmptyRaw |> Storage.save
+
+    match Storage.getAllActivities() with
+    | (savedQuest,_)::[] -> savedQuest |> assertEqual questA
+    | x -> failwithf "Expected: %A\r\nBut was: %A" questA x

@@ -45,6 +45,12 @@ let private fssnip (conf: Configuration.Type) =
         do Storage.saveAll snippets
     repeatForever (TimeSpan.FromMinutes(5.)) fetchSnippets
 
+let private fpish (conf: Configuration.Type) =
+    let fetchQuestions () =
+        let quests = FPish.fetch conf.FPish
+        do Storage.saveAll quests
+    repeatForever (TimeSpan.FromMinutes(5.)) fetchQuestions
+
 [<EntryPoint>]
 let main argv =
     do log.Info "Program started"
@@ -52,10 +58,11 @@ let main argv =
     let twiUrl = ref None
     let nuUrl = ref None
     let fssnipUrl = ref None
+    let fpishUrl = ref None
 
     let startPullingData() =
-        let conf = Configuration.build !seUrl !twiUrl !nuUrl !fssnipUrl
-        [stackExchange conf; twitter conf; nuget conf; fssnip conf]
+        let conf = Configuration.build !seUrl !twiUrl !nuUrl !fssnipUrl !fpishUrl
+        [stackExchange conf; twitter conf; nuget conf; fssnip conf; fpish conf]
         |> Async.Parallel
         |> Async.Ignore
         |> Async.Start
@@ -76,6 +83,7 @@ let main argv =
         conf |> addCommandLineDefinition "twitterUrl" (fun url -> twiUrl := Some url)
         conf |> addCommandLineDefinition "nugetUrl" (fun url -> nuUrl := Some url)
         conf |> addCommandLineDefinition "fssnipUrl" (fun url -> fssnipUrl := Some url)
+        conf |> addCommandLineDefinition "fpishUrl" (fun url -> fpishUrl := Some url)
 
     let exitCode = configureTopShelf <| fun conf ->
         do configureService conf

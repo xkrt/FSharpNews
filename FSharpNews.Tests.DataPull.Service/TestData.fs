@@ -639,8 +639,41 @@ module FsSnip =
   "title": "Rabbits and Recurrence Relations"
 }]"""
 
-    let snippet = { Id = "lQ"
+    let snippet = { FsSnippet.Id = "lQ"
                     Title = "Rabbits and Recurrence Relations"
                     Author = "Michel Caradec"
                     Url = "http://fssnip.net/lQ"
                     PublishedDate = DateTime.UtcNow.Subtract(TimeSpan.FromHours(7.)) }
+
+module FPish =
+    let emptyXml = """<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">FPish.net - Questions tagged 'f#'</title>
+  <subtitle type="text">Questions asked on FPish.net and tagged 'f#'.</subtitle>
+  <id>uuid:ebef6232-7545-4ed6-8fd2-39abcdae4b62;id=21227</id>
+  <updated>2014-03-06T04:42:34Z</updated>
+</feed>"""
+
+    let xml = """<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">FPish.net - Questions tagged 'f#'</title>
+  <subtitle type="text">Questions asked on FPish.net and tagged 'f#'.</subtitle>
+  <id>uuid:ebef6232-7545-4ed6-8fd2-39abcdae4b62;id=21227</id>
+  <updated>2014-03-06T04:42:34Z</updated>
+  <entry>
+    <id>http://fpish.net//topic/None/57493</id>
+    <title type="text">Record field names as function parameters </title>
+    <published>2008-05-22T18:30:21-07:00</published>
+    <updated>2014-03-06T04:42:34Z</updated>
+    <link href="http://fpish.net//topic/None/57493" rel="alternate"/>
+    <category term="f#"/>
+    <category term="compiler"/>
+    <content type="text">Asked by michaeldavid </content>
+  </entry>
+</feed>"""
+
+    let question = { FPishQuestion.Id = 57493
+                     Title = "Record field names as function parameters"
+                     Author = "michaeldavid"
+                     Url = "http://fpish.net//topic/None/57493"
+                     PublishedDate = DateTime(2008, 5, 23, 1, 30, 21, DateTimeKind.Utc) }

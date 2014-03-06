@@ -13,9 +13,7 @@ let Setup() = do Storage.deleteAll()
 
 [<Test>]
 let ``One snippet returned by api => one activity in storage``() =
-    use fs = FsSnipApi.runServer (GET >>= url FsSnipApi.path
-                                      >>= OK TestData.FsSnip.json)
-
+    use fs = FsSnipApi.runServer (GET >>= url FsSnipApi.path >>= OK TestData.FsSnip.json)
     use tw = TwitterApi.runEmpty()
     use se = StackExchangeApi.runEmpty()
     use nu = NuGetApi.runEmpty()

@@ -10,9 +10,10 @@ open FSharpNews.Utils
 type Type = { StackExchange: StackExchange.Configuration
               Twitter: Twitter.Configuration
               NuGet: NuGet.Configuration
-              FsSnip: Fssnip.Configuration }
+              FsSnip: Fssnip.Configuration
+              FPish: FPish.Configuration }
 
-let build (seUrl: string option) (twiUrl: string option) (nuUrl: string option) (fssnipUrl: string option) =
+let build (seUrl: string option) (twiUrl: string option) (nuUrl: string option) (fssnipUrl: string option) (fpishUrl: string option) =
     let cfg = ConfigurationManager.AppSettings
 
     let seApiKey = cfg.["StackExchangeApiKey"]
@@ -25,6 +26,7 @@ let build (seUrl: string option) (twiUrl: string option) (nuUrl: string option) 
     let twiUrl = twiUrl |> Option.fill "https://stream.twitter.com/1.1/"
     let nuUrl = nuUrl |> Option.fill "https://www.nuget.org/api/v2"
     let fssnipUrl = fssnipUrl |> Option.fill "http://api.fssnip.net"
+    let fpishUrl = fpishUrl |> Option.fill "http://fpish.net/atom/topics/tag/1/f~23"
 
     { StackExchange = { ApiKey = seApiKey
                         ApiUrl = seUrl }
@@ -34,4 +36,5 @@ let build (seUrl: string option) (twiUrl: string option) (nuUrl: string option) 
                   AccessTokenSecret = twiAccessTokenSecret
                   StreamApiUrl = twiUrl }
       NuGet = { Url = nuUrl }
-      FsSnip = { Url = fssnipUrl } }
+      FsSnip = { Url = fssnipUrl }
+      FPish = { BaseUrl = fpishUrl } }

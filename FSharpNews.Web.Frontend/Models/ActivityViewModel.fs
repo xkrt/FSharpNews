@@ -49,7 +49,15 @@ type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: st
             ActivityViewModel(
                 iconUrl = "http://fssnip.net/favicon.ico",
                 iconTitle = "F# Snippets",
-                text = sprintf "%s: %s published" s.Author s.Title,
+                text = sprintf "%s: %s" s.Author s.Title,
                 url = s.Url,
                 creationDateUnix = DateTime.toUnix s.PublishedDate,
+                addedDateUnixOffset = DateTime.toUnixOffset added)
+        | FPishQuestion q ->
+            ActivityViewModel(
+                iconUrl = "http://fpish.net/images/favicon.png",
+                iconTitle = "FPish",
+                text = sprintf "%s: %s" q.Author q.Title,
+                url = q.Url,
+                creationDateUnix = DateTime.toUnix q.PublishedDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)

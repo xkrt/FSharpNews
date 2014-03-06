@@ -32,9 +32,16 @@ type FsSnippet = { Id: string
                    PublishedDate: DateTime
                    Url: string }
 
+type FPishQuestion = { Id: int
+                       Title: string
+                       Author: string
+                       PublishedDate: DateTime
+                       Url: string }
+
 type Activity =
     | StackExchangeQuestion of StackExchangeQuestion
     | Tweet of Tweet
     | NugetPackage of NugetPackage
     | FsSnippet of FsSnippet
+    | FPishQuestion of FPishQuestion
     with override x.ToString() = sprintf "%A" x

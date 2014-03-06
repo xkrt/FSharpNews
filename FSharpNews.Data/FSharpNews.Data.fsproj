@@ -64,6 +64,7 @@
     <Compile Include="Twitter.fs" />
     <Compile Include="NuGet.fs" />
     <Compile Include="Fssnip.fs" />
+    <Compile Include="FPish.fs" />
     <None Include="FillStorage.fsx" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +120,8 @@
       <Project>{18f43f82-0f6e-48f8-a57d-9acbe5387cc3}</Project>
       <Private>True</Private>
     </ProjectReference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

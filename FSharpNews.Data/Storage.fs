@@ -16,6 +16,7 @@ type private ActivityType =
     | Tweet = 1
     | NugetPackage = 2
     | FsSnippet = 3
+    | FPish = 4
 
 [<Literal>]
 let DuplicateKeyError = 11000
@@ -37,6 +38,7 @@ do activities.EnsureIndex(IndexKeys.Ascending("activity.site").Ascending("activi
 do activities.EnsureIndex(IndexKeys.Ascending("activity.tweetId"), IndexOptions.SetUnique(true).SetSparse(true))
 do activities.EnsureIndex(IndexKeys.Ascending("activity.packageId").Ascending("activity.version"), IndexOptions.SetUnique(true).SetSparse(true))
 do activities.EnsureIndex(IndexKeys.Ascending("activity.snippetId"), IndexOptions.SetUnique(true).SetSparse(true))
+do activities.EnsureIndex(IndexKeys.Ascending("activity.fpishId"), IndexOptions.SetUnique(true).SetSparse(true))
 
 let private doc (elems: BsonElement list) = BsonDocument(elems)
 let private el (name: string) (value: BsonValue) = BsonElement(name, value)
@@ -75,10 +77,16 @@ let private mapToDocument (activity, raw) =
                                el "url" (str s.Url)
                                el "date" (date s.PublishedDate) ]
                          , i32 (int ActivityType.FsSnippet)
+        | FPishQuestion q -> doc [ el "fpishId" (i32 q.Id)
+                                   el "title" (str q.Title)
+                                   el "author" (str q.Author)
+                                   el "url" (str q.Url)
+                                   el "date" (date q.PublishedDate) ]
+                             , i32 (int ActivityType.FPish)
     doc [ el "descriminator" descriminator
           el "activity" activityDoc
           el "raw" (str raw)
-          el "addedDate" (date DateTime.UtcNow)]
+          el "addedDate" (date DateTime.UtcNow) ]
 
 let private mapFromDocument (document: BsonDocument) =
     let activityType = enum<ActivityType>(document.["descriminator"].AsInt32)
@@ -100,11 +108,16 @@ let private mapFromDocument (document: BsonDocument) =
                                          Version = adoc.["version"].AsString
                                          Url = adoc.["url"].AsString
                                          PublishedDate = adoc.["date"].ToUniversalTime() } |> NugetPackage
-        | ActivityType.FsSnippet -> { Id = adoc.["snippetId"].AsString
+        | ActivityType.FsSnippet -> { FsSnippet.Id = adoc.["snippetId"].AsString
                                       Title = adoc.["title"].AsString
                                       Author = adoc.["author"].AsString
                                       Url = adoc.["url"].AsString
                                       PublishedDate = adoc.["date"].ToUniversalTime() } |> FsSnippet
+        | ActivityType.FPish -> { FPishQuestion.Id = adoc.["fpishId"].AsInt32
+                                  Title = adoc.["title"].AsString
+                                  Author = adoc.["author"].AsString
+                                  Url = adoc.["url"].AsString
+                                  PublishedDate = adoc.["date"].ToUniversalTime() } |> FPishQuestion
         | t -> failwithf "Mapping for %A is not implemented" t
     let added = document.["addedDate"].ToUniversalTime()
     activity, added

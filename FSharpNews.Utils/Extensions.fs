@@ -16,6 +16,9 @@ type String with
        then this
        else this + suffix
 
+module Strings =
+    let trim (s: string) = s.Trim()
+
 type DateTime with
     member this.Truncate(timeSpan: TimeSpan) = this.AddTicks -(this.Ticks % timeSpan.Ticks)
 

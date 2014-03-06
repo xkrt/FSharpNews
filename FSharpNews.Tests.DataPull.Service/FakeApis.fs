@@ -84,3 +84,12 @@ module FsSnipApi =
 
     let runServer = WebServer.run "FsSnip" port
     let runEmpty() = runServer (OK TestData.FsSnip.emptyJson)
+
+module FPishApi =
+    let private port = 4145
+
+    let path = "/atom/topics/tag/1/f~23"
+    let baseUrl = sprintf "http://%s:%d" Environment.machine port
+
+    let runServer = WebServer.run "FPish" port
+    let runEmpty() = runServer (OK TestData.FsSnip.emptyJson)
