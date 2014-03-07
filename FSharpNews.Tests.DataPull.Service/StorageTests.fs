@@ -88,9 +88,23 @@ let ``saveAll activities => getAllActivities returns same activities``() =
     savedActivities |> List.map fst |> Collection.assertEquiv toSave
 
 [<Test>]
-let ``saveAll with empty list => nothin saved``() =
+let ``saveAll with empty list => nothing saved``() =
     do Storage.saveAll []
     Storage.getAllActivities() |> assertEqual []
+
+[<Test>]
+let ``saveAll partially duplicates => non-duplicates successfully saved``() =
+    let alreadySavedTweet = Tweet { tweet with Id = 1L }
+    do Storage.saveAll [alreadySavedTweet |> withEmptyRaw]
+
+    let duplicateTweet = alreadySavedTweet
+    let newTweet = Tweet { tweet with Id = 2L }
+    do Storage.saveAll [ duplicateTweet |> withEmptyRaw
+                         newTweet |> withEmptyRaw ]
+
+    Storage.getAllActivities()
+    |> List.map fst
+    |> Collection.assertEquiv [ alreadySavedTweet; newTweet ]
 
 [<Test>]
 let ``getTopActivitiesByCreation``() =

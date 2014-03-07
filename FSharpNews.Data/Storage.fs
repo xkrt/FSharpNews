@@ -56,6 +56,9 @@ let (|BNull|_|) (v: BsonValue) =
    then Some ()
    else None
 
+let private continueOnError = MongoInsertOptions()
+continueOnError.Flags <- InsertFlags.ContinueOnError
+
 let private siteToBson = function Stackoverflow -> i32 0 | Programmers -> i32 1 | CodeReview -> i32 2 | CodeGolf -> i32 3
 let private bsonToSite = function 0 -> Stackoverflow | 1 -> Programmers | 2 -> CodeReview | 3 -> CodeGolf | x -> failwithf "Unknown %d StackExchange site" x
 
@@ -160,7 +163,7 @@ let private safeInsert doc =
     safeUniq fn desc
 
 let private safeInsertBatch (docs: BsonDocument list) =
-    let fn = fun () -> activities.InsertBatch docs
+    let fn = fun () -> activities.InsertBatch(docs, continueOnError)
     let desc = fun () -> sprintf "inserting documents %A" (docs |> List.map (sprintf "%O"))
     safeUniq fn desc
 
