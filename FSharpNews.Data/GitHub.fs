@@ -13,9 +13,11 @@ type Configuration = { BaseUri: Uri
 
 let private log = Logger.create "GitHub"
 
-let fetchGists conf sinceDate =
+let fetchGists conf (sinceDate: DateTime) =
     let credStore = InMemoryCredentialStore(Credentials(conf.Login, conf.Password))
     let client = GitHubClient(ProductHeaderValue("FSharpNews"), credStore, conf.BaseUri)
+
+    do log.Info "Start fetching gists since %s..." (sinceDate.ToIsoString())
     let allGists =
         client.Gist.GetAllPublic(DateTimeOffset sinceDate)
         |> Async.AwaitTask
@@ -30,7 +32,6 @@ let fetchGists conf sinceDate =
                                     do log.Info "Looks like gist is non-english { Id=%s; Description='%s' }" g.Id g.Description
                                     false
                                  | _ -> true)
-
     do log.Info "Fetched gists f#/all: %d/%d" fsharpGists.Length allGists.Length
 
     let gistsWithRaws =
