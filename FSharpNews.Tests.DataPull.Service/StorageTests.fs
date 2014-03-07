@@ -224,3 +224,13 @@ let ``gists should be unique``() =
     match Storage.getAllActivities() with
     | (savedGist,_)::[] -> savedGist |> assertEqual gistA
     | x -> failwithf "Expected: %A\r\nBut was: %A" gistA x
+
+[<Test>]
+let ``github repositories should be unique``() =
+    let repoA = Repository TestData.Repositories.repo
+    repoA |> withEmptyRaw |> Storage.save
+    repoA |> withEmptyRaw |> Storage.save
+
+    match Storage.getAllActivities() with
+    | (savedRepo,_)::[] -> savedRepo |> assertEqual repoA
+    | x -> failwithf "Expected: %A\r\nBut was: %A" repoA x

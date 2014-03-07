@@ -19,6 +19,7 @@ type private ActivityType =
     | FsSnippet = 3
     | FPish = 4
     | Gist = 5
+    | Repository = 6
 
 #if INTERACTIVE
 let connectionString = "mongodb://localhost/fsharpnews"
@@ -39,6 +40,7 @@ do activities.EnsureIndex(IndexKeys.Ascending("activity.packageId").Ascending("a
 do activities.EnsureIndex(IndexKeys.Ascending("activity.snippetId"), IndexOptions.SetUnique(true).SetSparse(true))
 do activities.EnsureIndex(IndexKeys.Ascending("activity.fpishId"), IndexOptions.SetUnique(true).SetSparse(true))
 do activities.EnsureIndex(IndexKeys.Ascending("activity.gistId"), IndexOptions.SetUnique(true).SetSparse(true))
+do activities.EnsureIndex(IndexKeys.Ascending("activity.repoId"), IndexOptions.SetUnique(true).SetSparse(true))
 
 let private doc (elems: BsonElement list) = BsonDocument(elems)
 let private el (name: string) (value: BsonValue) = BsonElement(name, value)
@@ -101,6 +103,13 @@ let private mapToDocument (activity, raw) =
                           el "url" (str g.Url)
                           el "date" (date g.CreationDate) ]
                     , i32 (int ActivityType.Gist)
+        | Repository r -> doc [ el "repoId" (i32 r.Id)
+                                el "name" (str r.Name)
+                                el "description" (optstr r.Description)
+                                el "owner" (str r.Owner)
+                                el "url" (str r.Url)
+                                el "date" (date r.CreationDate) ]
+                          , i32 (int ActivityType.Repository)
     doc [ el "descriminator" descriminator
           el "activity" activityDoc
           el "raw" (str raw)
@@ -136,13 +145,21 @@ let private mapFromDocument (document: BsonDocument) =
                                   Author = adoc.["author"].AsString
                                   Url = adoc.["url"].AsString
                                   PublishedDate = adoc.["date"].ToUniversalTime() } |> FPishQuestion
-        | ActivityType.Gist -> { Id = adoc.["gistId"].AsString
+        | ActivityType.Gist -> { Gist.Id = adoc.["gistId"].AsString
                                  Description = match adoc.["description"] with
                                                | BNull -> None
                                                | v -> Some v.AsString
                                  Owner = adoc.["owner"].AsString
                                  Url = adoc.["url"].AsString
                                  CreationDate = adoc.["date"].ToUniversalTime() } |> Gist
+        | ActivityType.Repository -> { Repository.Id = adoc.["repoId"].AsInt32
+                                       Name = adoc.["name"].AsString
+                                       Description = match adoc.["description"] with
+                                                     | BNull -> None
+                                                     | v -> Some v.AsString
+                                       Owner = adoc.["owner"].AsString
+                                       Url = adoc.["url"].AsString
+                                       CreationDate = adoc.["date"].ToUniversalTime() } |> Repository
         | t -> failwithf "Mapping for %A is not implemented" t
     let added = document.["addedDate"].ToUniversalTime()
     activity, added
@@ -206,6 +223,15 @@ let getDateOfLastGist () =
     |> Seq.tryHead
     |> function | Some (Gist gist, _) -> gist.CreationDate
                 | _ -> minDataDate
+
+let getDateOfLastRepo () =
+    activities.Find(Query.EQ("descriminator", i32 (int ActivityType.Repository)))
+              .SetSortOrder(SortBy.Descending("activity.date"))
+              .SetLimit(1)
+    |> Seq.map mapFromDocument
+    |> Seq.tryHead
+    |> function | Some (Repository repo, _) -> repo.CreationDate
+                | _ -> DateTime.MinValue
 
 let mapToActivities cursor =
     cursor

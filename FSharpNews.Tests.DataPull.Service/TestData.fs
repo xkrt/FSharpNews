@@ -729,7 +729,7 @@ module Gist =
   }
 ]"""
 
-    let gist = { Id = "9380680"
+    let gist = { Gist.Id = "9380680"
                  Description = Some "euler 26, f# version"
                  Owner = "drcabana"
                  Url = "https://gist.github.com/9380680"
@@ -903,3 +903,105 @@ module Gist =
     "site_admin": false
   }
 }]"""
+
+module Repositories =
+    let json = """{
+  "total_count": 1854,
+  "items": [
+    {
+      "id": 1162709,
+      "name": "fsharp",
+      "full_name": "fsharp/fsharp",
+      "owner": {
+        "login": "fsharp",
+        "id": 485415,
+        "avatar_url": "https://gravatar.com/avatar/db0bc7081238324591d7f0d64373f13d?d=https%3A%2F%2Fidenticons.github.com%2Fc7b672773be8d873eb5a41cb4b1f6691.png&r=x",
+        "gravatar_id": "db0bc7081238324591d7f0d64373f13d",
+        "url": "https://api.github.com/users/fsharp",
+        "html_url": "https://github.com/fsharp",
+        "followers_url": "https://api.github.com/users/fsharp/followers",
+        "following_url": "https://api.github.com/users/fsharp/following{/other_user}",
+        "gists_url": "https://api.github.com/users/fsharp/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/fsharp/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/fsharp/subscriptions",
+        "organizations_url": "https://api.github.com/users/fsharp/orgs",
+        "repos_url": "https://api.github.com/users/fsharp/repos",
+        "events_url": "https://api.github.com/users/fsharp/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/fsharp/received_events",
+        "type": "Organization",
+        "site_admin": false
+      },
+      "private": false,
+      "html_url": "https://github.com/fsharp/fsharp",
+      "description": "The F# compiler and core library (open edition)",
+      "fork": false,
+      "url": "https://api.github.com/repos/fsharp/fsharp",
+      "forks_url": "https://api.github.com/repos/fsharp/fsharp/forks",
+      "keys_url": "https://api.github.com/repos/fsharp/fsharp/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/fsharp/fsharp/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/fsharp/fsharp/teams",
+      "hooks_url": "https://api.github.com/repos/fsharp/fsharp/hooks",
+      "issue_events_url": "https://api.github.com/repos/fsharp/fsharp/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/fsharp/fsharp/events",
+      "assignees_url": "https://api.github.com/repos/fsharp/fsharp/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/fsharp/fsharp/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/fsharp/fsharp/tags",
+      "blobs_url": "https://api.github.com/repos/fsharp/fsharp/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/fsharp/fsharp/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/fsharp/fsharp/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/fsharp/fsharp/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/fsharp/fsharp/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/fsharp/fsharp/languages",
+      "stargazers_url": "https://api.github.com/repos/fsharp/fsharp/stargazers",
+      "contributors_url": "https://api.github.com/repos/fsharp/fsharp/contributors",
+      "subscribers_url": "https://api.github.com/repos/fsharp/fsharp/subscribers",
+      "subscription_url": "https://api.github.com/repos/fsharp/fsharp/subscription",
+      "commits_url": "https://api.github.com/repos/fsharp/fsharp/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/fsharp/fsharp/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/fsharp/fsharp/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/fsharp/fsharp/issues/comments/{number}",
+      "contents_url": "https://api.github.com/repos/fsharp/fsharp/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/fsharp/fsharp/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/fsharp/fsharp/merges",
+      "archive_url": "https://api.github.com/repos/fsharp/fsharp/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/fsharp/fsharp/downloads",
+      "issues_url": "https://api.github.com/repos/fsharp/fsharp/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/fsharp/fsharp/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/fsharp/fsharp/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/fsharp/fsharp/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/fsharp/fsharp/labels{/name}",
+      "releases_url": "https://api.github.com/repos/fsharp/fsharp/releases{/id}",
+      "created_at": "2010-12-13T00:19:52Z",
+      "updated_at": "2014-03-03T18:32:20Z",
+      "pushed_at": "2014-03-03T18:32:18Z",
+      "git_url": "git://github.com/fsharp/fsharp.git",
+      "ssh_url": "git@github.com:fsharp/fsharp.git",
+      "clone_url": "https://github.com/fsharp/fsharp.git",
+      "svn_url": "https://github.com/fsharp/fsharp",
+      "homepage": "http://fsharp.github.io/fsharp",
+      "size": 66370,
+      "stargazers_count": 494,
+      "watchers_count": 494,
+      "language": "F#",
+      "has_issues": true,
+      "has_downloads": true,
+      "has_wiki": false,
+      "forks_count": 126,
+      "mirror_url": null,
+      "open_issues_count": 37,
+      "forks": 126,
+      "open_issues": 37,
+      "watchers": 494,
+      "default_branch": "master",
+      "master_branch": "master",
+      "score": 1.0
+    }
+  ]
+}"""
+
+    let repo = { Repository.Id = 1162709
+                 Name = "fsharp"
+                 Description = Some "The F# compiler and core library (open edition)"
+                 Owner = "fsharp"
+                 Url = "https://github.com/fsharp/fsharp"
+                 CreationDate = DateTime(2010, 12, 13, 0, 19, 52, DateTimeKind.Utc) }

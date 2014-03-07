@@ -69,3 +69,11 @@ type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: st
                 url = g.Url,
                 creationDateUnix = DateTime.toUnix g.CreationDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
+        | Repository r ->
+            ActivityViewModel(
+                iconUrl = "https://github.com/favicon.ico",
+                iconTitle = "GitHub",
+                text = sprintf "New repo %s/%s%s" r.Owner r.Name (r.Description |> function Some s -> sprintf ": %s" s | None -> ""),
+                url = r.Url,
+                creationDateUnix = DateTime.toUnix r.CreationDate,
+                addedDateUnixOffset = DateTime.toUnixOffset added)

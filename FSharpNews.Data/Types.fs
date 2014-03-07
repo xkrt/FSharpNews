@@ -44,6 +44,13 @@ type Gist = { Id: string
               CreationDate: DateTime
               Url: string }
 
+type Repository = { Id: int
+                    Name: string
+                    Description: string option
+                    Owner: string
+                    Url: string
+                    CreationDate: DateTime }
+
 type Activity =
     | StackExchangeQuestion of StackExchangeQuestion
     | Tweet of Tweet
@@ -51,4 +58,5 @@ type Activity =
     | FsSnippet of FsSnippet
     | FPishQuestion of FPishQuestion
     | Gist of Gist
+    | Repository of Repository
     with override x.ToString() = sprintf "%A" x

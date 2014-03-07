@@ -62,6 +62,13 @@ let private gists (conf: Configuration.Type) =
     let lastSavedDate = Storage.getDateOfLastGist()
     repeatForeverArg (TimeSpan.FromMinutes 5.) fetch lastSavedDate
 
+let private repos (conf: Configuration.Type) =
+    let fetch () =
+        let sinceExclusive = Storage.getDateOfLastRepo()
+        let repos = GitHub.fetchNewRepos conf.GitHub sinceExclusive
+        do Storage.saveAll repos
+    repeatForever (TimeSpan.FromMinutes 5.) fetch
+
 [<EntryPoint>]
 let main argv =
     do log.Info "Program started"
@@ -79,7 +86,8 @@ let main argv =
          nuget
          fssnip
          fpish
-         gists]
+         gists
+         repos]
         |> Seq.map (fun f -> f conf)
         |> Async.Parallel
         |> Async.Ignore

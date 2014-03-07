@@ -12,9 +12,9 @@ open FSharpNews.Tests.Core
 let Setup() = do Storage.deleteAll()
 
 let runGistsWith json =
-    GistsApi.runServer (GET >>= url GistsApi.path
-                            >>= (set_mime_type "application/json"
-                            >> OK json))
+    GitHubApi.runServer (GET >>= url GitHubApi.gistsPath
+                             >>= (set_mime_type "application/json"
+                             >> OK json))
 
 [<Test>]
 let ``One F# gist returned by api => one activity in storage``() =
