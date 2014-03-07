@@ -20,9 +20,6 @@ type private ActivityType =
     | FPish = 4
     | Gist = 5
 
-[<Literal>]
-let private DuplicateKeyError = 11000
-
 #if INTERACTIVE
 let connectionString = "mongodb://localhost/fsharpnews"
 #else
@@ -152,8 +149,9 @@ let private safeUniq fn description =
         fn() |> ignore
     with
     | :? WriteConcernException as e ->
+        let duplicateKeyError = 11000
         match e.CommandResult.Code with
-        | Value code when code = DuplicateKeyError -> log.Warn "Duplicate key error while %s, error: %s" (description()) (e.ToString())
+        | Value code when code = duplicateKeyError -> ()
         | _ -> reraise()
 
 let private safeInsert doc =
