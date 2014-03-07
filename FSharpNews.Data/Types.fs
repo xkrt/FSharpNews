@@ -38,10 +38,17 @@ type FPishQuestion = { Id: int
                        PublishedDate: DateTime
                        Url: string }
 
+type Gist = { Id: string
+              Description: string option
+              Owner: string
+              CreationDate: DateTime
+              Url: string }
+
 type Activity =
     | StackExchangeQuestion of StackExchangeQuestion
     | Tweet of Tweet
     | NugetPackage of NugetPackage
     | FsSnippet of FsSnippet
     | FPishQuestion of FPishQuestion
+    | Gist of Gist
     with override x.ToString() = sprintf "%A" x

@@ -16,6 +16,12 @@ type String with
        then this
        else this + suffix
 
+    member this.TrimToNull() =
+        if this = null
+        then null
+        else let res = this.Trim()
+             if res = "" then null else res
+
 module Strings =
     let trim (s: string) = s.Trim()
 

@@ -10,14 +10,17 @@ let private log = Logger.create "Program"
 
 do AppDomain.CurrentDomain.UnhandledException.Add UnhandledExceptionLogger.handle
 
-let private repeatForever (interval: TimeSpan) fn =
-    async { let rec loop () =
-                try fn()
+let private repeatForeverArg (interval: TimeSpan) fn startArg =
+    async { let rec loop arg =
+                let newArg = ref arg
+                try newArg := fn arg
                 with
                 | e -> do log.Error "%O" e
-                Thread.Sleep(interval)
-                loop()
-            loop() }
+                do Thread.Sleep interval
+                loop !newArg
+            loop startArg }
+
+let private repeatForever (interval: TimeSpan) fn = repeatForeverArg interval fn ()
 
 let private stackExchange (conf: Configuration.Type) =
     let fetchNewQuestions site =
@@ -51,6 +54,14 @@ let private fpish (conf: Configuration.Type) =
         do Storage.saveAll quests
     repeatForever (TimeSpan.FromMinutes(5.)) fetchQuestions
 
+let private gists (conf: Configuration.Type) =
+    let fetch since =
+        let gists, lastFetchedDate = GitHub.fetchGists conf.GitHub since
+        do Storage.saveAll gists
+        lastFetchedDate
+    let lastSavedDate = Storage.getDateOfLastGist()
+    repeatForeverArg (TimeSpan.FromMinutes 5.) fetch lastSavedDate
+
 [<EntryPoint>]
 let main argv =
     do log.Info "Program started"
@@ -59,10 +70,17 @@ let main argv =
     let nuUrl = ref None
     let fssnipUrl = ref None
     let fpishUrl = ref None
+    let githubUrl = ref None
 
     let startPullingData() =
-        let conf = Configuration.build !seUrl !twiUrl !nuUrl !fssnipUrl !fpishUrl
-        [stackExchange conf; twitter conf; nuget conf; fssnip conf; fpish conf]
+        let conf = Configuration.build !seUrl !twiUrl !nuUrl !fssnipUrl !fpishUrl !githubUrl
+        [stackExchange
+         twitter
+         nuget
+         fssnip
+         fpish
+         gists]
+        |> Seq.map (fun f -> f conf)
         |> Async.Parallel
         |> Async.Ignore
         |> Async.Start
@@ -84,6 +102,7 @@ let main argv =
         conf |> addCommandLineDefinition "nugetUrl" (fun url -> nuUrl := Some url)
         conf |> addCommandLineDefinition "fssnipUrl" (fun url -> fssnipUrl := Some url)
         conf |> addCommandLineDefinition "fpishUrl" (fun url -> fpishUrl := Some url)
+        conf |> addCommandLineDefinition "githubUrl" (fun url -> githubUrl := Some url)
 
     let exitCode = configureTopShelf <| fun conf ->
         do configureService conf

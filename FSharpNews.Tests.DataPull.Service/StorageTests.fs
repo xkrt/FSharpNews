@@ -58,6 +58,8 @@ let snippetA = FsSnippet snippet
 [<SetUp>]
 let Setup() = collection.RemoveAll() |> ignore
 
+// todo test for id intersection for different activity types
+
 [<Test>]
 let ``save saves activity with raw data and time added``() =
     let tweetJson = """{"key": "value"}"""
@@ -198,3 +200,13 @@ let ``fpish questions should be unique``() =
     match Storage.getAllActivities() with
     | (savedQuest,_)::[] -> savedQuest |> assertEqual questA
     | x -> failwithf "Expected: %A\r\nBut was: %A" questA x
+
+[<Test>]
+let ``gists should be unique``() =
+    let gistA = Gist TestData.Gist.gist
+    gistA |> withEmptyRaw |> Storage.save
+    gistA |> withEmptyRaw |> Storage.save
+
+    match Storage.getAllActivities() with
+    | (savedGist,_)::[] -> savedGist |> assertEqual gistA
+    | x -> failwithf "Expected: %A\r\nBut was: %A" gistA x

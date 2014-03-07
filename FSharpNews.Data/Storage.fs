@@ -10,6 +10,7 @@ open FSharpNews.Data
 open FSharpNews.Utils
 
 let private log = Logger.create "Storage"
+let private minDataDate = DateTime(2014, 3, 1, 0, 0, 0, DateTimeKind.Utc)
 
 type private ActivityType =
     | StackExchange = 0
@@ -17,9 +18,10 @@ type private ActivityType =
     | NugetPackage = 2
     | FsSnippet = 3
     | FPish = 4
+    | Gist = 5
 
 [<Literal>]
-let DuplicateKeyError = 11000
+let private DuplicateKeyError = 11000
 
 #if INTERACTIVE
 let connectionString = "mongodb://localhost/fsharpnews"
@@ -39,13 +41,23 @@ do activities.EnsureIndex(IndexKeys.Ascending("activity.tweetId"), IndexOptions.
 do activities.EnsureIndex(IndexKeys.Ascending("activity.packageId").Ascending("activity.version"), IndexOptions.SetUnique(true).SetSparse(true))
 do activities.EnsureIndex(IndexKeys.Ascending("activity.snippetId"), IndexOptions.SetUnique(true).SetSparse(true))
 do activities.EnsureIndex(IndexKeys.Ascending("activity.fpishId"), IndexOptions.SetUnique(true).SetSparse(true))
+do activities.EnsureIndex(IndexKeys.Ascending("activity.gistId"), IndexOptions.SetUnique(true).SetSparse(true))
 
 let private doc (elems: BsonElement list) = BsonDocument(elems)
 let private el (name: string) (value: BsonValue) = BsonElement(name, value)
 let private i32 value = BsonInt32 value
 let private i64 value = BsonInt64 value
 let private str value = BsonString value
+let private optstr opt =
+    match opt with
+    | Some s -> (str s) :> BsonValue
+    | None -> BsonNull.Value :> BsonValue
 let private date (value: DateTime) = BsonDateTime value
+
+let (|BNull|_|) (v: BsonValue) =
+   if v.IsBsonNull
+   then Some ()
+   else None
 
 let private siteToBson = function Stackoverflow -> i32 0 | Programmers -> i32 1 | CodeReview -> i32 2 | CodeGolf -> i32 3
 let private bsonToSite = function 0 -> Stackoverflow | 1 -> Programmers | 2 -> CodeReview | 3 -> CodeGolf | x -> failwithf "Unknown %d StackExchange site" x
@@ -83,6 +95,12 @@ let private mapToDocument (activity, raw) =
                                    el "url" (str q.Url)
                                    el "date" (date q.PublishedDate) ]
                              , i32 (int ActivityType.FPish)
+        | Gist g -> doc [ el "gistId" (str g.Id)
+                          el "description" (optstr g.Description)
+                          el "owner" (str g.Owner)
+                          el "url" (str g.Url)
+                          el "date" (date g.CreationDate) ]
+                    , i32 (int ActivityType.Gist)
     doc [ el "descriminator" descriminator
           el "activity" activityDoc
           el "raw" (str raw)
@@ -118,6 +136,13 @@ let private mapFromDocument (document: BsonDocument) =
                                   Author = adoc.["author"].AsString
                                   Url = adoc.["url"].AsString
                                   PublishedDate = adoc.["date"].ToUniversalTime() } |> FPishQuestion
+        | ActivityType.Gist -> { Id = adoc.["gistId"].AsString
+                                 Description = match adoc.["description"] with
+                                               | BNull -> None
+                                               | v -> Some v.AsString
+                                 Owner = adoc.["owner"].AsString
+                                 Url = adoc.["url"].AsString
+                                 CreationDate = adoc.["date"].ToUniversalTime() } |> Gist
         | t -> failwithf "Mapping for %A is not implemented" t
     let added = document.["addedDate"].ToUniversalTime()
     activity, added
@@ -154,25 +179,32 @@ let saveAll (activitiesWithRaws: (Activity*string) list) =
                           |> safeInsertBatch
 
 let getTimeOfLastQuestion (site: StackExchangeSite) =
-    let quest = activities.Find(Query.And([ Query.EQ("descriminator", i32 (int ActivityType.StackExchange))
-                                            Query.EQ("activity.site", siteToBson site) ]))
-                         .SetSortOrder(SortBy.Descending("activity.date"))
-                         .SetLimit(1)
-                |> Seq.map mapFromDocument
-                |> Seq.tryHead
-    match quest with
-    | Some (StackExchangeQuestion quest, _) -> quest.CreationDate
-    | _ -> DateTime(2014, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+    activities.Find(Query.And([ Query.EQ("descriminator", i32 (int ActivityType.StackExchange))
+                                Query.EQ("activity.site", siteToBson site) ]))
+             .SetSortOrder(SortBy.Descending("activity.date"))
+             .SetLimit(1)
+    |> Seq.map mapFromDocument
+    |> Seq.tryHead
+    |> function | Some (StackExchangeQuestion quest, _) -> quest.CreationDate
+                | _ -> minDataDate
 
 let getTimeOfLastPackage () =
-    let pkg = activities.Find(Query.EQ("descriminator", i32 (int ActivityType.NugetPackage)))
-                        .SetSortOrder(SortBy.Descending("activity.date"))
-                        .SetLimit(1)
-              |> Seq.map mapFromDocument
-              |> Seq.tryHead
-    match pkg with
-    | Some (NugetPackage pkg, _) -> pkg.PublishedDate
-    | _ -> DateTime(2014, 1, 1, 0, 0, 0, DateTimeKind.Utc) // todo extract to var
+    activities.Find(Query.EQ("descriminator", i32 (int ActivityType.NugetPackage)))
+                         .SetSortOrder(SortBy.Descending("activity.date"))
+                         .SetLimit(1)
+    |> Seq.map mapFromDocument
+    |> Seq.tryHead
+    |> function | Some (NugetPackage pkg, _) -> pkg.PublishedDate
+                | _ -> minDataDate
+
+let getDateOfLastGist () =
+    activities.Find(Query.EQ("descriminator", i32 (int ActivityType.Gist)))
+              .SetSortOrder(SortBy.Descending("activity.date"))
+              .SetLimit(1)
+    |> Seq.map mapFromDocument
+    |> Seq.tryHead
+    |> function | Some (Gist gist, _) -> gist.CreationDate
+                | _ -> minDataDate
 
 let mapToActivities cursor =
     cursor

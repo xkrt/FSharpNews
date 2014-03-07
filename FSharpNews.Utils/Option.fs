@@ -3,6 +3,11 @@ module FSharpNews.Utils.Option
 
 open System
 
+let inline ofNull (value : 'T) =
+    if Object.ReferenceEquals(null, value)
+    then None
+    else Some value
+
 let inline fill defaultValue (value: 'T option) =
     defaultArg value defaultValue
 
@@ -17,7 +22,7 @@ let toNullable =
 
 let (|Null|_|) (x: _ Nullable) =
    if x.HasValue
-       then None
-       else Some()
+   then None
+   else Some()
 
 let (|Value|_|) = fromNullable

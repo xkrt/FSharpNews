@@ -61,3 +61,11 @@ type ActivityViewModel(iconUrl: string, iconTitle: string, text: string, url: st
                 url = q.Url,
                 creationDateUnix = DateTime.toUnix q.PublishedDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
+        | Gist g ->
+            ActivityViewModel(
+                iconUrl = "https://github.com/favicon.ico",
+                iconTitle = "GitHub",
+                text = sprintf "Gist by %s: %s" g.Owner (g.Description |> function Some s -> s | None -> "<no description>"),
+                url = g.Url,
+                creationDateUnix = DateTime.toUnix g.CreationDate,
+                addedDateUnixOffset = DateTime.toUnixOffset added)

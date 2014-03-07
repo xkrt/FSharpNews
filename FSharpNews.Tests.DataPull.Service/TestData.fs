@@ -677,3 +677,229 @@ module FPish =
                      Author = "michaeldavid"
                      Url = "http://fpish.net//topic/None/57493"
                      PublishedDate = DateTime(2008, 5, 23, 1, 30, 21, DateTimeKind.Utc) }
+
+module Gist =
+    let emptyJson = "[]"
+
+    // gist with F# file
+    let fsharpJson = """[
+  {
+    "url": "https://api.github.com/gists/9380680",
+    "forks_url": "https://api.github.com/gists/9380680/forks",
+    "commits_url": "https://api.github.com/gists/9380680/commits",
+    "id": "9380680",
+    "git_pull_url": "https://gist.github.com/9380680.git",
+    "git_push_url": "https://gist.github.com/9380680.git",
+    "html_url": "https://gist.github.com/9380680",
+    "files": {
+      "p26.fs": {
+        "filename": "p26.fs",
+        "type": "text/plain",
+        "language": "F#",
+        "raw_url": "https://gist.githubusercontent.com/drcabana/9380680/raw/bd412a06a5a0f3c51c0ded2a9f2b87aa01b02815/p26.fs",
+        "size": 2238
+      }
+    },
+    "public": true,
+    "created_at": "2014-03-06T01:56:34Z",
+    "updated_at": "2014-03-06T02:00:50Z",
+    "description": "euler 26, f# version",
+    "comments": 1,
+    "user": null,
+    "comments_url": "https://api.github.com/gists/9380680/comments",
+    "owner": {
+      "login": "drcabana",
+      "id": 314158,
+      "avatar_url": "https://gravatar.com/avatar/2248ec70c680a42550cbc8c8b297e85d?d=https%3A%2F%2Fidenticons.github.com%2F23286291fe49143112b63f52c2f6c23a.png&r=x",
+      "gravatar_id": "2248ec70c680a42550cbc8c8b297e85d",
+      "url": "https://api.github.com/users/drcabana",
+      "html_url": "https://github.com/drcabana",
+      "followers_url": "https://api.github.com/users/drcabana/followers",
+      "following_url": "https://api.github.com/users/drcabana/following{/other_user}",
+      "gists_url": "https://api.github.com/users/drcabana/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/drcabana/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/drcabana/subscriptions",
+      "organizations_url": "https://api.github.com/users/drcabana/orgs",
+      "repos_url": "https://api.github.com/users/drcabana/repos",
+      "events_url": "https://api.github.com/users/drcabana/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/drcabana/received_events",
+      "type": "User",
+      "site_admin": false
+    }
+  }
+]"""
+
+    let gist = { Id = "9380680"
+                 Description = Some "euler 26, f# version"
+                 Owner = "drcabana"
+                 Url = "https://gist.github.com/9380680"
+                 CreationDate = DateTime(2014, 3, 6, 1, 56, 34, DateTimeKind.Utc) }
+
+    // gist with non-F# files
+    let nonFsharpJson = """[
+  {
+    "url": "https://api.github.com/gists/9384891",
+    "forks_url": "https://api.github.com/gists/9384891/forks",
+    "commits_url": "https://api.github.com/gists/9384891/commits",
+    "id": "9384891",
+    "git_pull_url": "https://gist.github.com/9384891.git",
+    "git_push_url": "https://gist.github.com/9384891.git",
+    "html_url": "https://gist.github.com/9384891",
+    "files": {
+      "0_reuse_code.js": {
+        "filename": "0_reuse_code.js",
+        "type": "application/javascript",
+        "language": "JavaScript",
+        "raw_url": "https://gist.githubusercontent.com/eakraly/9384891/raw/2b8a5ccf55d94d29328a24ef3913ffb54841429c/0_reuse_code.js",
+        "size": 126
+      },
+      "1_ruby_quicksort.rb": {
+        "filename": "1_ruby_quicksort.rb",
+        "type": "application/ruby",
+        "language": "Ruby",
+        "raw_url": "https://gist.githubusercontent.com/eakraly/9384891/raw/b16d3e65da4810d1bf24fd231028f3775f7dcede/1_ruby_quicksort.rb",
+        "size": 592
+      },
+      "2_keyboard_shortcuts.md": {
+        "filename": "2_keyboard_shortcuts.md",
+        "type": "text/plain",
+        "language": "Markdown",
+        "raw_url": "https://gist.githubusercontent.com/eakraly/9384891/raw/df51b18a3a36024d04f9348bd4e24f6991e41a02/2_keyboard_shortcuts.md",
+        "size": 534
+      },
+      "3_cheesecake_recipe.md": {
+        "filename": "3_cheesecake_recipe.md",
+        "type": "text/plain",
+        "language": "Markdown",
+        "raw_url": "https://gist.githubusercontent.com/eakraly/9384891/raw/f030315106c2b8dc0f52ad861f67223f88d4e35f/3_cheesecake_recipe.md",
+        "size": 1821
+      }
+    },
+    "public": true,
+    "created_at": "2014-03-06T08:30:32Z",
+    "updated_at": "2014-03-06T08:30:32Z",
+    "description": "Here are some things you can do with Gists in GistBox.",
+    "comments": 0,
+    "user": null,
+    "comments_url": "https://api.github.com/gists/9384891/comments",
+    "owner": {
+      "login": "eakraly",
+      "id": 2505440,
+      "avatar_url": "https://gravatar.com/avatar/bc4d4704c9547f9bad0cf1043b34e8c1?d=https%3A%2F%2Fidenticons.github.com%2F4c0a83bc43bd978408cd4d7a8bbfc6ec.png&r=x",
+      "gravatar_id": "bc4d4704c9547f9bad0cf1043b34e8c1",
+      "url": "https://api.github.com/users/eakraly",
+      "html_url": "https://github.com/eakraly",
+      "followers_url": "https://api.github.com/users/eakraly/followers",
+      "following_url": "https://api.github.com/users/eakraly/following{/other_user}",
+      "gists_url": "https://api.github.com/users/eakraly/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/eakraly/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/eakraly/subscriptions",
+      "organizations_url": "https://api.github.com/users/eakraly/orgs",
+      "repos_url": "https://api.github.com/users/eakraly/repos",
+      "events_url": "https://api.github.com/users/eakraly/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/eakraly/received_events",
+      "type": "User",
+      "site_admin": false
+    }
+  }
+]"""
+
+    // F# gist with japan description
+    let japanFsharpJson = """[
+  {
+    "url": "https://api.github.com/gists/9340629",
+    "forks_url": "https://api.github.com/gists/9340629/forks",
+    "commits_url": "https://api.github.com/gists/9340629/commits",
+    "id": "9340629",
+    "git_pull_url": "https://gist.github.com/9340629.git",
+    "git_push_url": "https://gist.github.com/9340629.git",
+    "html_url": "https://gist.github.com/9340629",
+    "files": {
+      "TextBox2.cs": {
+        "filename": "TextBox2.cs",
+        "type": "text/plain",
+        "language": "C#",
+        "raw_url": "https://gist.githubusercontent.com/sayurin/9340629/raw/866f078e069f88c53761573b24f6d60b8722b51e/TextBox2.cs",
+        "size": 1047
+      },
+      "TextBox2.fs": {
+        "filename": "TextBox2.fs",
+        "type": "text/plain",
+        "language": "F#",
+        "raw_url": "https://gist.githubusercontent.com/sayurin/9340629/raw/2a4344b28162b708b8662fdcfad4e226c04c35da/TextBox2.fs",
+        "size": 1002
+      }
+    },
+    "public": true,
+    "created_at": "2014-03-04T05:12:30Z",
+    "updated_at": "2014-03-04T05:14:00Z",
+    "description": "WinFormsのTextBoxでfocusを失う時にIMEへの入力文字を確定させる",
+    "comments": 0,
+    "user": null,
+    "comments_url": "https://api.github.com/gists/9340629/comments",
+    "owner": {
+      "login": "sayurin",
+      "id": 3615855,
+      "avatar_url": "https://gravatar.com/avatar/3710daacf055efda12fd5553e86d38b6?d=https%3A%2F%2Fidenticons.github.com%2Fb09a6f29ca8d6a065a488db155ff06d2.png&r=x",
+      "gravatar_id": "3710daacf055efda12fd5553e86d38b6",
+      "url": "https://api.github.com/users/sayurin",
+      "html_url": "https://github.com/sayurin",
+      "followers_url": "https://api.github.com/users/sayurin/followers",
+      "following_url": "https://api.github.com/users/sayurin/following{/other_user}",
+      "gists_url": "https://api.github.com/users/sayurin/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/sayurin/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/sayurin/subscriptions",
+      "organizations_url": "https://api.github.com/users/sayurin/orgs",
+      "repos_url": "https://api.github.com/users/sayurin/repos",
+      "events_url": "https://api.github.com/users/sayurin/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/sayurin/received_events",
+      "type": "User",
+      "site_admin": false
+    }
+  }]"""
+
+    /// F# gist with empty description
+    let emptyDescription = """[{
+  "url": "https://api.github.com/gists/9365834",
+  "forks_url": "https://api.github.com/gists/9365834/forks",
+  "commits_url": "https://api.github.com/gists/9365834/commits",
+  "id": "9365834",
+  "git_pull_url": "https://gist.github.com/9365834.git",
+  "git_push_url": "https://gist.github.com/9365834.git",
+  "html_url": "https://gist.github.com/9365834",
+  "files": {
+    "batch.fs": {
+      "filename": "batch.fs",
+      "type": "text/plain",
+      "language": "F#",
+      "raw_url": "https://gist.githubusercontent.com/mschinz/9365834/raw/76b80de0dc4bc69e1a48c51a6e0666edf5e4afa9/batch.fs",
+      "size": 478
+    }
+  },
+  "public": true,
+  "created_at": "2014-03-05T11:54:42Z",
+  "updated_at": "2014-03-05T11:54:43Z",
+  "description": "",
+  "comments": 0,
+  "user": null,
+  "comments_url": "https://api.github.com/gists/9365834/comments",
+  "owner": {
+    "login": "mschinz",
+    "id": 890978,
+    "avatar_url": "https://gravatar.com/avatar/da12f051730ce0461aba2502460dbfd7?d=https%3A%2F%2Fidenticons.github.com%2F8b4f8bbf34e3cfc1fbab4f8f88e7482a.png&r=x",
+    "gravatar_id": "da12f051730ce0461aba2502460dbfd7",
+    "url": "https://api.github.com/users/mschinz",
+    "html_url": "https://github.com/mschinz",
+    "followers_url": "https://api.github.com/users/mschinz/followers",
+    "following_url": "https://api.github.com/users/mschinz/following{/other_user}",
+    "gists_url": "https://api.github.com/users/mschinz/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/mschinz/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/mschinz/subscriptions",
+    "organizations_url": "https://api.github.com/users/mschinz/orgs",
+    "repos_url": "https://api.github.com/users/mschinz/repos",
+    "events_url": "https://api.github.com/users/mschinz/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/mschinz/received_events",
+    "type": "User",
+    "site_admin": false
+  }
+}]"""

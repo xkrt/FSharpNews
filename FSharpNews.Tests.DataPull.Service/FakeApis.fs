@@ -92,4 +92,13 @@ module FPishApi =
     let baseUrl = sprintf "http://%s:%d" Environment.machine port
 
     let runServer = WebServer.run "FPish" port
-    let runEmpty() = runServer (OK TestData.FsSnip.emptyJson)
+    let runEmpty() = runServer (OK TestData.FPish.emptyXml)
+
+module GistsApi =
+    let private port = 4146
+
+    let path = "/api/v3/gists/public"
+    let baseUrl = sprintf "http://%s:%d" Environment.machine port
+
+    let runServer = WebServer.run "Gists" port
+    let runEmpty() = runServer (OK TestData.Gist.emptyJson)
