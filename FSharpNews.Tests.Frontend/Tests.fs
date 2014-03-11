@@ -221,3 +221,13 @@ let ``Stackexchange question title and twitter tweet should be html decoded``() 
     Page.rows()
     |> Seq.map getRowItems
     |> Seq.iter (fun (_, link, _) -> F link |> checkTextIs "Jack: Converting a Union<'a> to a Union<'b>")
+
+[<Test>]
+let ``Stackexchange user name should be html decoded``() =
+    do saveQuest { soQuest with UserDisplayName = "Alex R&#248;nne Petersen"; Title = "test" }
+
+    do Page.go()
+
+    Page.rows()
+    |> Seq.map getRowItems
+    |> Seq.iter (fun (_, link, _) -> F link |> checkTextIs "Alex Rønne Petersen: test")
