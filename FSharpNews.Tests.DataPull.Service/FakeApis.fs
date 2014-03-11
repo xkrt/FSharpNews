@@ -7,6 +7,15 @@ open Suave.Web
 open Suave.Socket
 open FSharpNews.Tests.Core
 
+type Source =
+    | StackExchange
+    | Twitter
+    | NuGet
+    | FsSnip
+    | FPish
+    | Gists
+    | Repos
+
 module WebServer =
     let run name port route =
         let binding = HttpBinding.Create(HTTP, System.Net.IPAddress.Any.ToString(), port)

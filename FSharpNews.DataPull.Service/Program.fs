@@ -10,7 +10,7 @@ let private log = Logger.create "Program"
 
 do AppDomain.CurrentDomain.UnhandledException.Add UnhandledExceptionLogger.handle
 
-let private repeatForeverArg (interval: TimeSpan) fn startArg =
+let private repeatForeverArg (interval: TimeSpan) startArg fn =
     async { let rec loop arg =
                 let newArg = ref arg
                 try newArg := fn arg
@@ -20,39 +20,31 @@ let private repeatForeverArg (interval: TimeSpan) fn startArg =
                 loop !newArg
             loop startArg }
 
-let private repeatForever (interval: TimeSpan) fn = repeatForeverArg interval fn ()
+let private repeatForever interval fn = repeatForeverArg interval () fn
+let private repeatEvery5min = repeatForever (TimeSpan.FromMinutes 5.)
 
 let private stackExchange (conf: Configuration.Type) =
     let fetchNewQuestions site =
         let lastQuestionTime = Storage.getTimeOfLastQuestion site
-        let startDate = lastQuestionTime.AddSeconds(1.)
+        let startDate = lastQuestionTime.AddSeconds 1.
         let activitiesWithRaws = StackExchange.fetch conf.StackExchange site startDate
         do Storage.saveAll activitiesWithRaws
-    let repeat = repeatForever (TimeSpan.FromMinutes(5.))
-    repeat (fun () -> StackExchange.allSites |> List.iter fetchNewQuestions)
+    repeatEvery5min (fun () -> StackExchange.allSites |> List.iter fetchNewQuestions)
 
 let private twitter (conf: Configuration.Type) =
     async { Twitter.listenStream conf.Twitter Storage.save }
 
 let private nuget (conf: Configuration.Type) =
     let fetchSince = NuGet.fetch conf.NuGet
-    let fetchNewPackages () =
-        let lastPackagePublishedDate = Storage.getTimeOfLastPackage()
-        let pkgsWithRaw = fetchSince lastPackagePublishedDate
-        do Storage.saveAll pkgsWithRaw
-    repeatForever (TimeSpan.FromMinutes(5.)) fetchNewPackages
+    repeatEvery5min (Storage.getTimeOfLastPackage >> fetchSince >> Storage.saveAll)
 
 let private fssnip (conf: Configuration.Type) =
-    let fetchSnippets () =
-        let snippets = Fssnip.fetch conf.FsSnip
-        do Storage.saveAll snippets
-    repeatForever (TimeSpan.FromMinutes(5.)) fetchSnippets
+    let fetchSnippets () = Fssnip.fetch conf.FsSnip |> Storage.saveAll
+    repeatEvery5min fetchSnippets
 
 let private fpish (conf: Configuration.Type) =
-    let fetchQuestions () =
-        let quests = FPish.fetch conf.FPish
-        do Storage.saveAll quests
-    repeatForever (TimeSpan.FromMinutes(5.)) fetchQuestions
+    let fetchQuestions () = FPish.fetch conf.FPish |> Storage.saveAll
+    repeatEvery5min fetchQuestions
 
 let private gists (conf: Configuration.Type) =
     let fetch since =
@@ -60,35 +52,30 @@ let private gists (conf: Configuration.Type) =
         do Storage.saveAll gists
         lastFetchedDate
     let lastSavedDate = Storage.getDateOfLastGist()
-    repeatForeverArg (TimeSpan.FromMinutes 5.) fetch lastSavedDate
+    repeatForeverArg (TimeSpan.FromMinutes 5.) lastSavedDate fetch
 
 let private repos (conf: Configuration.Type) =
-    let fetch () =
-        let sinceExclusive = Storage.getDateOfLastRepo()
-        let repos = GitHub.fetchNewRepos conf.GitHub sinceExclusive
-        do Storage.saveAll repos
-    repeatForever (TimeSpan.FromMinutes 5.) fetch
+    let fetch = Storage.getDateOfLastRepo >> GitHub.fetchNewRepos conf.GitHub >> Storage.saveAll
+    repeatEvery5min fetch
 
 [<EntryPoint>]
 let main argv =
     do log.Info "Program started"
-    let seUrl = ref None
-    let twiUrl = ref None
-    let nuUrl = ref None
-    let fssnipUrl = ref None
-    let fpishUrl = ref None
-    let githubUrl = ref None
+    let args = Args.Default
 
     let startPullingData() =
-        let conf = Configuration.build !seUrl !twiUrl !nuUrl !fssnipUrl !fpishUrl !githubUrl
-        [stackExchange
-         twitter
-         nuget
-         fssnip
-         fpish
-         gists
-         repos]
-        |> Seq.map (fun f -> f conf)
+        log.Info "Started with args: %A" args
+        let conf = Configuration.build args
+        [stackExchange, args.StackExchangeEnabled
+         twitter,       args.TwitterEnabled
+         nuget,         args.NuGetEnabled
+         fssnip,        args.FssnipEnabled
+         fpish,         args.FpishEnabled
+         gists,         args.GistsEnabled
+         repos,         args.ReposEnabled]
+        |> Seq.filter snd
+        |> Seq.map fst
+        |> Seq.map (fun fn -> fn conf)
         |> Async.Parallel
         |> Async.Ignore
         |> Async.Start
@@ -105,15 +92,22 @@ let main argv =
         conf |> dependsOnMongoDB
         conf |> enableServiceRecovery <| restartService 1
         conf |> useNLog
-        conf |> addCommandLineDefinition "stackExchangeUrl" (fun url -> seUrl := Some url)
-        conf |> addCommandLineDefinition "twitterUrl" (fun url -> twiUrl := Some url)
-        conf |> addCommandLineDefinition "nugetUrl" (fun url -> nuUrl := Some url)
-        conf |> addCommandLineDefinition "fssnipUrl" (fun url -> fssnipUrl := Some url)
-        conf |> addCommandLineDefinition "fpishUrl" (fun url -> fpishUrl := Some url)
-        conf |> addCommandLineDefinition "githubUrl" (fun url -> githubUrl := Some url)
+        conf |> addCommandLineDefinition "disableStackExchange" (fun url -> args.StackExchangeEnabled <- false)
+        conf |> addCommandLineDefinition "stackExchangeUrl" (fun url -> args.StackExchangeUrl <- Some url)
+        conf |> addCommandLineDefinition "disableTwitter" (fun url -> args.TwitterEnabled <- false)
+        conf |> addCommandLineDefinition "twitterUrl" (fun url -> args.TwitterUrl <- Some url)
+        conf |> addCommandLineDefinition "disableNuget" (fun url -> args.NuGetEnabled <- false)
+        conf |> addCommandLineDefinition "nugetUrl" (fun url -> args.NuGetUrl <- Some url)
+        conf |> addCommandLineDefinition "disableFssnip" (fun url -> args.FssnipEnabled <- false)
+        conf |> addCommandLineDefinition "fssnipUrl" (fun url -> args.FssnipUrl <- Some url)
+        conf |> addCommandLineDefinition "disableFpish" (fun url -> args.FpishEnabled <- false)
+        conf |> addCommandLineDefinition "fpishUrl" (fun url -> args.FpishUrl <- Some url)
+        conf |> addCommandLineDefinition "disableGists" (fun url -> args.GistsEnabled <- false)
+        conf |> addCommandLineDefinition "disableRepos" (fun url -> args.ReposEnabled <- false)
+        conf |> addCommandLineDefinition "githubUrl" (fun url -> args.GitHubUrl <- Some url)
 
-    let exitCode = configureTopShelf <| fun conf ->
-        do configureService conf
-        do runService |> service conf
+    let exitCode = configureTopShelf <| fun hostConf ->
+        do configureService hostConf
+        do runService |> service hostConf
     log.Info "Exiting, code=%A" exitCode
     int exitCode

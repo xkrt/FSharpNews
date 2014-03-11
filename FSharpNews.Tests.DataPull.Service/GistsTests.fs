@@ -11,80 +11,40 @@ open FSharpNews.Tests.Core
 [<SetUp>]
 let Setup() = do Storage.deleteAll()
 
-let runGistsWith json =
-    GitHubApi.runServer (GET >>= url GitHubApi.gistsPath
-                             >>= (set_mime_type "application/json"
-                             >> OK json))
+let runGistsWith json = GitHubApi.runServer (GET >>= url GitHubApi.gistsPath
+                                                 >>= (set_mime_type "application/json"
+                                                 >> OK json))
 
 [<Test>]
 let ``One F# gist returned by api => one activity in storage``() =
     use gs = runGistsWith TestData.Gist.fsharpJson
-    use tw = TwitterApi.runEmpty()
-    use se = StackExchangeApi.runEmpty()
-    use nu = NuGetApi.runEmpty()
-    use fs = FsSnipApi.runEmpty()
-    use fp = FPishApi.runEmpty()
+    do ServiceApplication.startAndSleep Gists
 
-    use puller = ServiceApplication.start()
-    sleep 10
-
-    let activities = Storage.getAllActivities()
-    let gist =
-        activities
-        |> List.map fst
-        |> List.exactlyOne
-        |> function Gist g -> g | x -> failwithf "Expected Gist, but was %O" (x.GetType())
-
-    gist |> assertEqual TestData.Gist.gist
-    activities
-    |> List.map snd
-    |> List.iter (assertEqualDateWithin DateTime.UtcNow (TimeSpan.FromSeconds(15.)))
+    Storage.getAllActivities()
+    |> List.map fst
+    |> List.exactlyOne
+    |> function Gist g -> g | x -> failwithf "Expected Gist, but was %O" (x.GetType())
+    |> assertEqual TestData.Gist.gist
 
 [<Test>]
 let ``Non-F# gists filtered``() =
     use gs = runGistsWith TestData.Gist.nonFsharpJson
-    use tw = TwitterApi.runEmpty()
-    use se = StackExchangeApi.runEmpty()
-    use nu = NuGetApi.runEmpty()
-    use fs = FsSnipApi.runEmpty()
-    use fp = FPishApi.runEmpty()
-
-    use puller = ServiceApplication.start()
-    sleep 10;
-
+    do ServiceApplication.startAndSleep Gists
     Storage.getAllActivities() |> assertEqual []
 
 [<Test>]
 let ``Gists with non-english description filtered``() =
     use gs = runGistsWith TestData.Gist.japanFsharpJson
-    use tw = TwitterApi.runEmpty()
-    use se = StackExchangeApi.runEmpty()
-    use nu = NuGetApi.runEmpty()
-    use fs = FsSnipApi.runEmpty()
-    use fp = FPishApi.runEmpty()
-
-    use puller = ServiceApplication.start()
-    sleep 10
-
+    do ServiceApplication.startAndSleep Gists
     Storage.getAllActivities() |> assertEqual []
 
 [<Test>]
 let ``Gist with empty description saved with null description``() =
     use gs = runGistsWith TestData.Gist.emptyDescription
-    use tw = TwitterApi.runEmpty()
-    use se = StackExchangeApi.runEmpty()
-    use nu = NuGetApi.runEmpty()
-    use fs = FsSnipApi.runEmpty()
-    use fp = FPishApi.runEmpty()
-
-    use puller = ServiceApplication.start()
-    sleep 10
-
-    let activities = Storage.getAllActivities()
-    let gist =
-        activities
-        |> List.map fst
-        |> List.exactlyOne
-        |> function Gist g -> g | x -> failwithf "Expected Gist, but was %O" (x.GetType())
-
-    gist.Description |> assertEqual None
+    do ServiceApplication.startAndSleep Gists
+    
+    Storage.getAllActivities()
+    |> List.map fst
+    |> List.exactlyOne
+    |> function Gist g -> g | x -> failwithf "Expected Gist, but was %O" (x.GetType())
+    |> (fun g -> g.Description |> assertEqual None)

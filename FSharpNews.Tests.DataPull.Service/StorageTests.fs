@@ -10,10 +10,10 @@ open FSharpNews.Data
 open FSharpNews.Utils
 open FSharpNews.Tests.Core
 
-let utcnow () = DateTime.UtcNow.Truncate(TimeSpan.FromMilliseconds(1.))
-let oneSec = TimeSpan.FromSeconds(1.)
+let utcnow () = DateTime.UtcNow.Truncate(TimeSpan.FromMilliseconds 1.)
+let oneSec = TimeSpan.FromSeconds 1.
 
-let withEmptyRaw a = (a, "")
+let withEmptyRaw a = a, ""
 
 let mongoUrl = ConfigurationManager.ConnectionStrings.["MongoDB"].ConnectionString |> MongoUrl.Create
 let client = new MongoClient(mongoUrl)
@@ -57,8 +57,6 @@ let snippetA = FsSnippet snippet
 
 [<SetUp>]
 let Setup() = collection.RemoveAll() |> ignore
-
-// todo test for id intersection for different activity types
 
 [<Test>]
 let ``save saves activity with raw data and time added``() =
@@ -164,15 +162,6 @@ let ``saveAll do not raise duplicate key exception``() =
     |> assertEqual tweetA
 
 [<Test>]
-let ``tweets should be unique``() =
-    tweetA |> withEmptyRaw |> Storage.save
-    tweetA |> withEmptyRaw |> Storage.save
-
-    match Storage.getAllActivities() with
-    | (tweet,_)::[] -> tweet |> assertEqual tweetA
-    | x -> failwithf "Expected: %A\r\nBut was: %A" tweetA x
-
-[<Test>]
 let ``stackexchange questions should be unique``() =
     let id = 42
     let so = { soquest with Id=id }
@@ -187,50 +176,28 @@ let ``stackexchange questions should be unique``() =
     | (StackExchangeQuestion q1,_)::(StackExchangeQuestion q2,_)::[] -> [q1; q2] |> Collection.assertEquiv [so; prog]
     | x -> failwithf "Expected: %A\r\nBut was: %A" [so; prog] x
 
-[<Test>]
-let ``nuget packages should be unique``() =
-    packageA |> withEmptyRaw |> Storage.save
-    packageA |> withEmptyRaw |> Storage.save
+let testUniquness activity =
+    activity |> withEmptyRaw |> Storage.save
+    activity |> withEmptyRaw |> Storage.save
 
     match Storage.getAllActivities() with
-    | (savedPackage,_)::[] -> savedPackage |> assertEqual packageA
-    | x -> failwithf "Expected: %A\r\nBut was: %A" packageA x
+    | (savedActivity,_)::[] -> savedActivity |> assertEqual activity
+    | x -> failwithf "Expected: %A\r\nBut was: %A" activity x
 
 [<Test>]
-let ``snippets should be unique``() =
-    snippetA |> withEmptyRaw |> Storage.save
-    snippetA |> withEmptyRaw |> Storage.save
-
-    match Storage.getAllActivities() with
-    | (savedSnippet,_)::[] -> savedSnippet |> assertEqual snippetA
-    | x -> failwithf "Expected: %A\r\nBut was: %A" snippetA x
+let ``tweets should be unique``() = testUniquness tweetA
 
 [<Test>]
-let ``fpish questions should be unique``() =
-    let questA = FPishQuestion TestData.FPish.question
-    questA |> withEmptyRaw |> Storage.save
-    questA |> withEmptyRaw |> Storage.save
-
-    match Storage.getAllActivities() with
-    | (savedQuest,_)::[] -> savedQuest |> assertEqual questA
-    | x -> failwithf "Expected: %A\r\nBut was: %A" questA x
+let ``nuget packages should be unique``() = testUniquness packageA
 
 [<Test>]
-let ``gists should be unique``() =
-    let gistA = Gist TestData.Gist.gist
-    gistA |> withEmptyRaw |> Storage.save
-    gistA |> withEmptyRaw |> Storage.save
-
-    match Storage.getAllActivities() with
-    | (savedGist,_)::[] -> savedGist |> assertEqual gistA
-    | x -> failwithf "Expected: %A\r\nBut was: %A" gistA x
+let ``snippets should be unique``() = testUniquness snippetA
 
 [<Test>]
-let ``github repositories should be unique``() =
-    let repoA = Repository TestData.Repositories.repo
-    repoA |> withEmptyRaw |> Storage.save
-    repoA |> withEmptyRaw |> Storage.save
+let ``fpish questions should be unique``() = testUniquness (FPishQuestion TestData.FPish.question)
 
-    match Storage.getAllActivities() with
-    | (savedRepo,_)::[] -> savedRepo |> assertEqual repoA
-    | x -> failwithf "Expected: %A\r\nBut was: %A" repoA x
+[<Test>]
+let ``gists should be unique``() = testUniquness (Gist TestData.Gist.gist)
+
+[<Test>]
+let ``github repositories should be unique``() = testUniquness (Repository TestData.Repositories.repo)

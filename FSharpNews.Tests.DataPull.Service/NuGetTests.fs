@@ -16,17 +16,9 @@ let ``One package returned by api => one activity in storage``() =
     use nu = NuGetApi.runServer (GET >>= url NuGetApi.path
                                      >>= (set_mime_type "application/atom+xml;type=feed;charset=utf-8"
                                      >> OK TestData.NuGet.xml))
-    use tw = TwitterApi.runEmpty()
-    use se = StackExchangeApi.runEmpty()
-
-    use puller = ServiceApplication.start()
-    sleep 10
+    do ServiceApplication.startAndSleep NuGet
 
     let activities = Storage.getAllActivities()
     activities
     |> List.map fst
-    |> Collection.assertEquiv ([ TestData.NuGet.activity ])
-
-    activities
-    |> List.map snd
-    |> List.iter (assertEqualDateWithin DateTime.UtcNow (TimeSpan.FromSeconds(15.)))
+    |> Collection.assertEquiv [TestData.NuGet.activity]

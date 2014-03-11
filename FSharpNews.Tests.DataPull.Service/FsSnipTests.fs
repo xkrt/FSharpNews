@@ -14,12 +14,7 @@ let Setup() = do Storage.deleteAll()
 [<Test>]
 let ``One snippet returned by api => one activity in storage``() =
     use fs = FsSnipApi.runServer (GET >>= url FsSnipApi.path >>= OK TestData.FsSnip.json)
-    use tw = TwitterApi.runEmpty()
-    use se = StackExchangeApi.runEmpty()
-    use nu = NuGetApi.runEmpty()
-
-    use puller = ServiceApplication.start()
-    sleep 10
+    ServiceApplication.startAndSleep FsSnip
 
     let activities = Storage.getAllActivities()
     let snip =
@@ -35,7 +30,3 @@ let ``One snippet returned by api => one activity in storage``() =
     snip.Author |> assertEqual expected.Author
     snip.Url |> assertEqual expected.Url
     snip.PublishedDate |> assertEqualDateWithin expected.PublishedDate (TimeSpan.FromSeconds(15.))
-
-    activities
-    |> List.map snd
-    |> List.iter (assertEqualDateWithin DateTime.UtcNow (TimeSpan.FromSeconds(15.)))

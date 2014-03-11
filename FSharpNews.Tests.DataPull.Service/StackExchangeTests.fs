@@ -11,8 +11,6 @@ open FSharpNews.Tests.Core
 [<SetUp>]
 let Setup() = do Storage.deleteAll()
 
-// todo: test wrong json
-
 [<Test>]
 let ``One question on SO and one on Programmers => two activities in storage``() =
     let handler (r: HttpRequest) =
@@ -24,20 +22,11 @@ let ``One question on SO and one on Programmers => two activities in storage``()
         | x -> failwithf "Wrong 'site' query item=%A" x
 
     use se = StackExchangeApi.runServer (GET >>= url StackExchangeApi.path >>== handler)
-    use tw = TwitterApi.runEmpty()
-    use nu = NuGetApi.runEmpty()
+    do ServiceApplication.startAndSleep StackExchange
 
-    use puller = ServiceApplication.start()
-    sleep 10
-
-    let activities = Storage.getAllActivities()
-    activities
+    Storage.getAllActivities()
     |> List.map fst
     |> Collection.assertEquiv [ TestData.StackExchange.soActivity
                                 TestData.StackExchange.progActivity
                                 TestData.StackExchange.reviewActivity
                                 TestData.StackExchange.golfActivity ]
-
-    activities
-    |> List.map snd
-    |> List.iter (assertEqualDateWithin DateTime.UtcNow (TimeSpan.FromSeconds(15.)))
