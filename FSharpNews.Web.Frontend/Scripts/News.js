@@ -22,8 +22,9 @@ function PageViewModel(config) {
         var createMoment = moment(activity.CreationDateUnixOffset).utc();
         var createdAgo = timeAgoObservable(createMoment);
         var createdTitle = createMoment.format('YYYY-MM-DD HH:mm:ss') + 'Z';
-        return {
-            IconUrl: activity.IconUrl,
+        var vm = {
+            IconLowResUrl: activity.IconLowResUrl,
+            IconHiResUrl: activity.IconHiResUrl,
             IconTitle: activity.IconTitle,
             Text: activity.Text,
             Url: activity.Url,
@@ -32,6 +33,12 @@ function PageViewModel(config) {
             CreationDate: activity.CreationDateUnixOffset,
             AddedAt: activity.AddedDateUnixOffset
         };
+        vm.IconUrl = ko.computed(function() {
+            return window.devicePixelRatio > 1
+                ? this.IconHiResUrl
+                : this.IconLowResUrl;
+        }, vm);
+        return vm;
     };
 
     var self = this;

@@ -113,9 +113,27 @@
     </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>
+    <Content Include="Content\Images\Web.config" />
     <Content Include="Content\Images\loader.gif" />
     <Content Include="Content\Images\favicon152.png" />
-    <Content Include="Content\Images\Web.config" />
+    <Content Include="Content\Images\codegolf16x16.png" />
+    <Content Include="Content\Images\codegolf32x32.png" />
+    <Content Include="Content\Images\codereview16x16.png" />
+    <Content Include="Content\Images\codereview32x32.png" />
+    <Content Include="Content\Images\fpish16x16.png" />
+    <Content Include="Content\Images\fpish32x32.png" />
+    <Content Include="Content\Images\fssnip16x16.png" />
+    <Content Include="Content\Images\fssnip32x32.png" />
+    <Content Include="Content\Images\github16x16.png" />
+    <Content Include="Content\Images\github32x32.png" />
+    <Content Include="Content\Images\nuget16x16.png" />
+    <Content Include="Content\Images\nuget32x32.png" />
+    <Content Include="Content\Images\programmers16x16.png" />
+    <Content Include="Content\Images\programmers32x32.png" />
+    <Content Include="Content\Images\so16x16.png" />
+    <Content Include="Content\Images\so32x32.png" />
+    <Content Include="Content\Images\twitter16x16.png" />
+    <Content Include="Content\Images\twitter32x32.png" />
     <Content Include="Content\Site.css" />
     <None Include="Content\bootstrap-theme.min.css" />
     <None Include="Content\bootstrap-theme.css" />
