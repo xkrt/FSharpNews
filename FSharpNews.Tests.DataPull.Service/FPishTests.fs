@@ -20,3 +20,4 @@ let ``One question returned by api => one activity in storage``() =
     |> List.map fst
     |> List.exactlyOne
     |> function FPishQuestion q -> q | x -> failwithf "Expected FPishQuestion, but was %O" (x.GetType())
+    |> assertEqual TestData.FPish.question
