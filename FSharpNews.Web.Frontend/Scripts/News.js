@@ -19,7 +19,7 @@ function PageViewModel(config) {
     };
 
     var buildActivityViewModel = function (activity) {
-        var createMoment = moment.unix(activity.CreationDateUnix).utc();
+        var createMoment = moment(activity.CreationDateUnixOffset).utc();
         var createdAgo = timeAgoObservable(createMoment);
         var createdTitle = createMoment.format('YYYY-MM-DD HH:mm:ss') + 'Z';
         return {
@@ -29,6 +29,7 @@ function PageViewModel(config) {
             Url: activity.Url,
             CreationDateAgo: createdAgo,
             CreationDateTitle: createdTitle,
+            CreationDate: activity.CreationDateUnixOffset,
             AddedAt: activity.AddedDateUnixOffset
         };
     };
@@ -50,7 +51,7 @@ function PageViewModel(config) {
     this.loadMore = function() {
         var showedNews = self.ShowedNews();
         var oldestShowedActivity = showedNews[showedNews.length - 1];
-        return $.get('/api/news/earlier', { time: oldestShowedActivity.AddedAt })
+        return $.get('/api/news/earlier', { time: oldestShowedActivity.CreationDate })
             .done(function(activities) {
                 self.HasMoreOldNews(activities.length === config.BatchSize);
                 var avms = activities.map(buildActivityViewModel);

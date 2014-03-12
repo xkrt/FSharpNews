@@ -58,6 +58,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="App.config" />
+    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Types.fs" />
     <Compile Include="Storage.fs" />
     <Compile Include="StackExchange.fs" />

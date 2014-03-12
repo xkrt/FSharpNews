@@ -55,12 +55,16 @@ let checkMatchText (expectedLinkText, row: IWebElement) =
     let _, link, _ = getRowItems row
     F link |> checkTextIs expectedLinkText
 
+let linkTitle q = sprintf "%s: %s" q.UserDisplayName q.Title
+
 let sleepMs (ms: int) = Threading.Thread.Sleep(ms)
 let waitAjax() = sleepMs 5500
 
 
 module Page =
     let private indexUrl = sprintf "http://%s:4040" Environment.machine
+    let perPageCount = 100
+
     let go() = go indexUrl
 
     let hiddenNews = element ".hidden-news-bar"
@@ -101,7 +105,7 @@ let ``Order by creation date descending``() =
     |> List.iter checkMatchRow
 
 [<Test>]
-let ``Preserve order by creation date for ajax loaded news``() =
+let ``Preserve order by creation date for newest ajax loaded news``() =
     let questOldest = { soQuest with Title = "Oldest"; CreationDate = DateTime.UtcNow.AddHours(-3.); Id = 1 }
     do saveQuest questOldest
     do Page.go()
@@ -126,7 +130,7 @@ let ``Preserve order by creation date for ajax loaded news``() =
     |> List.iter checkMatchRow
 
 [<Test>]
-let ``Ajax news hidden with bar``() =
+let ``Newest ajax news hidden with bar``() =
     do saveQuest soQuest
     do Page.go()
 
@@ -149,7 +153,7 @@ let ``Ajax news hidden with bar``() =
     |> List.iter checkMatchRow
 
 [<Test>]
-let ``Hidden news count in title``() =
+let ``Hidden newest count in title``() =
     do saveQuest { soQuest with Id = 1 }
     do Page.go()
     waitTitle "F# News"
@@ -165,14 +169,15 @@ let ``Hidden news count in title``() =
     do click Page.hiddenNews
     waitTitle "F# News"
 
+let genQuests n =
+    [1..n]
+    |> List.map (fun i -> { soQuest with Id = i
+                                         Title = sprintf "Test question #%d" i
+                                         CreationDate = soQuest.CreationDate.AddMilliseconds(float i) })
+
 [<Test>]
 let ``Infinite scroll``() =
-    let savedQuests =
-        let pageSize = 100
-        [1..pageSize*2 + 10]
-        |> List.map (fun i -> { soQuest with Id = i
-                                             Title = sprintf "Test question #%d" i
-                                             CreationDate = soQuest.CreationDate.AddMilliseconds(float i) })
+    let savedQuests = genQuests (Page.perPageCount * 2 + 10)
     savedQuests
     |> List.map StackExchangeQuestion
     |> List.iter (fun a -> Storage.save(a, ""); sleepMs 5)
@@ -180,7 +185,7 @@ let ``Infinite scroll``() =
     let takeExpected n =
         savedQuests
         |> List.rev
-        |> Seq.map (fun q -> sprintf "%s: %s" q.UserDisplayName q.Title)
+        |> Seq.map linkTitle
         |> Seq.take n
 
     do Page.go()
@@ -206,6 +211,22 @@ let ``Infinite scroll``() =
     checkDisplayed Page.noMoreNews
 
 [<Test>]
+let ``Earlier news should be requested by creation date``() =
+    let initialQuests = genQuests Page.perPageCount |> List.map StackExchangeQuestion
+    initialQuests |> Seq.take 50 |> Seq.iter (fun a -> Storage.save(a, ""); sleepMs 5)
+    let timeWhileSaving = DateTime.UtcNow
+    initialQuests |> Seq.skip 50 |> Seq.iter (fun a -> Storage.save(a, ""); sleepMs 5)
+    do Page.go()
+
+    let oldest = { soQuest with Id=999; Title = "Oldest"; CreationDate = soQuest.CreationDate.AddDays(-1.) }
+    do Storage.saveWithAdded(StackExchangeQuestion oldest, timeWhileSaving)
+    do scrollToBottom()
+
+    let rows = Page.rows()
+    rows.Length |> assertEqual (Page.perPageCount + 1)
+    rows |> Seq.last |> (fun r -> linkTitle oldest, r) |> checkMatchText
+
+[<Test>]
 let ``Loader initially hidden``() =
     do saveQuest soQuest
     do Page.go()
@@ -215,7 +236,6 @@ let ``Loader initially hidden``() =
 let ``Stackexchange question title and twitter tweet should be html decoded``() =
     do saveQuest { soQuest with UserDisplayName = "Jack"; Title = "Converting a Union&lt;&#39;a&gt; to a Union&lt;&#39;b&gt;" }
     do saveTweet { tweet with UserScreenName = "Jack"; Text = "Converting a Union&lt;&#39;a&gt; to a Union&lt;&#39;b&gt;" }
-
     do Page.go()
 
     Page.rows()
@@ -225,7 +245,6 @@ let ``Stackexchange question title and twitter tweet should be html decoded``() 
 [<Test>]
 let ``Stackexchange user name should be html decoded``() =
     do saveQuest { soQuest with UserDisplayName = "Alex R&#248;nne Petersen"; Title = "test" }
-
     do Page.go()
 
     Page.rows()

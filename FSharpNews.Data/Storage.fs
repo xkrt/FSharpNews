@@ -164,6 +164,12 @@ let private mapFromDocument (document: BsonDocument) =
     let added = document.["addedDate"].ToUniversalTime()
     activity, added
 
+let private mapToActivities cursor =
+    cursor
+    |> Seq.cast<BsonDocument>
+    |> Seq.map mapFromDocument
+    |> Seq.toList
+
 let private safeUniq fn description =
     try
         fn() |> ignore
@@ -233,20 +239,12 @@ let getDateOfLastRepo () =
     |> function | Some (Repository repo, _) -> repo.CreationDate
                 | _ -> DateTime.MinValue
 
-let mapToActivities cursor =
-    cursor
-    |> Seq.cast<BsonDocument>
-    |> Seq.map mapFromDocument
-    |> Seq.toList
-
 let getTopActivitiesByCreation count =
     activities
         .FindAll()
         .SetSortOrder(SortBy.Descending("activity.date"))
         .SetLimit(count)
     |> mapToActivities
-
-let getAllActivities () = activities.FindAll() |> mapToActivities
 
 let getActivitiesAddedSince (dtExclusive: DateTime) =
     activities
@@ -255,10 +253,14 @@ let getActivitiesAddedSince (dtExclusive: DateTime) =
     |> mapToActivities
 
 let getActivitiesAddedEarlier count (dtExclusive: DateTime) =
-    activities.Find(Query.LT("addedDate", BsonDateTime dtExclusive))
+    activities.Find(Query.LT("activity.date", BsonDateTime dtExclusive))
                         .SetSortOrder(SortBy.Descending "activity.date")
                         .SetLimit(count)
     |> mapToActivities
 
-let deleteAll () =
-    do activities.RemoveAll() |> ignore
+let internal getAllActivities () = activities.FindAll() |> mapToActivities
+let internal deleteAll () = do activities.RemoveAll() |> ignore
+let internal saveWithAdded (activity, added) =
+    let bdoc = mapToDocument (activity, "")
+    bdoc.["addedDate"] <- date added
+    safeInsert bdoc
