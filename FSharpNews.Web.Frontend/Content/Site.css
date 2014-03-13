@@ -57,6 +57,10 @@
     width: 16px;
 }
 
+#news tr td:nth-child(2) {
+    word-wrap: break-word;
+}
+
 #news tr td:last-child {
     text-align: right;
     white-space: nowrap;
