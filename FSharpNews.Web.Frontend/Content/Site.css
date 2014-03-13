@@ -33,6 +33,10 @@
 }
 
 /* table */
+#news {
+    margin-bottom: 0;
+}
+
 @media (max-width: 767px) {
     #news {
         table-layout: fixed;
@@ -71,5 +75,5 @@
     width: 32px;
     height: 32px;
     background: url(/Content/Images/loader.gif) center center no-repeat;
-    margin: 0 auto;
+    margin: 0 auto 20px;
 }
