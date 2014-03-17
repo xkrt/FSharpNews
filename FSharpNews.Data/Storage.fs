@@ -203,14 +203,23 @@ let saveAll (activitiesWithRaws: (Activity*string) list) =
                           |> safeInsertBatch
 
 let getTimeOfLastQuestion (site: StackExchangeSite) =
-    activities.Find(Query.And([ Query.EQ("descriminator", i32 (int ActivityType.StackExchange))
-                                Query.EQ("activity.site", siteToBson site) ]))
-             .SetSortOrder(SortBy.Descending("activity.date"))
-             .SetLimit(1)
+    activities.Find(Query.And [ Query.EQ("descriminator", i32 (int ActivityType.StackExchange))
+                                Query.EQ("activity.site", siteToBson site) ])
+              .SetSortOrder(SortBy.Descending("activity.date"))
+              .SetLimit 1
     |> Seq.map mapFromDocument
     |> Seq.tryHead
     |> function | Some (StackExchangeQuestion quest, _) -> quest.CreationDate
                 | _ -> minDataDate
+
+let getIdOfLastTweet () =
+    activities.Find(Query.EQ("descriminator", i32 (int ActivityType.Tweet)))
+              .SetSortOrder(SortBy.Descending("activity.tweetId"))
+              .SetLimit(1)
+    |> Seq.map mapFromDocument
+    |> Seq.tryHead
+    |> function | Some (Tweet tweet, _) -> tweet.Id
+                | _ -> 418099438234894336L - 1L // tweet 1:20 AM - 1 Jan 2014
 
 let getTimeOfLastPackage () =
     activities.Find(Query.EQ("descriminator", i32 (int ActivityType.NugetPackage)))

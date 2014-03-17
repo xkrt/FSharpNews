@@ -82,3 +82,63 @@ and listenStream config save =
                     where (s.Type = StreamingType.Filter && s.Track = targetHashtag && s.Language = "en")
                     select (s) }
     q.StreamingCallback(processStream config save) |> Seq.tryHead |> ignore
+
+let searchSince config (lastKnownId: int64) =
+    let sinceId = uint64 lastKnownId
+    let context = createContext config
+    let maxCount = 100
+
+    let toTweet (status: Status) =
+        let tweet = { Id = Int64.Parse status.StatusID
+                      Text = status.Text
+                      UserId = Int64.Parse status.User.Identifier.ID
+                      UserScreenName = status.User.Identifier.ScreenName
+                      CreationDate = status.CreatedAt }
+        let json = Serializer.toJson status
+        (tweet,json)
+    let filterRepliesRetweets = Seq.filter (fun (s: Status) -> s.RetweetedStatus.StatusID = null && s.InReplyToStatusID = null)
+    let toFilteredTweets = filterRepliesRetweets >> Seq.map toTweet >> Seq.toList
+    let getMinId (statuses: Collections.Generic.List<Status>) =
+        statuses
+        |> Seq.map (fun s -> s.StatusID)
+        |> Seq.map Int64.Parse
+        |> Seq.min
+
+    let rec loop maxIdExclusive =
+        let maxId = uint64 (maxIdExclusive - 1L)
+        do log.Debug "SinceId=%d, MaxId=%d" sinceId maxId
+        let q = query { for s in context.Search do
+                        where (s.SinceID = sinceId
+                            && s.MaxID = maxId
+                            && s.Query = targetHashtag
+                            && s.Count = maxCount
+                            && s.SearchLanguage = "en"
+                            && s.Type = SearchType.Search
+                            && s.ResultType = ResultType.Recent)
+                        select (s) }
+        match Seq.tryHead q with
+        | Some result when result.Statuses.Count = maxCount ->
+            let minId = getMinId result.Statuses
+            let batch = toFilteredTweets result.Statuses
+            batch @ (loop minId)
+        | Some result when result.Statuses.Count < maxCount -> toFilteredTweets result.Statuses
+        | _ -> []
+
+    let initialQuery = query { for s in context.Search do
+                               where (s.SinceID = sinceId
+                                   && s.Query = targetHashtag
+                                   && s.Count = maxCount
+                                   && s.SearchLanguage = "en"
+                                   && s.Type = SearchType.Search
+                                   && s.ResultType = ResultType.Recent)
+                               select (s) }
+    let tweets =
+        match Seq.tryHead initialQuery with
+        | Some result when result.Statuses.Count = maxCount ->
+            let minId = getMinId result.Statuses
+            let initialTweets = toFilteredTweets result.Statuses
+            initialTweets @ (loop minId)
+        | Some result when result.Statuses.Count < maxCount -> toFilteredTweets result.Statuses
+        | _ -> []
+    do log.Info "Search found: %d" tweets.Length
+    tweets |> List.map (fun (t,json) -> Tweet t, json)

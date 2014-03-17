@@ -32,7 +32,11 @@ let private stackExchange (conf: Configuration.Type) =
     repeatEvery5min (fun () -> StackExchange.allSites |> List.iter fetchNewQuestions)
 
 let private twitter (conf: Configuration.Type) =
-    async { Twitter.listenStream conf.Twitter Storage.save }
+    let listen = async { Twitter.listenStream conf.Twitter Storage.save }
+    let search = async { let lastId = Storage.getIdOfLastTweet()
+                         let tweets = Twitter.searchSince conf.Twitter lastId
+                         Storage.saveAll tweets }
+    [listen; search] |> Async.Parallel |> Async.Ignore
 
 let private nuget (conf: Configuration.Type) =
     let fetchSince = NuGet.fetch conf.NuGet
