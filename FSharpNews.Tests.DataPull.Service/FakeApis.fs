@@ -42,8 +42,10 @@ module StackExchangeApi =
 module TwitterApi =
     let private port = 4142
 
-    let path = "/1.1/statuses/filter.json"
+    let streamPath = "/1.1/statuses/filter.json"
+    let searchPath = "/1.1/search/tweets.json"
     let baseUrl = sprintf "http://%s:%d/1.1" Environment.machine port
+    let baseSearchUrl = sprintf "http://%s:%d/1.1/search" Environment.machine port
 
     let runServer = WebServer.run "Twitter" port
 
@@ -57,10 +59,10 @@ module TwitterApi =
     let writeHeaderBodyDelimeter = writeln ""
     let sleep sec = Async.Sleep(sec * 1000)
 
-    let writeEmptyInfinite (req: HttpRequest) = async {
-        while true do
-            do! writeBlankLine req
-            do! sleep 5 }
+    let writeEmptyInfinite (req: HttpRequest) =
+        async { while true do
+                do! writeBlankLine req
+                do! sleep 5 }
 
     let handle bodyWriter (req: HttpRequest) =
         fun req ->
@@ -74,7 +76,7 @@ module TwitterApi =
         async { do! writeHeaderBodyDelimeter req
                 do! writeEmptyInfinite req })
 
-    let runEmpty() = runServer (POST >>= url path >>== handleWithEmptyInfinite)
+    let runEmptyStream() = runServer (POST >>= url streamPath >>== handleWithEmptyInfinite)
 
 module NuGetApi =
     let private port = 4143

@@ -3,7 +3,8 @@
 type Args = { mutable StackExchangeEnabled: bool
               mutable StackExchangeUrl: string option
               mutable TwitterEnabled: bool
-              mutable TwitterUrl: string option
+              mutable TwitterStreamUrl: string option
+              mutable TwitterSearchUrl: string option
               mutable NuGetEnabled: bool
               mutable NuGetUrl: string option
               mutable FssnipEnabled: bool
@@ -16,7 +17,8 @@ type Args = { mutable StackExchangeEnabled: bool
                 with static member Default = { StackExchangeEnabled = true
                                                StackExchangeUrl = None
                                                TwitterEnabled = true
-                                               TwitterUrl = None
+                                               TwitterStreamUrl = None
+                                               TwitterSearchUrl = None
                                                NuGetEnabled = true
                                                NuGetUrl = None
                                                FssnipEnabled = true
@@ -47,7 +49,8 @@ module Configuration =
 
     let build (args: Args) =
         let seUrl = args.StackExchangeUrl |> Option.fill "https://api.stackexchange.com"
-        let twiUrl = args.TwitterUrl |> Option.fill "https://stream.twitter.com/1.1/"
+        let twiStreamUrl = args.TwitterStreamUrl |> Option.fill "https://stream.twitter.com/1.1/"
+        let twiSearchUrl = args.TwitterSearchUrl |> Option.fill "https://api.twitter.com/1.1/search"
         let nuUrl = args.NuGetUrl |> Option.fill "https://www.nuget.org/api/v2"
         let fssnipUrl = args.FssnipUrl |> Option.fill "http://api.fssnip.net"
         let fpishUrl = args.FpishUrl |> Option.fill "http://fpish.net/atom/topics/tag/1/f~23"
@@ -68,7 +71,8 @@ module Configuration =
                       ConsumerSecret = twiConsumerSecret
                       AccessToken = twiAccessToken
                       AccessTokenSecret = twiAccessTokenSecret
-                      StreamApiUrl = twiUrl }
+                      StreamApiUrl = twiStreamUrl
+                      SearchApiUrl = twiSearchUrl }
           NuGet = { Url = nuUrl }
           FsSnip = { Url = fssnipUrl }
           FPish = { BaseUrl = fpishUrl }

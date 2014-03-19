@@ -19,23 +19,35 @@ let Setup() = do Storage.deleteAll()
 
 [<Test>]
 let ``One tweet in stream => one activity in storage``() =
-    use tw = TwitterApi.runServer (POST >>= url TwitterApi.path >>== TwitterApi.handle (writeTweet TestData.Twitter.json))
+    use tw = TwitterApi.runServer (POST >>= url TwitterApi.streamPath >>== TwitterApi.handle (writeTweet TestData.Twitter.streamJson))
     do ServiceApplication.startAndSleep Twitter
 
     Storage.getAllActivities()
     |> List.map fst
-    |> Collection.assertEquiv [TestData.Twitter.activity]
+    |> Collection.assertEquiv [TestData.Twitter.streamActivity]
 
 [<Test>]
 let ``Retweets are filtered``() =
-    use tw = TwitterApi.runServer (POST >>= url TwitterApi.path >>== TwitterApi.handle (writeTweet TestData.Twitter.retweetJson))
+    use tw = TwitterApi.runServer (POST >>= url TwitterApi.streamPath >>== TwitterApi.handle (writeTweet TestData.Twitter.retweetJson))
     do ServiceApplication.startAndSleep Twitter
 
     Storage.getAllActivities().Length |> assertEqual 0
 
 [<Test>]
 let ``Replies are filtered``() =
-    use tw = TwitterApi.runServer (POST >>= url TwitterApi.path >>== TwitterApi.handle (writeTweet TestData.Twitter.replyJson))
+    use tw = TwitterApi.runServer (POST >>= url TwitterApi.streamPath >>== TwitterApi.handle (writeTweet TestData.Twitter.replyJson))
     do ServiceApplication.startAndSleep Twitter
 
     Storage.getAllActivities().Length |> assertEqual 0
+
+[<Test>]
+let ``Search since last tweet``() =
+    do Storage.save (TestData.Twitter.streamActivity, "")
+
+    use twsearch = TwitterApi.runServer (GET >>= url TwitterApi.searchPath >>= OK TestData.Twitter.searchJson)
+    use twstream = TwitterApi.runEmptyStream ()
+    do ServiceApplication.startAndSleep Twitter
+
+    let savedTweets = Storage.getAllActivities()
+    savedTweets.Length |> assertEqual 2
+    savedTweets |> List.map fst |> Collection.assertEquiv [TestData.Twitter.streamActivity; TestData.Twitter.searchActivity]

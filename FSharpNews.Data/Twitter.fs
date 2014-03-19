@@ -19,7 +19,8 @@ type Configuration = { ConsumerKey: string
                        ConsumerSecret: string
                        AccessToken: string
                        AccessTokenSecret: string
-                       StreamApiUrl: string }
+                       StreamApiUrl: string
+                       SearchApiUrl: string }
 
 type private LinqToTwitterLog() =
     inherit IO.TextWriter()
@@ -40,6 +41,7 @@ let private createContext config =
 
     let context = new TwitterContext(authorizer)
     context.StreamingUrl <- config.StreamApiUrl.EnsureEndsWith("/")
+    context.SearchUrl <- config.SearchApiUrl.EnsureEndsWith("/")
     context.Log <- new LinqToTwitterLog() :> IO.TextWriter
     context
 
@@ -84,8 +86,8 @@ and listenStream config save =
     q.StreamingCallback(processStream config save) |> Seq.tryHead |> ignore
 
 let searchSince config (lastKnownId: int64) =
-    let sinceId = uint64 lastKnownId
     let context = createContext config
+    let sinceId = uint64 lastKnownId
     let maxCount = 100
 
     let toTweet (status: Status) =

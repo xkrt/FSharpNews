@@ -174,7 +174,7 @@ module StackExchange =
                                 CreationDate = DateTime.unixToUtcDate 1387618185 }
 
 module Twitter =
-    let json = toLine """{
+    let streamJson = toLine """{
   "created_at": "Wed Jan 22 14:34:07 +0000 2014",
   "id": 425999826191650816,
   "id_str": "425999826191650816",
@@ -252,12 +252,12 @@ module Twitter =
   "lang": "en"
 }"""
 
-    let activity =
-        Tweet { Id = 425999826191650816L
-                Text = "Just found out about the fdharpx library for #fsharp Now I can haz Validation."
-                UserId = 404119861L
-                UserScreenName = "OweinReese"
-                CreationDate = DateTime(2014, 1, 22, 14, 34, 7, DateTimeKind.Utc) }
+    let streamTweet = { Id = 425999826191650816L
+                        Text = "Just found out about the fdharpx library for #fsharp Now I can haz Validation."
+                        UserId = 404119861L
+                        UserScreenName = "OweinReese"
+                        CreationDate = DateTime(2014, 1, 22, 14, 34, 7, DateTimeKind.Utc) }
+    let streamActivity = Tweet streamTweet
 
     let retweetJson = toLine """{
   "created_at": "Wed Jan 22 14:16:39 +0000 2014",
@@ -553,6 +553,124 @@ module Twitter =
   "filter_level": "medium",
   "lang": "en"
 }"""
+
+    let searchJson = """{
+  "statuses": [
+    {
+      "metadata": {
+        "result_type": "recent",
+        "iso_language_code": "en"
+      },
+      "created_at": "Mon Mar 17 04:39:08 +0000 2014",
+      "id": 445419037632528384,
+      "id_str": "445419037632528384",
+      "text": "For what the TIOBE Index is worth, #fsharp is on a rapid rise.  http://t.co/3eSa03F9Ol",
+      "source": "web",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 143032843,
+        "id_str": "143032843",
+        "name": "Josef Koza",
+        "screen_name": "JosefKoza",
+        "location": "",
+        "description": "",
+        "url": null,
+        "entities": {
+          "description": {
+            "urls": []
+          }
+        },
+        "protected": false,
+        "followers_count": 46,
+        "friends_count": 148,
+        "listed_count": 0,
+        "created_at": "Wed May 12 11:54:52 +0000 2010",
+        "favourites_count": 6,
+        "utc_offset": -14400,
+        "time_zone": "Eastern Time (US & Canada)",
+        "geo_enabled": true,
+        "verified": false,
+        "statuses_count": 127,
+        "lang": "en",
+        "contributors_enabled": false,
+        "is_translator": false,
+        "is_translation_enabled": false,
+        "profile_background_color": "C0DCF1",
+        "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/378800000083362189/a6edfb7e3d68e87264874ca185a65dd1.jpeg",
+        "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/378800000083362189/a6edfb7e3d68e87264874ca185a65dd1.jpeg",
+        "profile_background_tile": false,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/344513261566788205/80047a159760ddca71f4106671ce6073_normal.jpeg",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/344513261566788205/80047a159760ddca71f4106671ce6073_normal.jpeg",
+        "profile_link_color": "C0DCF1",
+        "profile_sidebar_border_color": "C0DCF1",
+        "profile_sidebar_fill_color": "1C1C1C",
+        "profile_text_color": "5C91B9",
+        "profile_use_background_image": true,
+        "default_profile": false,
+        "default_profile_image": false,
+        "following": false,
+        "follow_request_sent": false,
+        "notifications": false
+      },
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "entities": {
+        "hashtags": [
+          {
+            "text": "fsharp",
+            "indices": [
+              35,
+              42
+            ]
+          }
+        ],
+        "symbols": [],
+        "urls": [
+          {
+            "url": "http://t.co/3eSa03F9Ol",
+            "expanded_url": "http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html",
+            "display_url": "tiobe.com/index.php/cont…",
+            "indices": [
+              64,
+              86
+            ]
+          }
+        ],
+        "user_mentions": []
+      },
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "en"
+    }
+  ],
+  "search_metadata": {
+    "completed_in": 0.095,
+    "max_id": 445440121127841793,
+    "max_id_str": "445440121127841793",
+    "next_results": "?max_id=444870422270472191&q=%23fsharp&lang=en&count=100&include_entities=1&result_type=recent",
+    "query": "%23fsharp",
+    "refresh_url": "?since_id=445440121127841793&q=%23fsharp&lang=en&result_type=recent&include_entities=1",
+    "count": 100,
+    "since_id": 418099438234894335,
+    "since_id_str": "418099438234894335"
+  }
+}"""
+    let searchTweet = { Id = 445419037632528384L
+                        Text = "For what the TIOBE Index is worth, #fsharp is on a rapid rise.  http://t.co/3eSa03F9Ol"
+                        UserId = 143032843L
+                        UserScreenName = "JosefKoza"
+                        CreationDate = DateTime(2014, 3, 17, 4, 39, 8, DateTimeKind.Utc) }
+    let searchActivity = Tweet searchTweet
 
 
 module NuGet =

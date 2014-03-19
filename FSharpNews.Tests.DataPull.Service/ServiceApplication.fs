@@ -28,7 +28,8 @@ let private start targetSource =
     let enable s = allDisabled |> List.filter ((<>) s)
     let args = match targetSource with
                | StackExchange -> [sprintf "-stackExchangeUrl:%s" StackExchangeApi.baseUrl] @ (enable disSe)
-               | Twitter -> [sprintf "-twitterUrl:%s" TwitterApi.baseUrl] @ (enable disTw)
+               | Twitter -> [sprintf "-twitterStreamUrl:%s" TwitterApi.baseUrl
+                             sprintf "-twitterSearchUrl:%s" TwitterApi.baseSearchUrl] @ (enable disTw)
                | NuGet -> [sprintf "-nugetUrl:%s" NuGetApi.baseUrl] @ (enable disNu)
                | FsSnip -> [sprintf "-fssnipUrl:%s" FsSnipApi.baseUrl] @ (enable disFs)
                | FPish -> [sprintf "-fpishUrl:%s" FPishApi.baseUrl] @ (enable disFp)
