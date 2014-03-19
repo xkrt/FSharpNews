@@ -20,9 +20,7 @@ open System.Runtime.InteropServices
 // any other types should be automatically wrapped.
 [<assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)>]
 
-#if DEBUG
 [<assembly: InternalsVisibleTo("FSharpNews.Tests.DataPull.Service")>]
 [<assembly: InternalsVisibleTo("FSharpNews.Tests.Frontend")>]
-#endif
 
 do ()
