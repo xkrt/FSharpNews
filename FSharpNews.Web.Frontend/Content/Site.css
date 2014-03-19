@@ -73,6 +73,10 @@
     }
 }
 
+.newActivity {
+    background-color: #f9f9f9;
+}
+
 /* loader */
 .loader {
     display: block;

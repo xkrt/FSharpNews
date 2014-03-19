@@ -24,6 +24,7 @@ type String with
 
 module Strings =
     let trim (s: string) = s.Trim()
+    let splitBy (sep: string) (s: string) = s.Split([| sep |], StringSplitOptions.RemoveEmptyEntries)
 
 type DateTime with
     member this.Truncate(timeSpan: TimeSpan) = this.AddTicks -(this.Ticks % timeSpan.Ticks)

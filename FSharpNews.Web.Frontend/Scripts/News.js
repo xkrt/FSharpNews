@@ -31,7 +31,8 @@ function PageViewModel(config) {
             CreationDateAgo: createdAgo,
             CreationDateTitle: createdTitle,
             CreationDate: activity.CreationDateUnixOffset,
-            AddedAt: activity.AddedDateUnixOffset
+            AddedAt: activity.AddedDateUnixOffset,
+            IsNew: ko.observable(false)
         };
         vm.IconUrl = ko.computed(function() {
             return window.devicePixelRatio > 1
@@ -52,7 +53,10 @@ function PageViewModel(config) {
     this.HiddenNews = ko.observableArray([]);
     this.HasMoreOldNews = ko.observable(true);
     this.showHiddenNews = function () {
-        this.ShowedNews.unshift.apply(this.ShowedNews, this.HiddenNews.removeAll());
+        var hiddenNews = this.HiddenNews.removeAll();
+        hiddenNews.forEach(function (vm) { vm.IsNew(true); });
+        this.ShowedNews().forEach(function (vm) { vm.IsNew(false); });
+        this.ShowedNews.unshift.apply(this.ShowedNews, hiddenNews);
         setTitleCount(this.HiddenNews());
     };
     this.loadMore = function() {

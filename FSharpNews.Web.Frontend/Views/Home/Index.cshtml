@@ -26,7 +26,7 @@
 
 <table id="news" class="table table-condensed" data-bind="visible: ShowedNews().length > 0">
     <tbody data-bind="foreach: ShowedNews">
-        <tr>
+        <tr data-bind="css: { newActivity: IsNew }">
             <td>
                 <img data-bind="attr: { src: IconUrl, title: IconTitle, alt: IconTitle }" />
             </td>

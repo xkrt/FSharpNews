@@ -6,6 +6,7 @@ open OpenQA.Selenium
 open OpenQA.Selenium.Chrome
 open OpenQA.Selenium.Support.UI
 open FSharpNews.Tests.Core
+open FSharpNews.Utils
 
 let private driver = new ChromeDriver(Environment.executingAssemblyDirPath())
 let private jsexecutor = driver :> IWebDriver :?> IJavaScriptExecutor
@@ -36,6 +37,7 @@ let findElements selector (parent: IWebElement) = parent.FindElements(By.CssSele
 
 let private displayed (elem: IWebElement) = elem.Displayed
 let private text (elem: IWebElement) = elem.Text
+let private classes (elem: IWebElement) = elem.GetAttribute("class") |> Strings.splitBy " " |> Array.toList
 
 let click (elementFn: unit -> IWebElement) = elementFn().Click()
 
@@ -43,6 +45,9 @@ let checkDisplayed elementFn = waitFor (fun () -> elementFn() |> displayed |> as
 let checkNotDisplayed elementFn = waitFor (fun () -> elementFn() |> displayed |> assertEqual false)
 let checkTextIs expectedText elementFn = waitFor (fun () -> elementFn() |> text |> assertEqual expectedText)    
 let waitTitle text = waitFor (fun () -> driver.Title |> assertEqual text)
+
+let checkHasClass ``class`` elementFn = waitFor (fun () -> elementFn() |> classes |> Collection.assertContains ``class``)
+let checkNoClass ``class`` elementFn = waitFor (fun () -> elementFn() |> classes |> Collection.assertNotContains ``class``)
 
 let scrollToBottom () =
     let script =

@@ -153,6 +153,33 @@ let ``Newest ajax news hidden with bar``() =
     |> List.iter checkMatchRow
 
 [<Test>]
+let ``Newest ajax news highlighted with special css class``() =
+    do saveQuest soQuest
+    do Page.go()
+
+    let checkHighlighted = F >> checkHasClass "newActivity"
+    let checkNotHighlighted = F >> checkNoClass "newActivity"
+
+    Page.rows() |> List.exactlyOne |> checkNotHighlighted
+
+    do saveQuest pQuest
+    waitAjax()
+    do click Page.hiddenNews
+
+    let rows = Page.rows()
+    List.nth rows 0 |> checkHighlighted
+    List.nth rows 1 |> checkNotHighlighted
+
+    do saveQuest { pQuest with Id = pQuest.Id + 1 }
+    waitAjax()
+    do click Page.hiddenNews
+
+    let rows = Page.rows()
+    List.nth rows 0 |> checkHighlighted
+    List.nth rows 1 |> checkNotHighlighted
+    List.nth rows 2 |> checkNotHighlighted
+
+[<Test>]
 let ``Hidden newest count in title``() =
     do saveQuest { soQuest with Id = 1 }
     do Page.go()

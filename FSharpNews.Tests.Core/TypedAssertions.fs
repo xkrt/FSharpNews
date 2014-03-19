@@ -36,3 +36,9 @@ module Collection =
     /// Asserts that two collections are not exactly equal.
     let inline assertNotEquiv<'T, 'U when 'T :> seq<'U>> (expected : 'T) (actual : 'T) =
         CollectionAssert.AreNotEquivalent (expected, actual)
+
+    let inline assertContains<'T, 'U when 'T :> seq<'U>> (expected: 'U) (collection: 'T) =
+        CollectionAssert.Contains (collection, expected)
+
+    let inline assertNotContains<'T, 'U when 'T :> seq<'U>> (expected: 'U) (collection: 'T) =
+        CollectionAssert.DoesNotContain (collection, expected)
