@@ -3,10 +3,15 @@ module FSharpNews.Utils.Option
 
 open System
 
-let inline ofNull (value : 'T) =
+let inline ofNull (value: 'T) =
     if Object.ReferenceEquals(null, value)
     then None
     else Some value
+
+let inline toNull (value: 'T option) =
+    match value with
+    | Some v -> v
+    | None -> null
 
 let inline fill defaultValue (value: 'T option) =
     defaultArg value defaultValue

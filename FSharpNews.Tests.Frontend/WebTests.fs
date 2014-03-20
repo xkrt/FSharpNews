@@ -1,4 +1,4 @@
-﻿module FSharpNews.Tests.Frontend.Tests
+﻿module FSharpNews.Tests.Frontend.WebTests
 
 open System
 open NUnit.Framework
@@ -7,14 +7,41 @@ open FSharpNews.Data
 open FSharpNews.Utils
 open FSharpNews.Tests.Core
 
+let killChromeDriver() =
+    Diagnostics.Process.GetProcessesByName("chromedriver")
+    |> Array.iter (fun p -> p.Kill())
+
+[<TestFixtureSetUp>]
+let SetupFixture() =
+    do killChromeDriver()
+    do Browser.start()
+
+[<TestFixtureTearDown>]
+let TeardownFixture() =
+    do Browser.close()
+    do killChromeDriver()
+
 [<SetUp>]
 let Setup() = do Storage.deleteAll()
 
 let saveQuest q = Storage.save(StackExchangeQuestion q, "")
 let saveTweet t = Storage.save(Tweet t, "")
 
-let soIcoUrl = "http://cdn.sstatic.net/stackoverflow/img/favicon.ico"
-let pIcoUrl = "http://cdn.sstatic.net/programmers/img/favicon.ico"
+module Page =
+    let indexUrl = sprintf "http://%s:4040" Environment.machine
+    let perPageCount = 100
+
+    let go() = go indexUrl
+
+    let hiddenNews = element ".hidden-news-bar"
+    let table = element "#news"
+    let rows = table |> elementsWithin "tr"
+    let loader = element ".loader"
+    let noMoreNews = element "#noMoreNews"
+    let noNewsAtAll = element "#noNews"
+
+let soIcoUrl = sprintf "%s/Content/Images/so16x16.png" Page.indexUrl
+let pIcoUrl = sprintf "%s/Content/Images/programmers16x16.png" Page.indexUrl
 
 let soQuest = { Id = 1
                 Site = Stackoverflow
@@ -33,46 +60,32 @@ let tweet = { Id = 3L
               Text = "Test tweet"
               UserId = 42L
               UserScreenName = "TestUser"
-              CreationDate = DateTime.UtcNow }
+              CreationDate = DateTime.UtcNow
+              Urls = []
+              Photo = None }
 
-let getRowItems (row: IWebElement) =
+let getRowCells (row: IWebElement) =
     match row |> findElements "td" with
-    | iconTd::linkTd::dateTd::[] -> iconTd |> findElement "img",
-                                    linkTd |> findElement "a",
-                                    dateTd
+    | iconTd::linkTd::dateTd::[] -> iconTd, linkTd, dateTd
     | _ -> failwithf "Three cells in row expected"
 
 let F x = fun () -> x
 
-let checkMatchRow ((iconSrc,linkText,linkHref,ago), (row: IWebElement)) =
-    let img, link, date = getRowItems row
-    img?src |> assertEqual iconSrc
-    F link |> checkTextIs linkText
-    link?href |> assertEqual linkHref
+let checkMatchSingleLinkRow ((iconSrc,linkText,linkHref,ago), (row: IWebElement)) =
+    let icoTd, linksTd, date = getRowCells row
+    (icoTd |> findElement "img") ? src |> assertEqual iconSrc
+    F linksTd |> checkTextIs linkText
+    linksTd |> findElements "a" |> Seq.head |> getAttr "href" |> assertEqual linkHref
     F date |> checkTextIs ago
 
 let checkMatchText (expectedLinkText, row: IWebElement) =
-    let _, link, _ = getRowItems row
-    F link |> checkTextIs expectedLinkText
+    let _, linksTd, _ = getRowCells row
+    F linksTd |> checkTextIs expectedLinkText
 
 let linkTitle q = sprintf "%s: %s" q.UserDisplayName q.Title
 
 let sleepMs (ms: int) = Threading.Thread.Sleep(ms)
 let waitAjax() = sleepMs 5500
-
-
-module Page =
-    let private indexUrl = sprintf "http://%s:4040" Environment.machine
-    let perPageCount = 100
-
-    let go() = go indexUrl
-
-    let hiddenNews = element ".hidden-news-bar"
-    let table = element "#news"
-    let rows = table |> elementsWithin "tr"
-    let loader = element ".loader"
-    let noMoreNews = element "#noMoreNews"
-    let noNewsAtAll = element "#noNews"
 
 
 [<Test>]
@@ -102,7 +115,7 @@ let ``Order by creation date descending``() =
     do Page.go()
     Page.rows()
     |> List.zip expected
-    |> List.iter checkMatchRow
+    |> List.iter checkMatchSingleLinkRow
 
 [<Test>]
 let ``Preserve order by creation date for newest ajax loaded news``() =
@@ -127,7 +140,7 @@ let ``Preserve order by creation date for newest ajax loaded news``() =
 
     Page.rows()
     |> List.zip expected
-    |> List.iter checkMatchRow
+    |> List.iter checkMatchSingleLinkRow
 
 [<Test>]
 let ``Newest ajax news hidden with bar``() =
@@ -150,7 +163,7 @@ let ``Newest ajax news hidden with bar``() =
                     soIcoUrl, (sprintf "%s: %s" soQuest.UserDisplayName soQuest.Title), soQuest.Url, "a few seconds ago"]
     Page.rows()
     |> List.zip expected
-    |> List.iter checkMatchRow
+    |> List.iter checkMatchSingleLinkRow
 
 [<Test>]
 let ``Newest ajax news highlighted with special css class``() =
@@ -266,7 +279,7 @@ let ``Stackexchange question title and twitter tweet should be html decoded``() 
     do Page.go()
 
     Page.rows()
-    |> Seq.map getRowItems
+    |> Seq.map getRowCells
     |> Seq.iter (fun (_, link, _) -> F link |> checkTextIs "Jack: Converting a Union<'a> to a Union<'b>")
 
 [<Test>]
@@ -275,5 +288,44 @@ let ``Stackexchange user name should be html decoded``() =
     do Page.go()
 
     Page.rows()
-    |> Seq.map getRowItems
+    |> Seq.map getRowCells
     |> Seq.iter (fun (_, link, _) -> F link |> checkTextIs "Alex Rønne Petersen: test")
+
+[<Test>]
+let ``Tweet with urls and photo``() =
+    do saveTweet { Id = 434122673254563840L
+                   Text = "Latest #fsharp fractal fun: Kidney! Source at https://t.co/ocJUzydPaU @brandewinder http://t.co/zfdty9LIWv"
+                   UserId = 107460704L
+                   UserScreenName = "relentlessdev"
+                   CreationDate = DateTime(2014, 2, 14, 0, 31, 25, DateTimeKind.Utc)
+                   Urls = [ { Url = "https://t.co/ocJUzydPaU"
+                              ExpandedUrl = "https://github.com/relentless/FractalFun"
+                              DisplayUrl = "github.com/relentless/Fra…"
+                              StartIndex = 46
+                              EndIndex = 69 } ]
+                   Photo = Some { Url = "http://t.co/zfdty9LIWv"
+                                  MediaUrl = "http://pbs.twimg.com/media/BgZQRVzIQAAWqJx.jpg"
+                                  DisplayUrl = "pic.twitter.com/zfdty9LIWv"
+                                  StartIndex = 84
+                                  EndIndex = 106 } }
+    do Page.go()
+    let row = Page.rows() |> Seq.exactlyOne
+
+    let _, linksCell, _ = getRowCells row
+    match linksCell |> findElements "a" with
+    | tweetUrl1::externalUrl::tweetUrl2::imgUrl::imgAnchorUrl::[] ->
+        F tweetUrl1 |> checkTextIs "relentlessdev: Latest #fsharp fractal fun: Kidney! Source at"
+        F tweetUrl1 |> checkAttributeIs "href" "https://twitter.com/relentlessdev/status/434122673254563840"
+
+        F externalUrl |> checkTextIs "github.com/relentless/Fra…"
+        F externalUrl |> checkAttributeIs "href" "https://github.com/relentless/FractalFun"
+
+        F tweetUrl2 |> checkTextIs "@brandewinder"
+        F tweetUrl2 |> checkAttributeIs "href" "https://twitter.com/relentlessdev/status/434122673254563840"
+
+        F imgUrl |> checkTextIs "pic.twitter.com/zfdty9LIWv"
+        F imgUrl |> checkAttributeIs "href" "http://t.co/zfdty9LIWv"
+
+        F imgAnchorUrl |> checkDisplayed
+        F imgAnchorUrl |> checkAttributeIs "href" "http://pbs.twimg.com/media/BgZQRVzIQAAWqJx.jpg"
+    | x -> failwithf "Wrong number of links: %d" x.Length

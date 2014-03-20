@@ -52,8 +52,9 @@ let private optstr opt =
     | Some s -> (str s) :> BsonValue
     | None -> BsonNull.Value :> BsonValue
 let private date (value: DateTime) = BsonDateTime value
+let private ar<'a when 'a :> BsonValue> (values: 'a seq) = BsonArray(values)
 
-let (|BNull|_|) (v: BsonValue) =
+let private (|BNull|_|) (v: BsonValue) =
    if v.IsBsonNull
    then Some ()
    else None
@@ -78,7 +79,19 @@ let private mapToDocument (activity, raw) =
                            el "text" (str t.Text)
                            el "userId" (i64 t.UserId)
                            el "userScreenName" (str t.UserScreenName)
-                           el "date" (date t.CreationDate) ]
+                           el "date" (date t.CreationDate)
+                           el "urls" (ar (t.Urls |> List.map (fun u -> doc [ el "url" (str u.Url)
+                                                                             el "expandedUrl" (str u.ExpandedUrl)
+                                                                             el "displayUrl" (str u.DisplayUrl)
+                                                                             el "startIndex" (i32 u.StartIndex)
+                                                                             el "endIndex" (i32 u.EndIndex) ])))
+                           el "photo" (match t.Photo with
+                                       | Some p -> doc [ el "url" (str p.Url)
+                                                         el "mediaUrl" (str p.MediaUrl)
+                                                         el "displayUrl" (str p.DisplayUrl)
+                                                         el "startIndex" (i32 p.StartIndex)
+                                                         el "endIndex" (i32 p.EndIndex) ] :> BsonValue
+                                       | None -> BsonNull.Value :> BsonValue) ]
                      , i32 (int ActivityType.Tweet)
         | NugetPackage p -> doc [ el "packageId" (str p.Id)
                                   el "version" (str p.Version)
@@ -130,7 +143,24 @@ let private mapFromDocument (document: BsonDocument) =
                                   Text = adoc.["text"].AsString
                                   UserId = adoc.["userId"].AsInt64
                                   UserScreenName = adoc.["userScreenName"].AsString
-                                  CreationDate = adoc.["date"].ToUniversalTime() } |> Tweet
+                                  CreationDate = adoc.["date"].ToUniversalTime()
+                                  Urls = adoc.["urls"].AsBsonArray.Values
+                                         |> Seq.map (fun bv -> bv.AsBsonDocument)
+                                         |> Seq.map (fun bd -> { Url = bd.["url"].AsString
+                                                                 ExpandedUrl = bd.["expandedUrl"].AsString
+                                                                 DisplayUrl = bd.["displayUrl"].AsString
+                                                                 StartIndex = bd.["startIndex"].AsInt32
+                                                                 EndIndex = bd.["endIndex"].AsInt32 })
+                                         |> Seq.toList
+                                  Photo = match adoc.["photo"] with
+                                          | BNull -> None
+                                          | bv -> let photo = bv.AsBsonDocument
+                                                  Some { Url = photo.["url"].AsString
+                                                         MediaUrl = photo.["mediaUrl"].AsString
+                                                         DisplayUrl = photo.["displayUrl"].AsString
+                                                         StartIndex = photo.["startIndex"].AsInt32
+                                                         EndIndex = photo.["endIndex"].AsInt32 } }
+                                |> Tweet
         | ActivityType.NugetPackage -> { Id = adoc.["packageId"].AsString
                                          Version = adoc.["version"].AsString
                                          Url = adoc.["url"].AsString

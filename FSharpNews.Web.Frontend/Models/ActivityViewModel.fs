@@ -5,12 +5,23 @@ open System.Web.Http
 open FSharpNews.Data
 open FSharpNews.Utils
 
-type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: string, text: string, url: string, creationDateUnixOffset: int64, addedDateUnixOffset: int64) =
+type Link = { Text: string
+              Url: string } with override x.ToString() = sprintf "%A" x
+
+type private TweetLink = { Title: string
+                           Url: string
+                           Start: int
+                           End: int }
+
+// todo tweet photo retina support
+
+type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: string, links: Link list, photoUrl: string option, photoUrlThumb: string option, creationDateUnixOffset: int64, addedDateUnixOffset: int64) =
     member val IconLowResUrl = lowResIconUrl with get
     member val IconHiResUrl = hiResIconUrl with get
     member val IconTitle = iconTitle with get
-    member val Text = text with get
-    member val Url = url with get
+    member val Links = links with get
+    member val PhotoUrl = (Option.toNull photoUrl) with get
+    member val PhotoUrlThumb = (Option.toNull photoUrlThumb) with get
     member val CreationDateUnixOffset = creationDateUnixOffset with get
     member val AddedDateUnixOffset = addedDateUnixOffset with get
 
@@ -30,17 +41,53 @@ type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: s
                 lowResIconUrl = iconUrl,
                 hiResIconUrl = retinaUrl,
                 iconTitle = iconTitle,
-                text = sprintf "%s: %s" (decode q.UserDisplayName) (decode q.Title),
-                url = q.Url,
+                links = [{ Text = sprintf "%s: %s" (decode q.UserDisplayName) (decode q.Title)
+                           Url = q.Url }],
+                photoUrl = None,
+                photoUrlThumb = None,
                 creationDateUnixOffset = DateTime.toUnixOffset q.CreationDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
         | Tweet t ->
+            let tweetUrl = sprintf "https://twitter.com/%s/status/%d" t.UserScreenName t.Id
+            let urls = t.Urls |> List.map (fun u -> { Title = u.DisplayUrl
+                                                      Url = u.ExpandedUrl
+                                                      Start = u.StartIndex
+                                                      End = u.EndIndex })
+            let photos = match t.Photo with
+                         | Some p -> [{ Title = p.DisplayUrl
+                                        Url = p.Url
+                                        Start = p.StartIndex
+                                        End = p.EndIndex }]
+                         | None -> []
+            let allUrls = (urls @ photos) |> List.sortWith (fun u1 u2 -> u1.Start.CompareTo(u2.Start))
+            let links =
+                match allUrls with
+                | [] -> [{ Text = sprintf "%s: %s" t.UserScreenName (decode t.Text)
+                           Url = tweetUrl }]
+                | urls -> seq { let firstUrl = urls.Head
+                                yield { Text = sprintf "%s: %s" t.UserScreenName (t.Text.Substring(0, firstUrl.Start)) |> Strings.trim |> decode
+                                        Url = tweetUrl }
+                                yield { Text = firstUrl.Title.Trim()
+                                        Url = firstUrl.Url }
+                                let lastEndIndex = ref firstUrl.End
+                                for url in urls.Tail do
+                                    yield { Text = t.Text.Substring(!lastEndIndex, url.Start - !lastEndIndex - 1) |> Strings.trim |> decode
+                                            Url = tweetUrl }
+                                    yield { Text = url.Title.Trim()
+                                            Url = url.Url }
+                                    lastEndIndex := url.End
+                                yield { Text = t.Text.Substring(!lastEndIndex, t.Text.Length - !lastEndIndex).Trim()
+                                        Url = tweetUrl }
+                          } |> Seq.filter (fun l -> l.Text <> "") |> Seq.toList
+            let photoUrl = t.Photo |> Option.map (fun p -> sprintf "%s" p.MediaUrl)
+            let photoUrlThumb = photoUrl |> Option.map (sprintf "%s:thumb")
             ActivityViewModel(
                 lowResIconUrl = imgUrl "twitter16x16.png",
                 hiResIconUrl = imgUrl "twitter32x32.png",
                 iconTitle = "Twitter",
-                text = sprintf "%s: %s" t.UserScreenName (decode t.Text),
-                url = sprintf "https://twitter.com/%s/status/%d" t.UserScreenName t.Id,
+                links = links,
+                photoUrl = photoUrl,
+                photoUrlThumb = photoUrlThumb,
                 creationDateUnixOffset = DateTime.toUnixOffset t.CreationDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
         | NugetPackage p ->
@@ -48,8 +95,10 @@ type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: s
                 lowResIconUrl = imgUrl "nuget16x16.png",
                 hiResIconUrl = imgUrl "nuget32x32.png",
                 iconTitle = "NuGet",
-                text = sprintf "%s %s published" p.Id p.Version,
-                url = p.Url,
+                links = [{ Text = sprintf "%s %s published" p.Id p.Version
+                           Url = p.Url }],
+                photoUrl = None,
+                photoUrlThumb = None,
                 creationDateUnixOffset = DateTime.toUnixOffset p.PublishedDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
         | FsSnippet s ->
@@ -57,8 +106,10 @@ type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: s
                 lowResIconUrl = imgUrl "fssnip16x16.png",
                 hiResIconUrl = imgUrl "fssnip32x32.png",
                 iconTitle = "F# Snippets",
-                text = sprintf "%s: %s" s.Author s.Title,
-                url = s.Url,
+                links = [{ Text = sprintf "%s: %s" s.Author s.Title
+                           Url = s.Url }],
+                photoUrl = None,
+                photoUrlThumb = None,
                 creationDateUnixOffset = DateTime.toUnixOffset s.PublishedDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
         | FPishQuestion q ->
@@ -66,8 +117,10 @@ type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: s
                 lowResIconUrl = imgUrl "fpish16x16.png",
                 hiResIconUrl = imgUrl "fpish32x32.png",
                 iconTitle = "FPish",
-                text = sprintf "%s: %s" q.Author q.Title,
-                url = q.Url,
+                links = [{ Text = sprintf "%s: %s" q.Author q.Title
+                           Url = q.Url }],
+                photoUrl = None,
+                photoUrlThumb = None,
                 creationDateUnixOffset = DateTime.toUnixOffset q.PublishedDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
         | Gist g ->
@@ -75,8 +128,10 @@ type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: s
                 lowResIconUrl = imgUrl "github16x16.png",
                 hiResIconUrl = imgUrl "github32x32.png",
                 iconTitle = "GitHub",
-                text = sprintf "Gist by %s: %s" g.Owner (g.Description |> function Some s -> s | None -> "<no description>"),
-                url = g.Url,
+                links = [{ Text = sprintf "Gist by %s: %s" g.Owner (g.Description |> function Some s -> s | None -> "<no description>")
+                           Url = g.Url }],
+                photoUrl = None,
+                photoUrlThumb = None,
                 creationDateUnixOffset = DateTime.toUnixOffset g.CreationDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)
         | Repository r ->
@@ -84,7 +139,9 @@ type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: s
                 lowResIconUrl = imgUrl "github16x16.png",
                 hiResIconUrl = imgUrl "github32x32.png",
                 iconTitle = "GitHub",
-                text = sprintf "New repo %s/%s%s" r.Owner r.Name (r.Description |> function Some s -> sprintf ": %s" s | None -> ""),
-                url = r.Url,
+                links = [{ Text = sprintf "New repo %s/%s%s" r.Owner r.Name (r.Description |> function Some s -> sprintf ": %s" s | None -> "")
+                           Url = r.Url }],
+                photoUrl = None,
+                photoUrlThumb = None,
                 creationDateUnixOffset = DateTime.toUnixOffset r.CreationDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)

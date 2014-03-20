@@ -19,11 +19,13 @@ let mongoUrl = ConfigurationManager.ConnectionStrings.["MongoDB"].ConnectionStri
 let client = new MongoClient(mongoUrl)
 let collection = client.GetServer().GetDatabase(mongoUrl.DatabaseName).GetCollection("activities")
 
-let tweet = { Id = 424661043634507776L
-              Text = "Suave: non-blocking hipster web programming framework for F# - http://t.co/9EFDzlo8zt #fsharp"
-              UserId = 880772426L
-              UserScreenName = "fsharporg"
-              CreationDate = DateTime(2014, 1, 18, 21, 54, 17, DateTimeKind.Utc) }
+let tweet = { Id = 434019892908814336L
+              Text = "Wow, 105 registered for the deedle #fsharp talk tonight @skillsmatter"
+              UserId = 25549086L
+              UserScreenName = "colinbul"
+              CreationDate = DateTime(2014, 2, 13, 17, 43, 0, DateTimeKind.Utc)
+              Urls = []
+              Photo = None }
 let tweetA = Tweet tweet
 
 let soquest = { Id = 11227809

@@ -60,10 +60,15 @@
     <None Include="packages.config" />
     <None Include="App.config" />
     <Compile Include="Browser.fs" />
-    <Compile Include="TestsSetupper.fs" />
-    <Compile Include="Tests.fs" />
+    <Compile Include="ActivityViewModelTests.fs" />
+    <Compile Include="WebTests.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FSharpNews.Web.Frontend\FSharpNews.Web.Frontend.fsproj">
+      <Name>FSharpNews.Web.Frontend</Name>
+      <Project>{643f630b-4897-4699-86d2-457e56d708f7}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>

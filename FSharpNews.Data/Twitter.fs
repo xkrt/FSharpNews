@@ -69,7 +69,22 @@ let rec private processStream config save (stream: StreamContent) =
                                                     CreationDate = parseDate tweet.CreatedAt
                                                     Text = tweet.Text
                                                     UserId = tweet.User.Id
-                                                    UserScreenName = tweet.User.ScreenName })
+                                                    UserScreenName = tweet.User.ScreenName
+                                                    Urls = tweet.Entities.Urls
+                                                           |> Array.map (fun u -> { Url = u.Url
+                                                                                    ExpandedUrl = u.ExpandedUrl
+                                                                                    DisplayUrl = u.DisplayUrl
+                                                                                    StartIndex = u.Indices.[0]
+                                                                                    EndIndex = u.Indices.[1] })
+                                                           |> Array.toList
+                                                    Photo = tweet.Entities.Media
+                                                            |> Option.map (fun ms -> ms
+                                                                                      |> Seq.exactlyOne
+                                                                                      |> (fun m -> { Url = m.Url
+                                                                                                     MediaUrl = m.MediaUrl
+                                                                                                     DisplayUrl = m.DisplayUrl
+                                                                                                     StartIndex = m.Indices.[0]
+                                                                                                     EndIndex = m.Indices.[1] })) })
                             do save(activity, content)
         | _, Some disconnect, _ -> do log.Debug "Status=Success, disconnect=%O. Reopening stream..." disconnect
                                    listenStream config save
@@ -95,7 +110,21 @@ let searchSince config (lastKnownId: int64) =
                       Text = status.Text
                       UserId = Int64.Parse status.User.Identifier.ID
                       UserScreenName = status.User.Identifier.ScreenName
-                      CreationDate = status.CreatedAt }
+                      CreationDate = status.CreatedAt
+                      Urls = status.Entities.UrlEntities
+                             |> Seq.map (fun u -> { Url = u.Url
+                                                    ExpandedUrl = u.ExpandedUrl
+                                                    DisplayUrl = u.DisplayUrl
+                                                    StartIndex = u.Start
+                                                    EndIndex = u.End })
+                             |> Seq.toList
+                      Photo = status.Entities.MediaEntities
+                              |> Seq.tryHead
+                              |> Option.map (fun m -> { Url = m.Url
+                                                        MediaUrl = m.MediaUrl
+                                                        DisplayUrl = m.DisplayUrl
+                                                        StartIndex = m.Start
+                                                        EndIndex = m.End }) }
         let json = Serializer.toJson status
         (tweet,json)
     let filterRepliesRetweets = Seq.filter (fun (s: Status) -> s.RetweetedStatus.StatusID = null && s.InReplyToStatusID = null)

@@ -256,7 +256,9 @@ module Twitter =
                         Text = "Just found out about the fdharpx library for #fsharp Now I can haz Validation."
                         UserId = 404119861L
                         UserScreenName = "OweinReese"
-                        CreationDate = DateTime(2014, 1, 22, 14, 34, 7, DateTimeKind.Utc) }
+                        CreationDate = DateTime(2014, 1, 22, 14, 34, 7, DateTimeKind.Utc)
+                        Urls = []
+                        Photo = None }
     let streamActivity = Tweet streamTweet
 
     let retweetJson = toLine """{
@@ -669,7 +671,13 @@ module Twitter =
                         Text = "For what the TIOBE Index is worth, #fsharp is on a rapid rise.  http://t.co/3eSa03F9Ol"
                         UserId = 143032843L
                         UserScreenName = "JosefKoza"
-                        CreationDate = DateTime(2014, 3, 17, 4, 39, 8, DateTimeKind.Utc) }
+                        CreationDate = DateTime(2014, 3, 17, 4, 39, 8, DateTimeKind.Utc)
+                        Urls = [{ Url = "http://t.co/3eSa03F9Ol"
+                                  ExpandedUrl = "http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html"
+                                  DisplayUrl = "tiobe.com/index.php/cont…"
+                                  StartIndex = 64
+                                  EndIndex = 86 }]
+                        Photo = None }
     let searchActivity = Tweet searchTweet
 
 

@@ -15,11 +15,25 @@ type StackExchangeQuestion = { Id: int
                                Url: string
                                CreationDate: DateTime }
 
+type TweetUrl = { Url: string
+                  ExpandedUrl: string
+                  DisplayUrl: string
+                  StartIndex: int
+                  EndIndex: int }
+
+type TweetPhoto = { Url: string
+                    MediaUrl: string
+                    DisplayUrl: string
+                    StartIndex: int
+                    EndIndex: int }
+
 type Tweet = { Id: int64
                Text: string
                UserId: int64
                UserScreenName: string
-               CreationDate: DateTime }
+               CreationDate: DateTime
+               Urls: TweetUrl list
+               Photo: TweetPhoto option }
 
 type NugetPackage = { Id: string
                       Version: string

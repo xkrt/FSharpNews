@@ -39,11 +39,15 @@ let private displayed (elem: IWebElement) = elem.Displayed
 let private text (elem: IWebElement) = elem.Text
 let private classes (elem: IWebElement) = elem.GetAttribute("class") |> Strings.splitBy " " |> Array.toList
 
+let getAttr attr (element: IWebElement) = element.GetAttribute(attr)
+let (?) (element: IWebElement) attr = getAttr attr element
+
 let click (elementFn: unit -> IWebElement) = elementFn().Click()
 
 let checkDisplayed elementFn = waitFor (fun () -> elementFn() |> displayed |> assertEqual true)
 let checkNotDisplayed elementFn = waitFor (fun () -> elementFn() |> displayed |> assertEqual false)
-let checkTextIs expectedText elementFn = waitFor (fun () -> elementFn() |> text |> assertEqual expectedText)    
+let checkTextIs expectedText elementFn = waitFor (fun () -> elementFn() |> text |> assertEqual expectedText)
+let checkAttributeIs attribute expectedValue elementFn = waitFor (fun () -> elementFn() |> getAttr attribute |> assertEqual expectedValue)
 let waitTitle text = waitFor (fun () -> driver.Title |> assertEqual text)
 
 let checkHasClass ``class`` elementFn = waitFor (fun () -> elementFn() |> classes |> Collection.assertContains ``class``)
@@ -56,4 +60,3 @@ let scrollToBottom () =
                scrollTo(0, $(window).scrollTop() + $(window).height() + 50)"""
     jsexecutor.ExecuteScript(script) |> ignore
 
-let (?) (element: IWebElement) attr = element.GetAttribute(attr)
