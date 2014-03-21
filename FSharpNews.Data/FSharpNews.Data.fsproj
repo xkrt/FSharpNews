@@ -67,6 +67,7 @@
     <Compile Include="Fssnip.fs" />
     <Compile Include="FPish.fs" />
     <Compile Include="GitHub.fs" />
+    <Compile Include="Groups.fs" />
     <None Include="FillStorage.fsx" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +129,7 @@
     </ProjectReference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

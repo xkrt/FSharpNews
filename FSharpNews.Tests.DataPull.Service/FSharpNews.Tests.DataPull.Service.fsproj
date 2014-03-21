@@ -68,6 +68,7 @@
     <Compile Include="FPishTests.fs" />
     <Compile Include="GistsTests.fs" />
     <Compile Include="RepositoriesTests.fs" />
+    <Compile Include="GroupsTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FSharpNews.Data\FSharpNews.Data.fsproj">

@@ -196,10 +196,13 @@ let ``nuget packages should be unique``() = testUniquness packageA
 let ``snippets should be unique``() = testUniquness snippetA
 
 [<Test>]
-let ``fpish questions should be unique``() = testUniquness (FPishQuestion TestData.FPish.question)
+let ``fpish questions should be unique``() = testUniquness TestData.FPish.activity
 
 [<Test>]
-let ``gists should be unique``() = testUniquness (Gist TestData.Gist.gist)
+let ``gists should be unique``() = testUniquness TestData.Gist.activity
 
 [<Test>]
-let ``github repositories should be unique``() = testUniquness (Repository TestData.Repositories.repo)
+let ``github repositories should be unique``() = testUniquness TestData.Repositories.activity
+
+[<Test>]
+let ``groups topics should be unique``() = testUniquness TestData.Groups.activity

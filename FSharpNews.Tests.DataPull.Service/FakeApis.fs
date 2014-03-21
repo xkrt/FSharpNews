@@ -15,6 +15,7 @@ type Source =
     | FPish
     | Gists
     | Repos
+    | Groups
 
 module WebServer =
     let run name port route =
@@ -96,7 +97,7 @@ module FsSnipApi =
     let runServer = WebServer.run "FsSnip" port
     let runEmpty() = runServer (OK TestData.FsSnip.emptyJson)
 
-module FPishApi =
+module FPishFeed =
     let private port = 4145
 
     let path = "/atom/topics/tag/1/f~23"
@@ -114,3 +115,11 @@ module GitHubApi =
 
     let runServer = WebServer.run "GitHub" port
     let runEmpty() = runServer (OK TestData.Gist.emptyJson)
+
+module GroupsFeed =
+    let private port = 4147
+
+    let path = "/forum/feed/fsharp-opensource/topics/atom.xml"
+    let baseUrl = sprintf "http://%s:%d" Environment.machine port
+
+    let runServer = WebServer.run "Groups" port

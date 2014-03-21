@@ -93,8 +93,7 @@ type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: s
                 lowResIconUrl = imgUrl "nuget16x16.png",
                 hiResIconUrl = imgUrl "nuget32x32.png",
                 iconTitle = "NuGet",
-                links = [{ Text = sprintf "%s %s published" p.Id p.Version
-                           Url = p.Url }],
+                links = [{ Text = sprintf "%s %s published" p.Id p.Version; Url = p.Url }],
                 photoUrl = None,
                 photoUrlThumb = None,
                 creationDateUnixOffset = DateTime.toUnixOffset p.PublishedDate,
@@ -104,8 +103,7 @@ type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: s
                 lowResIconUrl = imgUrl "fssnip16x16.png",
                 hiResIconUrl = imgUrl "fssnip32x32.png",
                 iconTitle = "F# Snippets",
-                links = [{ Text = sprintf "%s: %s" s.Author s.Title
-                           Url = s.Url }],
+                links = [{ Text = sprintf "%s: %s" s.Author s.Title; Url = s.Url }],
                 photoUrl = None,
                 photoUrlThumb = None,
                 creationDateUnixOffset = DateTime.toUnixOffset s.PublishedDate,
@@ -115,8 +113,7 @@ type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: s
                 lowResIconUrl = imgUrl "fpish16x16.png",
                 hiResIconUrl = imgUrl "fpish32x32.png",
                 iconTitle = "FPish",
-                links = [{ Text = sprintf "%s: %s" q.Author q.Title
-                           Url = q.Url }],
+                links = [{ Text = sprintf "%s: %s" q.Author q.Title; Url = q.Url }],
                 photoUrl = None,
                 photoUrlThumb = None,
                 creationDateUnixOffset = DateTime.toUnixOffset q.PublishedDate,
@@ -142,4 +139,14 @@ type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: s
                 photoUrl = None,
                 photoUrlThumb = None,
                 creationDateUnixOffset = DateTime.toUnixOffset r.CreationDate,
+                addedDateUnixOffset = DateTime.toUnixOffset added)
+        | GroupTopic t ->
+            ActivityViewModel(
+                lowResIconUrl = imgUrl "groups16x16.png",
+                hiResIconUrl = imgUrl "groups32x32.png",
+                iconTitle = "Google Groups",
+                links = [{ Text = sprintf " %s:%s" t.Starter t.Title; Url = t.Url }],
+                photoUrl = None,
+                photoUrlThumb = None,
+                creationDateUnixOffset = DateTime.toUnixOffset t.CreationDate,
                 addedDateUnixOffset = DateTime.toUnixOffset added)

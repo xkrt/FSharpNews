@@ -803,6 +803,7 @@ module FPish =
                      Author = "michaeldavid"
                      Url = "http://fpish.net//topic/None/57493"
                      PublishedDate = DateTime(2008, 5, 23, 1, 30, 21, DateTimeKind.Utc) }
+    let activity = FPishQuestion question
 
 module Gist =
     let emptyJson = "[]"
@@ -860,6 +861,7 @@ module Gist =
                  Owner = "drcabana"
                  Url = "https://gist.github.com/9380680"
                  CreationDate = DateTime(2014, 3, 6, 1, 56, 34, DateTimeKind.Utc) }
+    let activity = Gist gist
 
     // gist with non-F# files
     let nonFsharpJson = """[
@@ -1131,3 +1133,31 @@ module Repositories =
                  Owner = "fsharp"
                  Url = "https://github.com/fsharp/fsharp"
                  CreationDate = DateTime(2010, 12, 13, 0, 19, 52, DateTimeKind.Utc) }
+    let activity = Repository repo
+
+module Groups =
+    let xml = """<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://groups.google.com/d/forum/fsharp-opensource</id>
+    <title type="text">F# Discussions</title>
+    <subtitle>Discussion group for the F# community (&lt;a href=&quot;http://fsharp.org&quot;&gt;http://fsharp.org&lt;/a&gt;). Join in!</subtitle>
+    <link href="https://groups.google.com/forum/feed/fsharp-opensource/topics/atom_v1_0.xml" rel="self" title="fsharp-opensource feed"/>
+    <updated/>
+    <generator>Google Groups</generator>
+    <entry>
+        <author>
+            <name>Can Erten</name>
+        </author>
+        <updated>2014-03-21T09:20:47Z</updated>
+        <id>https://groups.google.com/d/topic/fsharp-opensource/tLgTo5hfiTo</id>
+        <link href="https://groups.google.com/d/topic/fsharp-opensource/tLgTo5hfiTo"/>
+        <title type="text">Xamarin Error on Signed Assembly</title>
+        <summary type="html">Hi all, I developed and built my application using F# and  C# successfully using Xamarin Mac. It was all fine and finished development, until I switched to App Store compilation. The compilation goes fine, and signs all the assemblies. However when I run the application, the point where it reaches m</summary>
+    </entry>
+</feed>"""
+
+    let topic = { Id = "tLgTo5hfiTo"
+                  Title = "Xamarin Error on Signed Assembly"
+                  Starter = "Can Erten"
+                  CreationDate = DateTime(2014, 3, 21, 9, 20, 47, DateTimeKind.Utc)
+                  Url = "https://groups.google.com/d/topic/fsharp-opensource/tLgTo5hfiTo" }
+    let activity = GroupTopic topic

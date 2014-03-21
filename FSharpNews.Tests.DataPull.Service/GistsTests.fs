@@ -23,8 +23,7 @@ let ``One F# gist returned by api => one activity in storage``() =
     Storage.getAllActivities()
     |> List.map fst
     |> List.exactlyOne
-    |> function Gist g -> g | x -> failwithf "Expected Gist, but was %O" (x.GetType())
-    |> assertEqual TestData.Gist.gist
+    |> assertEqual TestData.Gist.activity
 
 [<Test>]
 let ``Non-F# gists filtered``() =

@@ -9,12 +9,6 @@ open FSharpNews.Web.Frontend.Models
 type StatusController() =
     inherit Controller()
 
-#if DEBUG
-    let requestNewsPeriod = 5 // secs
-#else
-    let requestNewsPeriod = 60 // secs
-#endif
-
     member this.Index () =
         let now = DateTime.UtcNow
         let activityTypes = Enum.GetValues(typeof<Storage.ActivityType>)

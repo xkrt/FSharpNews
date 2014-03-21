@@ -126,6 +126,8 @@
     <Content Include="Content\Images\fssnip32x32.png" />
     <Content Include="Content\Images\github16x16.png" />
     <Content Include="Content\Images\github32x32.png" />
+    <Content Include="Content\Images\groups16x16.png" />
+    <Content Include="Content\Images\groups32x32.png" />
     <Content Include="Content\Images\nuget16x16.png" />
     <Content Include="Content\Images\nuget32x32.png" />
     <Content Include="Content\Images\programmers16x16.png" />

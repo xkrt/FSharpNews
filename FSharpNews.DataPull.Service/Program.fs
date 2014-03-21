@@ -62,6 +62,10 @@ let private repos (conf: Configuration.Type) =
     let fetch = Storage.getDateOfLastRepo >> GitHub.fetchNewRepos conf.GitHub >> Storage.saveAll
     repeatEvery5min fetch
 
+let private groups (conf: Configuration.Type) =
+    let fetch() = Groups.fetch conf.Groups |> Storage.saveAll
+    repeatEvery5min fetch
+
 [<EntryPoint>]
 let main argv =
     do log.Info "Program started"
@@ -76,7 +80,8 @@ let main argv =
          fssnip,        args.FssnipEnabled
          fpish,         args.FpishEnabled
          gists,         args.GistsEnabled
-         repos,         args.ReposEnabled]
+         repos,         args.ReposEnabled
+         groups,        args.GroupsEnabled]
         |> Seq.filter snd
         |> Seq.map fst
         |> Seq.map (fun fn -> fn conf)
@@ -110,6 +115,8 @@ let main argv =
         conf |> addCommandLineDefinition "disableGists" (fun url -> args.GistsEnabled <- false)
         conf |> addCommandLineDefinition "disableRepos" (fun url -> args.ReposEnabled <- false)
         conf |> addCommandLineDefinition "githubUrl" (fun url -> args.GitHubUrl <- Some url)
+        conf |> addCommandLineDefinition "disableGroups" (fun url -> args.GroupsEnabled <- false)
+        conf |> addCommandLineDefinition "groupsUrl" (fun url -> args.GroupsUrl <- Some url)
 
     let exitCode = configureTopShelf <| fun hostConf ->
         do configureService hostConf

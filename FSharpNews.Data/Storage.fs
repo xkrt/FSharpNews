@@ -20,6 +20,7 @@ type ActivityType =
     | FPish = 4
     | Gist = 5
     | Repository = 6
+    | GroupTopic = 7
 
 #if INTERACTIVE
 let connectionString = "mongodb://localhost/fsharpnews"
@@ -41,6 +42,7 @@ do activities.EnsureIndex(IndexKeys.Ascending("activity.snippetId"), IndexOption
 do activities.EnsureIndex(IndexKeys.Ascending("activity.fpishId"), IndexOptions.SetUnique(true).SetSparse(true))
 do activities.EnsureIndex(IndexKeys.Ascending("activity.gistId"), IndexOptions.SetUnique(true).SetSparse(true))
 do activities.EnsureIndex(IndexKeys.Ascending("activity.repoId"), IndexOptions.SetUnique(true).SetSparse(true))
+do activities.EnsureIndex(IndexKeys.Ascending("activity.topicId"), IndexOptions.SetUnique(true).SetSparse(true))
 
 let private doc (elems: BsonElement list) = BsonDocument(elems)
 let private el (name: string) (value: BsonValue) = BsonElement(name, value)
@@ -123,6 +125,12 @@ let private mapToDocument (activity, raw) =
                                 el "url" (str r.Url)
                                 el "date" (date r.CreationDate) ]
                           , i32 (int ActivityType.Repository)
+        | GroupTopic t -> doc [ el "topicId" (str t.Id)
+                                el "title" (str t.Title)
+                                el "starter" (str t.Starter)
+                                el "url" (str t.Url)
+                                el "date" (date t.CreationDate) ]
+                          , i32 (int ActivityType.GroupTopic)
     doc [ el "descriminator" descriminator
           el "activity" activityDoc
           el "raw" (str raw)
@@ -190,6 +198,11 @@ let private mapFromDocument (document: BsonDocument) =
                                        Owner = adoc.["owner"].AsString
                                        Url = adoc.["url"].AsString
                                        CreationDate = adoc.["date"].ToUniversalTime() } |> Repository
+        | ActivityType.GroupTopic -> { Id = adoc.["topicId"].AsString
+                                       Title = adoc.["title"].AsString
+                                       Starter = adoc.["starter"].AsString
+                                       Url = adoc.["url"].AsString
+                                       CreationDate = adoc.["date"].ToUniversalTime() } |> GroupTopic
         | t -> failwithf "Mapping for %A is not implemented" t
     let added = document.["addedDate"].ToUniversalTime()
     activity, added

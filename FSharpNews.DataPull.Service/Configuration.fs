@@ -13,7 +13,9 @@ type Args = { mutable StackExchangeEnabled: bool
               mutable FpishUrl: string option
               mutable GistsEnabled: bool
               mutable ReposEnabled: bool
-              mutable GitHubUrl: string option }
+              mutable GitHubUrl: string option
+              mutable GroupsEnabled: bool
+              mutable GroupsUrl: string option }
                 with static member Default = { StackExchangeEnabled = true
                                                StackExchangeUrl = None
                                                TwitterEnabled = true
@@ -27,7 +29,9 @@ type Args = { mutable StackExchangeEnabled: bool
                                                FpishUrl = None
                                                GistsEnabled = true
                                                ReposEnabled = true
-                                               GitHubUrl = None }
+                                               GitHubUrl = None
+                                               GroupsEnabled = true
+                                               GroupsUrl = None }
 
 module Configuration = 
     open System
@@ -43,7 +47,8 @@ module Configuration =
                   NuGet: NuGet.Configuration
                   FsSnip: Fssnip.Configuration
                   FPish: FPish.Configuration
-                  GitHub: GitHub.Configuration }
+                  GitHub: GitHub.Configuration
+                  Groups: Groups.Configuration }
 
     let private uri url = Uri(url)
 
@@ -55,6 +60,7 @@ module Configuration =
         let fssnipUrl = args.FssnipUrl |> Option.fill "http://api.fssnip.net"
         let fpishUrl = args.FpishUrl |> Option.fill "http://fpish.net/atom/topics/tag/1/f~23"
         let githubUri = args.GitHubUrl |> Option.fill "https://api.github.com" |> uri
+        let groupsUri = args.GroupsUrl |> Option.fill "https://groups.google.com" |> uri
 
         let cfg = ConfigurationManager.AppSettings
         let seApiKey = cfg.["StackExchangeApiKey"]
@@ -78,4 +84,5 @@ module Configuration =
           FPish = { BaseUrl = fpishUrl }
           GitHub = { BaseUri = githubUri
                      Login = githubLogin
-                     Password = githubPassword } }
+                     Password = githubPassword }
+          Groups = { BaseUri = groupsUri } }

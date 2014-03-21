@@ -21,5 +21,4 @@ let ``One repo returned by search api => one activity in storage``() =
     Storage.getAllActivities()
     |> List.map fst
     |> List.exactlyOne
-    |> function Repository r -> r | x -> failwithf "Expected Repository, but was %O" (x.GetType())
-    |> assertEqual TestData.Repositories.repo
+    |> assertEqual TestData.Repositories.activity

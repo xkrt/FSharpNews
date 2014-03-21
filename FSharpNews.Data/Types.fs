@@ -65,6 +65,12 @@ type Repository = { Id: int
                     Url: string
                     CreationDate: DateTime }
 
+type GroupTopic = { Id: string
+                    Title: string
+                    Starter: string
+                    CreationDate: DateTime
+                    Url: string }
+
 type Activity =
     | StackExchangeQuestion of StackExchangeQuestion
     | Tweet of Tweet
@@ -73,4 +79,5 @@ type Activity =
     | FPishQuestion of FPishQuestion
     | Gist of Gist
     | Repository of Repository
+    | GroupTopic of GroupTopic
     with override x.ToString() = sprintf "%A" x
