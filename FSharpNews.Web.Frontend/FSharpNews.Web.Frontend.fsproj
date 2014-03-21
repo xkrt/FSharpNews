@@ -160,11 +160,14 @@
     <None Include="fonts\glyphicons-halflings-regular.svg" />
     <None Include="fonts\glyphicons-halflings-regular.eot" />
     <Compile Include="Models\ActivityViewModel.fs" />
+    <Compile Include="Models\StatusViewModel.fs" />
     <Compile Include="Models\PageConfiguration.fs" />
     <Compile Include="Controllers\HomeController.fs" />
+    <Compile Include="Controllers\StatusController.fs" />
     <Compile Include="Controllers\NewsController.fs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Status\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />

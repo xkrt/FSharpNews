@@ -20,41 +20,45 @@
     </small>
 }
 
-<div data-bind="visible: HiddenNews().length > 0, click: showHiddenNews" class="text-center hidden-news-bar">
-    <span data-bind="text: HiddenNews().length"></span> news
-</div>
+<article style="display: none" data-bind="visible: true">
 
-<table id="news" class="table table-condensed" data-bind="visible: ShowedNews().length > 0">
-    <tbody data-bind="foreach: ShowedNews">
-        <tr data-bind="css: { newActivity: IsNew }">
-            <td>
-                <img data-bind="attr: { src: IconUrl, title: IconTitle, alt: IconTitle }" />
-            </td>
-            <td>
-                <span data-bind="foreach: Links">
-                    <a data-bind="attr: { href: Url }, text: Text" href="#" target="_blank"></a>
-                </span>
-                <a data-bind="visible: PhotoUrl, attr: { href: PhotoUrl }" href="#" target="_blank">
-                    <img data-bind="attr: { src: PhotoUrlThumb }" alt="photo" />
-                </a>
-            </td>
-            <td>
-                <small>
-                    <em class="text-muted" data-bind="attr: { title: CreationDateTitle }, text: CreationDateAgo"></em>
-                </small>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <div data-bind="visible: HiddenNews().length > 0, click: showHiddenNews" class="text-center hidden-news-bar">
+        <span data-bind="text: HiddenNews().length"></span> news
+    </div>
 
-<div data-bind="scroll: loadMore, scrollOptions: { offset: 200 }">
-    <span class="loader" title="Loading..."></span>
-</div>
+    <table id="news" class="table table-condensed" data-bind="visible: ShowedNews().length > 0">
+        <tbody data-bind="foreach: ShowedNews">
+            <tr data-bind="css: { newActivity: IsNew }">
+                <td>
+                    <img data-bind="attr: { src: IconUrl, title: IconTitle, alt: IconTitle }" />
+                </td>
+                <td>
+                    <span data-bind="foreach: Links">
+                        <a data-bind="attr: { href: Url }, text: Text" href="#" target="_blank"></a>
+                    </span>
+                    <a data-bind="visible: PhotoUrl, attr: { href: PhotoUrl }" href="#" target="_blank">
+                        <img data-bind="attr: { src: PhotoUrlThumb }" alt="photo" />
+                    </a>
+                </td>
+                <td>
+                    <small>
+                        <em class="text-muted" data-bind="attr: { title: CreationDateTitle }, text: CreationDateAgo"></em>
+                    </small>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-<div id="noMoreNews" data-bind="visible: !HasMoreOldNews()" class="alert alert-info">
-    Well done! You get to the oldest news. Please <a href="https://twitter.com/xkrt" class="alert-link">give me feedback</a> about F# News.
-</div>
+    <div data-bind="scroll: loadMore, scrollOptions: { offset: 200 }">
+        <span class="loader" title="Loading..."></span>
+    </div>
 
-<div id="noNews" data-bind="visible: (ShowedNews().length == 0) && (HiddenNews().length == 0)" class="alert alert-danger">
-    For some strange reason we can not show the news. Please <a href="mailto:mr.xkurt@gmail.com" class="alert-link">contact me</a>.
-</div>
+    <div id="noMoreNews" data-bind="visible: !HasMoreOldNews()" class="alert alert-info">
+        Well done! You get to the oldest news. Please <a href="https://twitter.com/xkrt" class="alert-link">give me feedback</a> about F# News.
+    </div>
+
+    <div id="noNews" data-bind="visible: (ShowedNews().length == 0) && (HiddenNews().length == 0)" class="alert alert-danger">
+        For some strange reason we can not show the news. Please <a href="mailto:mr.xkurt@gmail.com" class="alert-link">contact me</a>.
+    </div>
+
+</article>

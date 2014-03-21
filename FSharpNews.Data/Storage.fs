@@ -12,7 +12,7 @@ open FSharpNews.Utils
 let private log = Logger.create "Storage"
 let private minDataDate = DateTime(2014, 3, 1, 0, 0, 0, DateTimeKind.Utc)
 
-type private ActivityType =
+type ActivityType =
     | StackExchange = 0
     | Tweet = 1
     | NugetPackage = 2
@@ -287,15 +287,21 @@ let getTopActivitiesByCreation count =
 
 let getActivitiesAddedSince (dtExclusive: DateTime) =
     activities
-        .Find(Query.GT("addedDate", BsonDateTime dtExclusive))
+        .Find(Query.GT("addedDate", date dtExclusive))
         .SetSortOrder(SortBy.Descending "activity.date")
     |> mapToActivities
 
 let getActivitiesAddedEarlier count (dtExclusive: DateTime) =
     activities.Find(Query.LT("activity.date", BsonDateTime dtExclusive))
-                        .SetSortOrder(SortBy.Descending "activity.date")
-                        .SetLimit(count)
+                         .SetSortOrder(SortBy.Descending "activity.date")
+                         .SetLimit(count)
     |> mapToActivities
+
+let getCountAddedSince (activityType: ActivityType) (dtInclusive: DateTime) =
+    activities.Count(Query.And([ Query.EQ("descriminator", i32 (int activityType))
+                                 Query.GTE("addedDate", date dtInclusive) ])) |> int
+
+let getCount (activityType: ActivityType) = activities.Count(Query.EQ("descriminator", i32 (int activityType))) |> int
 
 let internal getAllActivities () = activities.FindAll() |> mapToActivities
 let internal deleteAll () = do activities.RemoveAll() |> ignore

@@ -1,0 +1,40 @@
+@model FSharpNews.Web.Frontend.Models.StatusViewModel
+
+@section header
+{
+    status
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Last day</th>
+            <th>Last week</th>
+            <th>Last month</th>
+            <th>Overall</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in Model.SourcesStats)
+        {
+            <tr>
+                <td>
+                    @row.Name
+                </td>
+                <td>
+                    @row.DayCount
+                </td>
+                <td>
+                    @row.WeekCount
+                </td>
+                <td>
+                    @row.MonthCount
+                </td>
+                <td>
+                    @row.OverallCount
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

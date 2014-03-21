@@ -13,8 +13,6 @@ type private TweetLink = { Title: string
                            Start: int
                            End: int }
 
-// todo tweet photo retina support
-
 type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: string, links: Link list, photoUrl: string option, photoUrlThumb: string option, creationDateUnixOffset: int64, addedDateUnixOffset: int64) =
     member val IconLowResUrl = lowResIconUrl with get
     member val IconHiResUrl = hiResIconUrl with get
