@@ -9,6 +9,7 @@ Supported news sources:
 * GitHub
     - [New repositories written mostly in F#](https://github.com/search?q=language%3AF%23&type=Repositories)
 	- [Gist](https://gist.github.com/) (gists with F# files)
+* Google Groups [fsharp-opensource](https://groups.google.com/forum/#!forum/fsharp-opensource)
 * [NuGet](http://www.nuget.org/) (F# tag)
 * StackExchange (f# tag)
 	- [StackOverflow](http://stackoverflow.com/)
