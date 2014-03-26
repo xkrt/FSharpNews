@@ -145,7 +145,7 @@ type ActivityViewModel(lowResIconUrl: string, hiResIconUrl: string, iconTitle: s
                 lowResIconUrl = imgUrl "groups16x16.png",
                 hiResIconUrl = imgUrl "groups32x32.png",
                 iconTitle = "Google Groups",
-                links = [{ Text = sprintf " %s:%s" t.Starter t.Title; Url = t.Url }],
+                links = [{ Text = sprintf " %s: %s" t.Starter t.Title; Url = t.Url }],
                 photoUrl = None,
                 photoUrlThumb = None,
                 creationDateUnixOffset = DateTime.toUnixOffset t.CreationDate,

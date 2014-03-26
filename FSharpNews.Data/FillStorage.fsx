@@ -13,7 +13,9 @@ let tweet = { Id = 1L
               Text = "Test tweet"
               UserId = 1L
               UserScreenName = "testuser"
-              CreationDate = DateTime.UtcNow }
+              CreationDate = DateTime.UtcNow
+              Urls = []
+              Photo = None }
 
 do Storage.deleteAll()
 

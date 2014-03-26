@@ -36,12 +36,12 @@
                     <span data-bind="foreach: Links">
                         <a data-bind="attr: { href: Url }, text: Text" href="#" target="_blank"></a>
                     </span>
-                    <a data-bind="visible: PhotoUrl, attr: { href: PhotoUrl }" href="#" target="_blank">
+                    <a data-bind="visible: PhotoUrl, attr: { href: PhotoUrl }" class="img" href="#" target="_blank">
                         <img data-bind="attr: { src: PhotoUrlThumb }" alt="photo" />
                     </a>
                 </td>
                 <td>
-                    <small>
+                    <small class="smallest">
                         <em class="text-muted" data-bind="attr: { title: CreationDateTitle }, text: CreationDateAgo"></em>
                     </small>
                 </td>

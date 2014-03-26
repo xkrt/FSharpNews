@@ -63,6 +63,10 @@
     word-wrap: break-word;
 }
 
+#news tr td:nth-child(2) > a img {
+    border: 1px solid gray;
+}
+
 /* urls */
 @media (min-width: 768px) {
     #news tr td:nth-child(2) > span {
@@ -101,7 +105,6 @@
 }
 @media (max-width: 767px) {
     #news tr td:last-child {
-        font-size: 75%;
         white-space: normal;
         width: 70px;
     }
