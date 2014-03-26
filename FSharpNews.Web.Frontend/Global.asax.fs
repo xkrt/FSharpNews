@@ -21,10 +21,11 @@ type BundleConfig() =
                         .Include [| "~/Scripts/moment.min.js" |])
         bundles.Add(StyleBundle("~/Content/css/bootstrap", "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.0/css/bootstrap.min.css")
                         .Include [| "~/Content/bootstrap.css" |])
-        // fsharpnews
+        // application
         bundles.Add(ScriptBundle("~/bundles/js/fsharpnews").Include(
                         "~/Scripts/News.js",
                         "~/Scripts/knockout.extensions.js"))
+        bundles.Add(ScriptBundle("~/bundles/js/analytics").Include([| "~/Scripts/Analytics.js" |]))
         bundles.Add(StyleBundle("~/Content/css/fsharpnews").Include [| "~/Content/Site.css" |])
 
 type Route = { controller: string

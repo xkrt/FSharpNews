@@ -6,6 +6,8 @@ function PageViewModel(config) {
     };
     var now = createAutoMoment(30);
 
+    var ga = new Analytics();
+
     var title = $('title');
     var setTitleCount = function (hiddenNews) {
         if (hiddenNews.length === 0)
@@ -59,11 +61,13 @@ function PageViewModel(config) {
         this.ShowedNews().forEach(function (vm) { vm.IsNew(false); });
         this.ShowedNews.unshift.apply(this.ShowedNews, hiddenNews);
         setTitleCount(this.HiddenNews());
+        ga.sendEvent('hiddenNews', 'click');
     };
     this.loadMore = function() {
         var showedNews = self.ShowedNews();
         var oldestShowedActivity = showedNews[showedNews.length - 1];
         return $.get('/api/news/earlier', { time: oldestShowedActivity.CreationDate })
+            .always(function() { ga.sendEvent('earlierNews', 'load'); })
             .done(function(activities) {
                 self.HasMoreOldNews(activities.length === config.BatchSize);
                 var avms = activities.map(buildActivityViewModel);
