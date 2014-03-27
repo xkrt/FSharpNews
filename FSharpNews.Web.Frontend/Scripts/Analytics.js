@@ -8,12 +8,12 @@ ga('create', 'UA-48090222-1', 'fsharpnews.org');
 ga('send', 'pageview');
 
 (function gaHeartbeat() {
-    ga('send', 'event', 'Heartbeat', 'Heartbeat', { 'nonInteraction': 1 });
-    setTimeout(gaHeartbeat, 20 * 60 * 1000);
+    ga('send', 'event', 'Heartbeat', 'Heartbeat');
+    setTimeout(gaHeartbeat, 5 * 60 * 1000);
 })();
 
 function Analytics() {
-    this.sendEvent = function(category, action) {
+    this.sendEvent = function (category, action) {
         ga('send', 'event', category, action);
     };
 };
