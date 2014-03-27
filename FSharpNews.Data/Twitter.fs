@@ -61,31 +61,33 @@ let rec private processStream config save (stream: StreamContent) =
         | Some _, _, _ ->
             do log.Debug "Status=Success; Content=%s" content
             let tweet = TweetMessage.Parse content
-            match tweet.RetweetedStatus, tweet.InReplyToStatusId.Number with
-            | Some _, _ -> do log.Info "Id=%d is retweet, skip" tweet.Id
-            | _, Some _ -> do log.Info "Id=%d is reply, skip" tweet.Id
-            | None, None -> do log.Info "User=%s; At %s; Text=%s" tweet.User.ScreenName tweet.CreatedAt tweet.Text
-                            let activity = (Tweet { Id = tweet.Id
-                                                    CreationDate = parseDate tweet.CreatedAt
-                                                    Text = tweet.Text
-                                                    UserId = tweet.User.Id
-                                                    UserScreenName = tweet.User.ScreenName
-                                                    Urls = tweet.Entities.Urls
-                                                           |> Array.map (fun u -> { Url = u.Url
-                                                                                    ExpandedUrl = u.ExpandedUrl
-                                                                                    DisplayUrl = u.DisplayUrl
-                                                                                    StartIndex = u.Indices.[0]
-                                                                                    EndIndex = u.Indices.[1] })
-                                                           |> Array.toList
-                                                    Photo = tweet.Entities.Media
-                                                            |> Option.map (fun ms -> ms
-                                                                                      |> Seq.exactlyOne
-                                                                                      |> (fun m -> { Url = m.Url
-                                                                                                     MediaUrl = m.MediaUrl
-                                                                                                     DisplayUrl = m.DisplayUrl
-                                                                                                     StartIndex = m.Indices.[0]
-                                                                                                     EndIndex = m.Indices.[1] })) })
-                            do save(activity, content)
+            match tweet.RetweetedStatus, tweet.InReplyToStatusId.Number, tweet.User.ScreenName with
+            | Some _, _, _ -> do log.Info "Id=%d is retweet, skip" tweet.Id
+            | _, Some _, _ -> do log.Info "Id=%d is reply, skip" tweet.Id
+            | _, _, "fssnip" -> do log.Info "Id=%d tweet by @fssnip, skip" tweet.Id
+            | None, None, _ ->
+                do log.Info "User=%s; At %s; Text=%s" tweet.User.ScreenName tweet.CreatedAt tweet.Text
+                let activity = (Tweet { Id = tweet.Id
+                                        CreationDate = parseDate tweet.CreatedAt
+                                        Text = tweet.Text
+                                        UserId = tweet.User.Id
+                                        UserScreenName = tweet.User.ScreenName
+                                        Urls = tweet.Entities.Urls
+                                               |> Array.map (fun u -> { Url = u.Url
+                                                                        ExpandedUrl = u.ExpandedUrl
+                                                                        DisplayUrl = u.DisplayUrl
+                                                                        StartIndex = u.Indices.[0]
+                                                                        EndIndex = u.Indices.[1] })
+                                               |> Array.toList
+                                        Photo = tweet.Entities.Media
+                                                |> Option.map (fun ms -> ms
+                                                                          |> Seq.exactlyOne
+                                                                          |> (fun m -> { Url = m.Url
+                                                                                         MediaUrl = m.MediaUrl
+                                                                                         DisplayUrl = m.DisplayUrl
+                                                                                         StartIndex = m.Indices.[0]
+                                                                                         EndIndex = m.Indices.[1] })) })
+                do save(activity, content)
         | _, Some disconnect, _ -> do log.Debug "Status=Success, disconnect=%O. Reopening stream..." disconnect
                                    listenStream config save
         | _, _, Some warning -> do log.Warn "Twitter warning: %O" warning
@@ -127,8 +129,8 @@ let searchSince config (lastKnownId: int64) =
                                                         EndIndex = m.End }) }
         let json = Serializer.toJson status
         (tweet,json)
-    let filterRepliesRetweets = Seq.filter (fun (s: Status) -> s.RetweetedStatus.StatusID = null && s.InReplyToStatusID = null)
-    let toFilteredTweets = filterRepliesRetweets >> Seq.map toTweet >> Seq.toList
+    let filter = Seq.filter (fun (s: Status) -> s.RetweetedStatus.StatusID = null && s.InReplyToStatusID = null && s.User.Identifier.ScreenName <> "fssnip")
+    let toFilteredTweets = filter >> Seq.map toTweet >> Seq.toList
     let getMinId (statuses: Collections.Generic.List<Status>) =
         statuses
         |> Seq.map (fun s -> s.StatusID)

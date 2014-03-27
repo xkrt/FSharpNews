@@ -51,3 +51,10 @@ let ``Search since last tweet``() =
     let savedTweets = Storage.getAllActivities()
     savedTweets.Length |> assertEqual 2
     savedTweets |> List.map fst |> Collection.assertEquiv [TestData.Twitter.streamActivity; TestData.Twitter.searchActivity]
+
+[<Test>]
+let ``fssnip filtered out``() =
+    use tw = TwitterApi.runServer (POST >>= url TwitterApi.streamPath >>== TwitterApi.handle (writeTweet TestData.Twitter.fssnipJson))
+    do ServiceApplication.startAndSleep Twitter
+
+    Storage.getAllActivities().Length |> assertEqual 0

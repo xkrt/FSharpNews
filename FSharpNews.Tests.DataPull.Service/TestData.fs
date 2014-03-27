@@ -680,6 +680,94 @@ module Twitter =
                         Photo = None }
     let searchActivity = Tweet searchTweet
 
+    let fssnipJson = toLine """{
+  "created_at": "Thu Mar 27 04:54:05 +0000 2014",
+  "id": 449046679614791680,
+  "id_str": "449046679614791680",
+  "text": "F# Snippet: Alternative ways to do some suggestions on F# user voice site. http://t.co/9V4eyNIp3D #fsharp",
+  "source": "<a href=\"http://dlvr.it\" rel=\"nofollow\">dlvr.it</a>",
+  "truncated": false,
+  "in_reply_to_status_id": null,
+  "in_reply_to_status_id_str": null,
+  "in_reply_to_user_id": null,
+  "in_reply_to_user_id_str": null,
+  "in_reply_to_screen_name": null,
+  "user": {
+    "id": 237793441,
+    "id_str": "237793441",
+    "name": "F# Snippets",
+    "screen_name": "fssnip",
+    "location": "",
+    "url": "http://fssnip.net",
+    "description": "Get links to all recently posted F# snippets!",
+    "protected": false,
+    "followers_count": 519,
+    "friends_count": 0,
+    "listed_count": 21,
+    "created_at": "Thu Jan 13 17:02:30 +0000 2011",
+    "favourites_count": 0,
+    "utc_offset": 3600,
+    "time_zone": "Amsterdam",
+    "geo_enabled": false,
+    "verified": false,
+    "statuses_count": 896,
+    "lang": "en",
+    "contributors_enabled": false,
+    "is_translator": false,
+    "is_translation_enabled": false,
+    "profile_background_color": "693F6A",
+    "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+    "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+    "profile_background_tile": false,
+    "profile_image_url": "http://pbs.twimg.com/profile_images/1214728189/logo_normal.png",
+    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1214728189/logo_normal.png",
+    "profile_link_color": "4F004F",
+    "profile_sidebar_border_color": "EADDEB",
+    "profile_sidebar_fill_color": "EADDEB",
+    "profile_text_color": "333333",
+    "profile_use_background_image": false,
+    "default_profile": false,
+    "default_profile_image": false,
+    "following": null,
+    "follow_request_sent": null,
+    "notifications": null
+  },
+  "geo": null,
+  "coordinates": null,
+  "place": null,
+  "contributors": null,
+  "retweet_count": 0,
+  "favorite_count": 0,
+  "entities": {
+    "hashtags": [
+      {
+        "text": "fsharp",
+        "indices": [
+          98,
+          105
+        ]
+      }
+    ],
+    "symbols": [],
+    "urls": [
+      {
+        "url": "http://t.co/9V4eyNIp3D",
+        "expanded_url": "http://fssnip.net/m9",
+        "display_url": "fssnip.net/m9",
+        "indices": [
+          75,
+          97
+        ]
+      }
+    ],
+    "user_mentions": []
+  },
+  "favorited": false,
+  "retweeted": false,
+  "possibly_sensitive": false,
+  "filter_level": "medium",
+  "lang": "en"
+}"""
 
 module NuGet =
     let emptyXml = """<?xml version="1.0" encoding="utf-8"?>
