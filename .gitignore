@@ -1,13 +1,8 @@
 [Bb]in/
 [Oo]bj/
 packages/
+!packages/FsWebAddRegistryEntries.0.1.0.0
 *.suo
 *.user
 Settings.config
-FSharpNews.Web.Frontend/Content/bootstrap*
-FSharpNews.Web.Frontend/fonts/glyphicons-halflings-regular.*
-FSharpNews.Web.Frontend/Scripts/bootstrap.*
-FSharpNews.Web.Frontend/Scripts/jquery*
-FSharpNews.Web.Frontend/Scripts/knockout-*
-FSharpNews.Web.Frontend/Scripts/moment*
 FSharpNews.Web.Frontend/Logs/*

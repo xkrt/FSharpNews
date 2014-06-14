@@ -18,4 +18,7 @@ Supported news sources:
 	- [CodeGolf](http://codegolf.stackexchange.com/)
 * [Twitter](https://twitter.com/) (#fsharp hashtag)
 
+Requirements:
+* IIS 7.5 with Rewrite module installed
+
 Inspired by [Haskell News](http://haskellnews.org/) by [Chris Done](http://chrisdone.com/).

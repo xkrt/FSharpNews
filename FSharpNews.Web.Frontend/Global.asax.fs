@@ -10,16 +10,16 @@ open System.Web.Optimization
 open FSharpNews.Utils
 
 type BundleConfig() =
-    static member RegisterBundles (bundles:BundleCollection) =
+    static member RegisterBundles (bundles: BundleCollection) =
         bundles.UseCdn <- true
         // libs
-        bundles.Add(ScriptBundle("~/bundles/js/jquery", "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js")
-                        .Include [| "~/Scripts/jquery-2.1.0.js" |])
-        bundles.Add(ScriptBundle("~/bundles/js/knockout", "//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js")
-                        .Include [| "~/Scripts/knockout-3.0.0.js" |])
-        bundles.Add(ScriptBundle("~/bundles/js/moment", "//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js")
+        bundles.Add(ScriptBundle("~/bundles/js/jquery", "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+                        .Include [| "~/Scripts/jquery-2.1.1.js" |])
+        bundles.Add(ScriptBundle("~/bundles/js/knockout", "//cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js")
+                        .Include [| "~/Scripts/knockout-3.1.0.js" |])
+        bundles.Add(ScriptBundle("~/bundles/js/moment", "//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js")
                         .Include [| "~/Scripts/moment.min.js" |])
-        bundles.Add(StyleBundle("~/Content/css/bootstrap", "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.0/css/bootstrap.min.css")
+        bundles.Add(StyleBundle("~/Content/css/bootstrap", "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css")
                         .Include [| "~/Content/bootstrap.css" |])
         // application
         bundles.Add(ScriptBundle("~/bundles/js/fsharpnews").Include(
@@ -59,7 +59,7 @@ type Global() =
         ) |> ignore
 
     member x.Application_Start() =
-        log.Info "Application start"
+        do log.Info "Application start"
         do AppDomain.CurrentDomain.UnhandledException.Add UnhandledExceptionLogger.handle
 
         AreaRegistration.RegisterAllAreas()
@@ -69,4 +69,4 @@ type Global() =
         BundleConfig.RegisterBundles BundleTable.Bundles
 
     member x.Application_End() =
-        log.Info "Application end"
+        do log.Info "Application end"
