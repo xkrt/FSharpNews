@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>FSharp.Data.Toolbox.Twitter</name></assembly>
+<members>
+<member name="">
+
+</member>
+<member name="T:FSharp.Control.Observable">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Control.Utils">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.Toolbox.Twitter.TwitterTypes">
+
+</member>
+<member name="M:FSharp.Data.Toolbox.Twitter.WebRequestExtensions.WebRequest.AddOAuthHeader(System.Net.WebRequest,FSharp.Data.Toolbox.Twitter.TwitterContext,Microsoft.FSharp.Collections.FSharpList{System.Tuple{System.String,System.String}},Microsoft.FSharp.Core.FSharpOption{System.String})">
+<summary>
+ Add an Authorization header to the WebRequest for the provided user authorization tokens and query parameters
+</summary>
+</member>
+<member name="M:FSharp.Data.Toolbox.Twitter.WebRequestExtensions.WebRequest.AddOAuthHeader(System.Net.WebRequest,System.String,System.String,System.String,System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple{System.String,System.String}},Microsoft.FSharp.Core.FSharpOption{System.String})">
+<summary>
+ Add an Authorization header to the WebRequest for the provided user authorization tokens and query parameters
+</summary>
+</member>
+<member name="T:FSharp.Data.Toolbox.Twitter.WebRequestExtensions">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.Toolbox.Twitter.Utils.addAuthHeaderForUser(System.Net.WebRequest,System.String,System.String,System.String,System.String,System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple{System.String,System.String}})">
+<summary>
+ Add an Authorization header to an existing WebRequest 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.Toolbox.Twitter.Utils.authHeaderAfterAuthenticated(System.String,System.String,System.String,System.String,System.String,System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple{System.String,System.String}})">
+<summary>
+ Compute the &apos;Authorization&apos; header for the given request data
+</summary>
+</member>
+<member name="M:FSharp.Data.Toolbox.Twitter.Utils.accessToken(System.String,System.String,System.String,System.String,System.String)">
+<summary>
+ Get an access token from Twitter and returns: oauth_token, oauth_token_secret
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.Toolbox.Twitter.Utils.requestToken(System.String,System.String)">
+<summary>
+ Request a token from Twitter and return:
+  oauth_token, oauth_token_secret, oauth_callback_confirmed
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.Toolbox.Twitter.Utils">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.WebBrowser.WebBrowserExtensions">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:System.AssemblyVersionInformation">
+
+</member>
+</members>
+</doc>

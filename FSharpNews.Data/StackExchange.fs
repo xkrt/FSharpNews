@@ -16,8 +16,8 @@ let private apiKey = ConfigurationManager.AppSettings.["StackExchangeApiKey"]
 
 type private Questions = JsonProvider<"DataSamples/StackExchange/questions.json">
 
-let private toString (qsEntity: Questions.DomainTypes.Entity) = sprintf "Items.Count=%d; HasMore=%b; QuotaRemaining=%d; QuotaMax=%d" qsEntity.Items.Length qsEntity.HasMore qsEntity.QuotaRemaining qsEntity.QuotaMax
-let private toQuestion site (q: Questions.DomainTypes.Item) =
+let private toString (qsEntity: Questions.Root) = sprintf "Items.Count=%d; HasMore=%b; QuotaRemaining=%d; QuotaMax=%d" qsEntity.Items.Length qsEntity.HasMore qsEntity.QuotaRemaining qsEntity.QuotaMax
+let private toQuestion site (q: Questions.Item) =
     StackExchangeQuestion { Site = site
                             Id = q.QuestionId
                             Title = q.Title
